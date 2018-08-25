@@ -9,6 +9,12 @@
 import CoreGraphics
 
 public extension CGRect {
+    enum Orientation {
+        case square
+        case landscape
+        case portrait
+    }
+    
     /// A point representing the rectangle's center.
     public var center: CGPoint {
         get {
@@ -98,11 +104,39 @@ public extension CGRect {
             self.origin = newValue.translated(along: self.maxYEdgeCenter.formVector(with: self.origin))
         }
     }
-
+    
+    /// The smallest square rectangle that can contain `self`.
+    public var maxSquare: CGRect {
+        let maxEdge = max(self.width, self.height)
+        return CGRect(origin: .zero, size: .init(width: maxEdge, height: maxEdge))
+    }
+    
+    /// The biggest square rectangle that `self` can contain.
+    public var minSquare: CGRect {
+        let minEdge = min(self.width, self.height)
+        return CGRect(origin: .zero, size: .init(width: minEdge, height: minEdge))
+    }
+    
+    /// The ratio of `self`.
+    public var ratio: CGFloat {
+        return self.width / self.height
+    }
+    
+    /// The orientation of `self`.
+    public var orientation: Orientation {
+        switch self.ratio {
+        case let x where x < 1.0:
+            return .portrait
+        case let x where x > 1.0:
+            return .landscape
+        default:
+            return .square
+        }
+    }
     
     /// Creates a rectangle with the specified center and size.
     public init(center: CGPoint, size: CGSize) {
-        let r = CGRect(origin: CGPoint.zero, size: size)
+        let r = CGRect(origin: .zero, size: size)
         self = r.centered(at: center)
     }
 
