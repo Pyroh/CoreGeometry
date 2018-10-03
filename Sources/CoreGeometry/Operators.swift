@@ -9,12 +9,12 @@ import Foundation
 
 postfix operator °
 
-
 /// Considers a value as an angle expressed in degrees and returns the corresponding angle in radians.
 ///
 /// - note: _x_`º` is equivalent to _x_`.degree`.
 /// - Parameter lhs: The angle value expressed in degrees.
 /// - Returns: The angle value expressed in radians.
+@inlinable
 public postfix func °<T: BinaryInteger>(lhs: T) -> CGFloat {
     return lhs.radian
 }
@@ -24,6 +24,7 @@ public postfix func °<T: BinaryInteger>(lhs: T) -> CGFloat {
 /// - note: _x_`º` is equivalent to _x_`.degree`.
 /// - Parameter lhs: The angle value expressed in degrees.
 /// - Returns: The angle value expressed in radians.
+@inlinable
 public postfix func °<T: BinaryFloatingPoint>(lhs: T) -> CGFloat {
     return lhs.radian
 }

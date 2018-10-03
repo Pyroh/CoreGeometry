@@ -16,6 +16,7 @@ public extension CGRect {
     }
     
     /// A point representing the rectangle's center.
+    @inlinable
     public var center: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.midY)
@@ -26,6 +27,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the smallest value of the x-coordinate and the smallest value of the y-coordinate of the rectangle.
+    @inlinable
     public var minXminYCorner: CGPoint {
         get {
             return CGPoint(x: self.minX, y: self.minY)
@@ -36,6 +38,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the smallest value of the x-coordinate and the largest value of the y-coordinate of the rectangle.
+    @inlinable
     public var minXmaxYCorner: CGPoint {
         get {
             return CGPoint(x: self.minX, y: self.maxY)
@@ -46,6 +49,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the largest value of the x-coordinate and the smallest value of the y-coordinate of the rectangle.
+    @inlinable
     public var maxXminYCorner: CGPoint {
         get {
             return CGPoint(x: self.maxX, y: self.minY)
@@ -56,6 +60,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the largest value of the x-coordinate and the largest value of the y-coordinate of the rectangle.
+    @inlinable
     public var maxXmaxYCorner: CGPoint {
         get {
             return CGPoint(x: self.maxX, y: self.maxY)
@@ -66,6 +71,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the smallest value of the x-coordinate and the of the rectangle.
+    @inlinable
     public var minXEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.minX, y: self.midY)
@@ -76,6 +82,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the smallest value of the x-coordinate and the of the rectangle.
+    @inlinable
     public var maxXEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.maxX, y: self.midY)
@@ -86,6 +93,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the smallest value of the y-coordinate and the of the rectangle.
+    @inlinable
     public var minYEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.minY)
@@ -96,6 +104,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the largest value of the y-coordinate and the of the rectangle.
+    @inlinable
     public var maxYEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.maxY)
@@ -106,18 +115,21 @@ public extension CGRect {
     }
     
     /// The smallest square rectangle that can contain `self`.
+    @inlinable
     public var maxSquare: CGRect {
         let maxEdge = max(self.width, self.height)
         return CGRect(origin: .zero, size: .init(width: maxEdge, height: maxEdge))
     }
     
     /// The biggest square rectangle that `self` can contain.
+    @inlinable
     public var minSquare: CGRect {
         let minEdge = min(self.width, self.height)
         return CGRect(origin: .zero, size: .init(width: minEdge, height: minEdge))
     }
     
     /// The ratio of `self`.
+    @inlinable
     public var ratio: CGFloat {
         return self.width / self.height
     }
