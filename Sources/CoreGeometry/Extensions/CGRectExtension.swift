@@ -9,6 +9,11 @@
 import CoreGraphics
 
 public extension CGRect {
+    /// Represents a rectangle orientation.
+    ///
+    /// - square: The rectangle is a square so it's always the same.
+    /// - landscape: The rectangle is landscape oriented.
+    /// - portrait: The rectangle is portrait oriented.
     enum Orientation {
         case square
         case landscape

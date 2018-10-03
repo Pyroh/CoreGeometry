@@ -1,29 +1,11 @@
 //
-//  CGFloatExtension.swift
-//  CoreGeometry_macOSX
+//  BinaryFloatingPointExtension.swift
+//  CoreGeometry
 //
-//  Created by Pierre TACCHI on 05/07/2018.
-//  Copyright © 2018 Pyrolyse. All rights reserved.
+//  Created by Pierre TACCHI on 03/10/2018.
 //
 
-import CoreGraphics
-
-@usableFromInline internal let degreeFactor = 180 / CGFloat.pi
-@usableFromInline internal let radianFactor = 1 / degreeFactor
-
-extension BinaryInteger {
-    /// The numerical value considered as expressed in radians converted in degrees.
-    @inlinable
-    public var degree: CGFloat {
-        return CGFloat(self) * degreeFactor
-    }
-    
-    /// The numerical value considered as expressed in degrees converted in radians.
-    @inlinable
-    public var radian: CGFloat {
-        return CGFloat(self) * radianFactor
-    }
-}
+import Foundation
 
 extension BinaryFloatingPoint {
     /// The numerical value considered as expressed in radians converted in degrees.
@@ -83,4 +65,3 @@ extension BinaryFloatingPoint {
         return (r + CGFloat(self).truncatingRemainder(dividingBy: r)).truncatingRemainder(dividingBy: r)
     }
 }
-

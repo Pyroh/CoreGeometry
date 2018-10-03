@@ -2,14 +2,9 @@ import XCTest
 @testable import CoreGeometry
 
 final class CoreGeometryTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(CoreGeometry().text, "Hello, World!")
+    func testDegree() {
+        XCTAssert(90° == 90.radian)
+        let r = 90
+        XCTAssert(r° == r.radian)
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }
