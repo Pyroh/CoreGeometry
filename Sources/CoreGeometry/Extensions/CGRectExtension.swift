@@ -286,4 +286,61 @@ public extension CGRect {
     public mutating func slide(relativeTo center: CGPoint, by angle: CGFloat) {
         self = self.slided(relativeTo: center, by: angle)
     }
+    
+    /// Offsets `self` by the given amount in the `maxX` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public mutating func offsetMaxX(by amount: CGFloat) {
+        self = self.offsettingMaxX(by: amount)
+    }
+    
+    
+    /// Returns a copy of `self` offset by the given amount in the `maxX` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public func offsettingMaxX(by amount: CGFloat) -> CGRect {
+        return CGRect(origin: self.origin, size: .init(width: self.width + amount, height: self.height))
+    }
+    
+    /// Offsets `self` by the given amount in the `minX` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public mutating func offsetMinX(by amount: CGFloat) {
+        self = self.offsettingMinX(by: amount)
+    }
+    
+    /// Returns a copy of `self` offset by the given amount in the `minX` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public func offsettingMinX(by amount: CGFloat) -> CGRect {
+        return CGRect(origin: .init(x: self.minX - amount, y: self.minY), size: .init(width: self.width + amount, height: self.height))
+    }
+    
+    /// Offsets `self` by the given amount in the `maxY` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public mutating func offsetMaxY(by amount: CGFloat) {
+        self = self.offsettingMaxY(by: amount)
+    }
+    
+    /// Returns a copy of `self` offset by the given amount in the `maxY` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public func offsettingMaxY(by amount: CGFloat) -> CGRect {
+        return CGRect(origin: self.origin, size: .init(width: self.width, height: self.height + amount))
+    }
+    
+    /// Offsets `self` by the given amount in the `minY` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public mutating func offsetMinY(by amount: CGFloat) {
+        self = self.offsettingMinY(by: amount)
+    }
+    
+    /// Returns a copy of `self` offset by the given amount in the `minY` direction.
+    ///
+    /// - Parameter amount: The amount of offeseting
+    public func offsettingMinY(by amount: CGFloat) -> CGRect {
+        return CGRect(origin: .init(x: self.minX, y: self.minY - amount), size: .init(width: self.width, height: self.height + amount))
+    }
 }
