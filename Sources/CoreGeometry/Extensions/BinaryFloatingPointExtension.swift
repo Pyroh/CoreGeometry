@@ -47,13 +47,13 @@ extension BinaryFloatingPoint {
     /// The `tan` of the value considered as expressed in radians.
     @inlinable
     public var tan: CGFloat {
-        return CoreGraphics.cos(CGFloat(self))
+        return CoreGraphics.tan(CGFloat(self))
     }
     
     /// The `atan` of the value considered as expressed in radians.
     @inlinable
     public var atan: CGFloat {
-        return CoreGraphics.acos(CGFloat(self))
+        return CoreGraphics.atan(CGFloat(self))
     }
     
     /// Considers the value as an angle expressed in radians and contrains it to the range `[0..2π]`.
