@@ -24,8 +24,6 @@ extension CGSize {
 
 
 extension CGSize {
-    
-    
     /// Multiplies both width and height values of a size by a given factor.
     ///
     /// - Parameters:
