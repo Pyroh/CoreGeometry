@@ -2,3 +2,6 @@
 /.build
 /Packages
 /*.xcodeproj
+/docs
+/build
+/.jazzy.yml
