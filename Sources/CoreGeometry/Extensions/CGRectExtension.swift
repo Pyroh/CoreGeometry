@@ -139,6 +139,13 @@ public extension CGRect {
         return self.width / self.height
     }
     
+    
+    /// The diagonal of `self`.
+    @inlinable
+    public var diagonal: CGFloat {
+        return sqrt(pow(self.width, 2.0) + pow(self.height, 2.0))
+    }
+    
     /// The orientation of `self`.
     public var orientation: Orientation {
         switch self.ratio {
@@ -176,16 +183,22 @@ public extension CGRect {
         let origin = CGPoint(x: point.x - self.width / 2.0, y: point.y - self.height / 2.0)
         return CGRect(origin: origin, size: self.size)
     }
-
+    
     /// Returns a copy of `self` centered at `(x,y)`.
-    public func centered<T: BinaryInteger>(atX x: T, y: T) -> CGRect {
-        let center = CGPoint(x: Int(x), y: Int(y))
+    public func centered(atX x: Int, y: Int) -> CGRect {
+        let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Returns a copy of `self` centered at `(x,y)`.
-    public func centered<T: BinaryFloatingPoint>(atX x: T, y: T) -> CGRect {
-        let center = CGPoint(x: CGFloat(x), y: CGFloat(y))
+    public func centered(atX x: Double, y: Double) -> CGRect {
+        let center = CGPoint(x: x, y: y)
+        return self.centered(at: center)
+    }
+    
+    /// Returns a copy of `self` centered at `(x,y)`.
+    public func centered(atX x: CGFloat, y: CGFloat) -> CGRect {
+        let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
@@ -195,12 +208,17 @@ public extension CGRect {
     }
 
     /// Centers `self` at `(x,y)`
-    public mutating func center<T: BinaryInteger>(x: T, y: T) {
+    public mutating func center(x: Int, y: Int) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
-    public mutating func center<T: BinaryFloatingPoint>(x: T, y: T) {
+    public mutating func center(x: Double, y: Double) {
+        self = self.centered(atX: x, y: y)
+    }
+    
+    /// Centers `self` at `(x,y)`
+    public mutating func center(x: CGFloat, y: CGFloat) {
         self = self.centered(atX: x, y: y)
     }
     
@@ -218,14 +236,19 @@ public extension CGRect {
     public func translated(by vector: CGVector) -> CGRect {
         return CGRect(origin: self.origin.translated(along: vector), size: self.size)
     }
-
+    
     /// Returns a copy of `self` translated by `(tx,ty)`.
-    public func translated<T: BinaryInteger>(byTx tx: T, ty: T) -> CGRect {
+    public func translated(byTx tx: Int, ty: Int) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
-    public func translated<T: BinaryFloatingPoint>(byTx tx: T, ty: T) -> CGRect {
+    public func translated(byTx tx: Double, ty: Double) -> CGRect {
+        return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
+    }
+    
+    /// Returns a copy of `self` translated by `(tx,ty)`.
+    public func translated(byTx tx: CGFloat, ty: CGFloat) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
 
@@ -235,12 +258,17 @@ public extension CGRect {
     }
 
     /// Translate `self` by `(tx,ty)`.
-    public mutating func translate<T: BinaryInteger>(tx: T, ty: T) {
+    public mutating func translate(tx: Int, ty: Int) {
         self = self.translated(byTx: tx, ty: ty)
     }
-
+    
     /// Translate `self` by `(tx,ty)`.
-    public mutating func translate<T: BinaryFloatingPoint>(tx: T, ty: T) {
+    public mutating func translate(tx: Double, ty: Double) {
+        self = self.translated(byTx: tx, ty: ty)
+    }
+    
+    /// Translate `self` by `(tx,ty)`.
+    public mutating func translate(tx: CGFloat, ty: CGFloat) {
         self = self.translated(byTx: tx, ty: ty)
     }
     

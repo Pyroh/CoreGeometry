@@ -23,14 +23,20 @@ public extension CGPoint {
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    public func translated<T: BinaryInteger>(tx: T, ty: T) -> CGPoint {
+    public func translated(tx: Int, ty: Int) -> CGPoint {
         return CGPoint(x: self.x + CGFloat(tx), y: self.y + CGFloat(ty))
     }
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    public func translated<T: BinaryFloatingPoint>(tx: T, ty: T) -> CGPoint {
+    public func translated(tx: Double, ty: Double) -> CGPoint {
         return CGPoint(x: self.x + CGFloat(tx), y: self.y + CGFloat(ty))
+    }
+    
+    /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
+    @inlinable
+    public func translated(tx: CGFloat, ty: CGFloat) -> CGPoint {
+        return CGPoint(x: self.x + tx, y: self.y + ty)
     }
     
     /// Translates `self` along the given vector.
@@ -41,13 +47,19 @@ public extension CGPoint {
     
     /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    public mutating func translate<T: BinaryInteger>(tx: T, ty: T) {
+    public mutating func translate(tx: Int, ty: Int) {
         self = self.translated(tx: tx, ty: ty)
     }
     
     /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    public mutating func translate<T: BinaryFloatingPoint>(tx: T, ty: T) {
+    public mutating func translate(tx: Double, ty: Double) {
+        self = self.translated(tx: tx, ty: ty)
+    }
+    
+    /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
+    @inlinable
+    public mutating func translate(tx: CGFloat, ty: CGFloat) {
         self = self.translated(tx: tx, ty: ty)
     }
     
