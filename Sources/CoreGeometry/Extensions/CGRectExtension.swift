@@ -2,23 +2,10 @@
 //  CGRectExtension.swift
 //  CoreGeometry
 //
-//  Created by Pierre TACCHI on 30/03/16.
-//  Copyright © 2016 Pyrolyse. All rights reserved.
-//
 
 import CoreGraphics
 
 public extension CGRect {
-    /// Represents a rectangle orientation.
-    ///
-    /// - square: The rectangle is a square so it's always the same.
-    /// - landscape: The rectangle is landscape oriented.
-    /// - portrait: The rectangle is portrait oriented.
-    enum Orientation {
-        case square
-        case landscape
-        case portrait
-    }
     
     /// A point representing the rectangle's center.
     @inlinable
@@ -147,8 +134,9 @@ public extension CGRect {
     }
     
     /// The orientation of `self`.
+    @inlinable
     public var orientation: Orientation {
-        switch self.ratio {
+        switch self.width / self.height {
         case let x where x < 1.0:
             return .portrait
         case let x where x > 1.0:
@@ -158,13 +146,53 @@ public extension CGRect {
         }
     }
     
+    /// Creates a rectangle with the specified size.
+    public init(size: CGSize) {
+        self.init(origin: .zero, size: size)
+    }
+    
     /// Creates a rectangle with the specified center and size.
     public init(center: CGPoint, size: CGSize) {
         let r = CGRect(origin: .zero, size: size)
         self = r.centered(at: center)
     }
+    
+    public init(ratio: Ratio, maxSize: CGFloat) {
+        let width: CGFloat, height: CGFloat
+        switch ratio.orientation {
+        case .landscape:
+            width = maxSize
+            height = maxSize / ratio.factor
+        case .portrait:
+            width = maxSize * ratio.factor
+            height = maxSize
+        case .square:
+            width = maxSize
+            height = maxSize
+        }
+        
+        self.init(size: .init(width: width, height: height))
+    }
+    
+    public init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
+        let width: CGFloat, height: CGFloat
+        switch ratio.orientation {
+        case .landscape:
+            width = maxSize
+            height = maxSize / ratio.factor
+        case .portrait:
+            width = maxSize * ratio.factor
+            height = maxSize
+        case .square:
+            width = maxSize
+            height = maxSize
+        }
+        
+        self.init(center: center, size: .init(width: width, height: height))
+    }
 
     /// Returns a copy of `self` centered relative to the given rectangle.
+    @inlinable
     public func centered(in rect: CGRect) -> CGRect {
         guard !self.isEmpty && !self.isInfinite else { return self }
         let rectCenter = rect.center
@@ -173,11 +201,13 @@ public extension CGRect {
     }
 
     /// Centers `self` relative to the given rect.
+    @inlinable
     public mutating func center(in rect: CGRect) {
         self = self.centered(in: rect)
     }
 
     /// Returns a copy of `self` centered to the given point.
+    @inlinable
     public func centered(at point: CGPoint) -> CGRect {
         guard !self.isEmpty && !self.isInfinite else { return self }
         let origin = CGPoint(x: point.x - self.width / 2.0, y: point.y - self.height / 2.0)
@@ -185,89 +215,147 @@ public extension CGRect {
     }
     
     /// Returns a copy of `self` centered at `(x,y)`.
+    @inlinable
     public func centered(atX x: Int, y: Int) -> CGRect {
         let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Returns a copy of `self` centered at `(x,y)`.
+    @inlinable
     public func centered(atX x: Double, y: Double) -> CGRect {
         let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Returns a copy of `self` centered at `(x,y)`.
+    @inlinable
     public func centered(atX x: CGFloat, y: CGFloat) -> CGRect {
         let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Centers `self` relative to the given point.
+    @inlinable
     public mutating func center(to point: CGPoint) {
         self = self.centered(at: point)
     }
 
     /// Centers `self` at `(x,y)`
+    @inlinable
     public mutating func center(x: Int, y: Int) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
+    @inlinable
     public mutating func center(x: Double, y: Double) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
+    @inlinable
     public mutating func center(x: CGFloat, y: CGFloat) {
         self = self.centered(atX: x, y: y)
     }
     
+    
+    /// Return a copy of `self` aligned relative to the given rect following x and y axis contraints.
+    ///
+    /// - Parameters:
+    ///   - rect: The rect to align against.
+    ///   - xAxis: The x axis' constraint.
+    ///   - yAxis: The y axis' constraint.
+    /// - Returns: A properly aligned rect.
+    @inlinable
+    public func aligned(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) -> CGRect {
+        let origin = self.origin
+        let coord: [CGFloat] = [(a: xAxis, o: origin.x, lon: self.width, min: rect.minX, max: rect.maxX, mid: rect.midX),
+                     (a: xAxis, o: origin.y, lon: self.height, min: rect.minY, max: rect.maxY, mid: rect.midY)].map {
+            switch $0.a {
+            case .center:
+                return $0.mid - $0.lon / 2
+            case .min:
+                return $0.min
+            case .max:
+                return $0.max - $0.lon
+            case .none:
+                return $0.o
+            }
+        }
+        let newOrigin = CGPoint(x: coord[0], y: coord[1])
+        
+        return CGRect(origin: newOrigin, size: self.size)
+    }
+    
+    
+    /// Aligns `self` relative to the given rect following x and y axis contraints.
+    ///
+    /// - Parameters:
+    ///   - rect: The rect to align against.
+    ///   - xAxis: The x axis' constraint.
+    ///   - yAxis: The y axis' constraint.
+    @inlinable
+    public mutating func align(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) {
+        self = self.aligned(relativeTo: rect, xAxis: xAxis, yAxis: yAxis)
+    }
+    
     /// Returns a copy of `self` with `origin` equals to `CGPointZero`.
+    @inlinable
     public func reseted() -> CGRect {
         return CGRect(x: 0, y: 0, width: self.width, height: self.height)
     }
     
     /// Makes `self`'s origin equal to `CGPointZero`.
+    @inlinable
     public mutating func reset() {
         self.origin = CGPoint(x: 0, y: 0)
     }
 
     /// Returns a copy of `self` translated by the given vector.
+    @inlinable
     public func translated(by vector: CGVector) -> CGRect {
         return CGRect(origin: self.origin.translated(along: vector), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
+    @inlinable
     public func translated(byTx tx: Int, ty: Int) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
+    @inlinable
     public func translated(byTx tx: Double, ty: Double) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
+    @inlinable
     public func translated(byTx tx: CGFloat, ty: CGFloat) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
 
     /// Translate `self` by the given vector.
+    @inlinable
     public mutating func translate(along vector: CGVector) {
         self = self.translated(by: vector)
     }
 
     /// Translate `self` by `(tx,ty)`.
+    @inlinable
     public mutating func translate(tx: Int, ty: Int) {
         self = self.translated(byTx: tx, ty: ty)
     }
     
     /// Translate `self` by `(tx,ty)`.
+    @inlinable
     public mutating func translate(tx: Double, ty: Double) {
         self = self.translated(byTx: tx, ty: ty)
     }
     
     /// Translate `self` by `(tx,ty)`.
+    @inlinable
     public mutating func translate(tx: CGFloat, ty: CGFloat) {
         self = self.translated(byTx: tx, ty: ty)
     }
@@ -278,6 +366,7 @@ public extension CGRect {
     /// - Parameters:
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
+    @inlinable
     public func rotated(relativeTo center: CGPoint, by angle: CGFloat) -> CGRect {
         var transform = CGAffineTransform(translationX: center.x, y: center.y)
         transform = transform.rotated(by: angle)
@@ -291,6 +380,7 @@ public extension CGRect {
     /// - Parameters:
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
+    @inlinable
     public mutating func rotate(relativeTo center: CGPoint, by angle: CGFloat) {
         self = self.rotated(relativeTo: center, by: angle)
     }
@@ -301,6 +391,7 @@ public extension CGRect {
     /// - Parameters:
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
+    @inlinable
     public func slided(relativeTo center: CGPoint, by angle: CGFloat) -> CGRect {
         return self.centered(at: self.center.rotated(relativeTo: center, by: angle))
     }
@@ -311,6 +402,7 @@ public extension CGRect {
     /// - Parameters:
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
+    @inlinable
     public mutating func slide(relativeTo center: CGPoint, by angle: CGFloat) {
         self = self.slided(relativeTo: center, by: angle)
     }
@@ -318,6 +410,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `maxX` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public mutating func offsetMaxX(by amount: CGFloat) {
         self = self.offsettingMaxX(by: amount)
     }
@@ -326,6 +419,7 @@ public extension CGRect {
     /// Returns a copy of `self` offset by the given amount in the `maxX` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public func offsettingMaxX(by amount: CGFloat) -> CGRect {
         return CGRect(origin: self.origin, size: .init(width: self.width + amount, height: self.height))
     }
@@ -333,6 +427,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `minX` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public mutating func offsetMinX(by amount: CGFloat) {
         self = self.offsettingMinX(by: amount)
     }
@@ -340,6 +435,7 @@ public extension CGRect {
     /// Returns a copy of `self` offset by the given amount in the `minX` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public func offsettingMinX(by amount: CGFloat) -> CGRect {
         return CGRect(origin: .init(x: self.minX - amount, y: self.minY), size: .init(width: self.width + amount, height: self.height))
     }
@@ -347,6 +443,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `maxY` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public mutating func offsetMaxY(by amount: CGFloat) {
         self = self.offsettingMaxY(by: amount)
     }
@@ -354,6 +451,7 @@ public extension CGRect {
     /// Returns a copy of `self` offset by the given amount in the `maxY` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public func offsettingMaxY(by amount: CGFloat) -> CGRect {
         return CGRect(origin: self.origin, size: .init(width: self.width, height: self.height + amount))
     }
@@ -361,6 +459,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `minY` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public mutating func offsetMinY(by amount: CGFloat) {
         self = self.offsettingMinY(by: amount)
     }
@@ -368,6 +467,7 @@ public extension CGRect {
     /// Returns a copy of `self` offset by the given amount in the `minY` direction.
     ///
     /// - Parameter amount: The amount of offeseting
+    @inlinable
     public func offsettingMinY(by amount: CGFloat) -> CGRect {
         return CGRect(origin: .init(x: self.minX, y: self.minY - amount), size: .init(width: self.width, height: self.height + amount))
     }

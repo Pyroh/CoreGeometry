@@ -2,9 +2,6 @@
 //  CGSizeExtension.swift
 //  CoreGeometry
 //
-//  Created by Pierre TACCHI on 30/03/16.
-//  Copyright © 2016 Pyrolyse. All rights reserved.
-//
 
 import CoreGraphics
 

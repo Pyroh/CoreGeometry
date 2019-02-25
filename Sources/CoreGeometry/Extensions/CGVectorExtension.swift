@@ -2,9 +2,6 @@
 //  CGVectorExtension.swift
 //  CoreGeometry
 //
-//  Created by Pierre TACCHI on 15/04/16.
-//  Copyright © 2016 Pyrolyse. All rights reserved.
-//
 
 import CoreGraphics
 
@@ -41,6 +38,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Int) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -55,6 +53,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Int64) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -69,6 +68,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Float) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -83,6 +83,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Int8) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -97,6 +98,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: UInt8) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -111,6 +113,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Double) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -125,6 +128,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Int16) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -139,6 +143,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: UInt32) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -153,6 +158,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: UInt) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -167,6 +173,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: UInt16) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -181,6 +188,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Int32) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -195,6 +203,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: UInt64) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -209,6 +218,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: CGFloat) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -223,6 +233,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func * (lhs: CGVector, rhs: Float80) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -237,6 +248,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Int) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -251,6 +263,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Int64) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -265,6 +278,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Float) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -279,6 +293,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Int8) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -293,6 +308,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: UInt8) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -307,6 +323,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Double) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -321,6 +338,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Int16) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -335,6 +353,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: UInt32) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -349,6 +368,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: UInt) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -363,6 +383,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: UInt16) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -377,6 +398,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Int32) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -391,6 +413,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: UInt64) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -405,6 +428,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -419,6 +443,7 @@ extension CGVector {
     ///   - lhs: The vector.
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func / (lhs: CGVector, rhs: Float80) -> CGVector {
         let factor = CGFloat(rhs)
         let dx = lhs.dx * factor
@@ -433,6 +458,7 @@ extension CGVector {
     ///   - lhs: A vector.
     ///   - rhs: Another vector.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func + (lhs: CGVector, rhs: CGVector) -> CGVector {
         let dx = lhs.dx + rhs.dx
         let dy = lhs.dy + rhs.dy
@@ -446,6 +472,7 @@ extension CGVector {
     ///   - lhs: A vector.
     ///   - rhs: Another vector.
     /// - Returns: The resulting vector.
+    @inlinable
     public static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
         let dx = lhs.dx + rhs.dx
         let dy = lhs.dy + rhs.dy

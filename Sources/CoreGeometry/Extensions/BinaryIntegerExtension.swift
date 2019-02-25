@@ -2,8 +2,6 @@
 //  BinaryIntegerExtension.swift
 //  CoreGeometry
 //
-//  Created by Pierre TACCHI on 03/10/2018.
-//
 
 import Foundation
 
