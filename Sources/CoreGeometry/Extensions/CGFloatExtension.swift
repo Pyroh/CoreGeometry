@@ -13,6 +13,6 @@ extension CGFloat: ExpressibleInDegree {
     /// - Returns: The angle value expressed in radians.
     @inlinable
     public static postfix func ° (lhs: CGFloat) -> CGFloat {
-        return lhs.degree
+        return lhs.radian
     }
 }
