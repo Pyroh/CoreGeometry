@@ -5,6 +5,56 @@
 
 import CoreGraphics
 
+// MARK: Initializers
+public extension CGRect {
+    /// Creates a rectangle with the specified size.
+    public init(size: CGSize) {
+        self.init(origin: .zero, size: size)
+    }
+    
+    /// Creates a rectangle with the specified center and size.
+    public init(center: CGPoint, size: CGSize) {
+        let r = CGRect(origin: .zero, size: size)
+        self = r.centered(at: center)
+    }
+    
+    public init(ratio: Ratio, maxSize: CGFloat) {
+        let width: CGFloat, height: CGFloat
+        switch ratio.orientation {
+        case .landscape:
+            width = maxSize
+            height = maxSize / ratio.factor
+        case .portrait:
+            width = maxSize * ratio.factor
+            height = maxSize
+        case .square:
+            width = maxSize
+            height = maxSize
+        }
+        
+        self.init(size: .init(width: width, height: height))
+    }
+    
+    public init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
+        let width: CGFloat, height: CGFloat
+        switch ratio.orientation {
+        case .landscape:
+            width = maxSize
+            height = maxSize / ratio.factor
+        case .portrait:
+            width = maxSize * ratio.factor
+            height = maxSize
+        case .square:
+            width = maxSize
+            height = maxSize
+        }
+        
+        self.init(center: center, size: .init(width: width, height: height))
+    }
+}
+
+// MARK: -
+// MARK: Corners
 public extension CGRect {
     
     /// A point representing the rectangle's center.
@@ -105,7 +155,11 @@ public extension CGRect {
             self.origin = newValue.translated(along: self.maxYEdgeCenter.formVector(with: self.origin))
         }
     }
-    
+}
+
+// MARK: -
+// MARK: Geometry
+public extension CGRect {
     /// The smallest square rectangle that can contain `self`.
     @inlinable
     public var maxSquare: CGRect {
@@ -145,51 +199,11 @@ public extension CGRect {
             return .square
         }
     }
-    
-    /// Creates a rectangle with the specified size.
-    public init(size: CGSize) {
-        self.init(origin: .zero, size: size)
-    }
-    
-    /// Creates a rectangle with the specified center and size.
-    public init(center: CGPoint, size: CGSize) {
-        let r = CGRect(origin: .zero, size: size)
-        self = r.centered(at: center)
-    }
-    
-    public init(ratio: Ratio, maxSize: CGFloat) {
-        let width: CGFloat, height: CGFloat
-        switch ratio.orientation {
-        case .landscape:
-            width = maxSize
-            height = maxSize / ratio.factor
-        case .portrait:
-            width = maxSize * ratio.factor
-            height = maxSize
-        case .square:
-            width = maxSize
-            height = maxSize
-        }
-        
-        self.init(size: .init(width: width, height: height))
-    }
-    
-    public init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
-        let width: CGFloat, height: CGFloat
-        switch ratio.orientation {
-        case .landscape:
-            width = maxSize
-            height = maxSize / ratio.factor
-        case .portrait:
-            width = maxSize * ratio.factor
-            height = maxSize
-        case .square:
-            width = maxSize
-            height = maxSize
-        }
-        
-        self.init(center: center, size: .init(width: width, height: height))
-    }
+}
+
+// MARK: -
+// MARK: Center
+public extension CGRect {
 
     /// Returns a copy of `self` centered relative to the given rectangle.
     @inlinable
@@ -258,8 +272,11 @@ public extension CGRect {
     public mutating func center(x: CGFloat, y: CGFloat) {
         self = self.centered(atX: x, y: y)
     }
-    
-    
+}
+
+// MARK: -
+// MARK: Align
+public extension CGRect {
     /// Return a copy of `self` aligned relative to the given rect following x and y axis contraints.
     ///
     /// - Parameters:
@@ -311,7 +328,11 @@ public extension CGRect {
     public mutating func reset() {
         self.origin = CGPoint(x: 0, y: 0)
     }
+}
 
+// MARK: -
+// MARK: Transform
+public extension CGRect {
     /// Returns a copy of `self` translated by the given vector.
     @inlinable
     public func translated(by vector: CGVector) -> CGRect {
@@ -406,6 +427,11 @@ public extension CGRect {
     public mutating func slide(relativeTo center: CGPoint, by angle: CGFloat) {
         self = self.slided(relativeTo: center, by: angle)
     }
+}
+
+// MARK: -
+// MARK: Offset
+public extension CGRect {
     
     /// Offsets `self` by the given amount in the `maxX` direction.
     ///
