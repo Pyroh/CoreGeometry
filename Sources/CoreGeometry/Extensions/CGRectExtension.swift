@@ -17,7 +17,7 @@ public extension CGRect {
         let r = CGRect(origin: .zero, size: size)
         self = r.centered(at: center)
     }
-    
+
     public init(ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
@@ -161,6 +161,34 @@ public extension CGRect {
         }
         set {
             self.origin = newValue.translated(along: self.maxYEdgeCenter.formVector(with: self.origin))
+        }
+    }
+    
+    @inlinable
+    public subscript(xBound: RectBoundary, yBound: RectBoundary) -> CGPoint {
+        get {
+            let x, y: CGFloat
+            switch xBound {
+            case .min:
+                x = self.minX
+            case .mid:
+                x = self.midX
+            case .max:
+                x = self.maxX
+            }
+            switch yBound {
+            case .min:
+                y = self.minY
+            case .mid:
+                y = self.midY
+            case .max:
+                y = self.maxY
+            }
+            
+            return .init(x: x, y: y)
+        }
+        set {
+            self.origin = newValue.translated(along: self[xBound, yBound].formVector(with: self.origin))
         }
     }
 }
@@ -313,7 +341,6 @@ public extension CGRect {
         return CGRect(origin: newOrigin, size: self.size)
     }
     
-    
     /// Aligns `self` relative to the given rect following x and y axis contraints.
     ///
     /// - Parameters:
@@ -440,6 +467,76 @@ public extension CGRect {
 // MARK: -
 // MARK: Offset & Inset
 public extension CGRect {
+    
+    /// Offsets `self` in the given edge direction by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edge: The edge to offset from.
+    ///   - amount: The offset amount.
+    @inlinable
+    public mutating func offsetEdge(_ edge: CGRectEdge, by amount: CGFloat) {
+        self = self.offsettingEdge(edge, by: amount)
+    }
+    
+    @inlinable
+    public mutating func offsetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
+        self = self.offsettingEdges(edges, by: amount)
+    }
+    
+    @inlinable
+    public func offsettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
+        switch edge {
+        case .minXEdge:
+            return CGRect(origin: .init(x: self.minX - amount, y: self.minY), size: .init(width: self.width + amount, height: self.height))
+        case .maxXEdge:
+            return CGRect(origin: self.origin, size: .init(width: self.width + amount, height: self.height))
+        case .minYEdge:
+            return CGRect(origin: .init(x: self.minX, y: self.minY - amount), size: .init(width: self.width, height: self.height + amount))
+        case .maxYEdge:
+            return CGRect(origin: self.origin, size: .init(width: self.width, height: self.height + amount))
+        }
+    }
+    
+    @inlinable
+    public func offsettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
+        guard edges.count > 0 else { return self }
+        return edges.reduce(self) { return $0.offsettingEdge($1, by: amount) }
+    }
+    
+    @inlinable
+    public mutating func insetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
+        self = self.insettingEdges(edges, by: amount)
+    }
+    
+    /// Insets `self` in the given edge direction by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edge: The edge to inset from.
+    ///   - amount: The inset amount.
+    @inlinable
+    public mutating func insetEdge(_ edge: CGRectEdge, by amount: CGFloat) {
+        self = self.insettingEdge(edge, by: amount)
+    }
+    
+    @inlinable
+    public func insettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
+        switch edge {
+        case .minXEdge:
+            return CGRect(origin: .init(x: self.minX + amount, y: self.minY), size: .init(width: self.width - amount, height: self.height))
+        case .maxXEdge:
+            return CGRect(origin: self.origin, size: .init(width: self.width - amount, height: self.height))
+        case .minYEdge:
+            return CGRect(origin: .init(x: self.minX, y: self.minY + amount), size: .init(width: self.width, height: self.height - amount))
+        case .maxYEdge:
+            return CGRect(origin: self.origin, size: .init(width: self.width, height: self.height - amount))
+        }
+    }
+    
+    @inlinable
+    public func insettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
+        guard edges.count > 0 else { return self }
+        return edges.reduce(self) { return $0.insettingEdge($1, by: amount) }
+    }
     
     /// Offsets `self` by the given amount in the `maxX` direction.
     ///
