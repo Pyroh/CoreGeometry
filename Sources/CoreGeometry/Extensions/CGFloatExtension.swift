@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension CGFloat: ExpressibleInDegree {
+extension CGFloat {
     /// Considers a value as an angle expressed in degrees and returns the corresponding angle in radians.
     ///
     /// - note: _x_`º` is equivalent to _x_`.degree`.
