@@ -478,11 +478,21 @@ public extension CGRect {
         self = self.offsettingEdge(edge, by: amount)
     }
     
+    /// Offsets `self` in the given edge directions by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edges: The edges to offset from.
+    ///   - amount: The offset amount.
     @inlinable
     public mutating func offsetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
         self = self.offsettingEdges(edges, by: amount)
     }
     
+    /// Return a copy of `self` offset in the given edge direction by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edge: The edge to offset from.
+    ///   - amount: The offset amount.
     @inlinable
     public func offsettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
         switch edge {
@@ -497,15 +507,15 @@ public extension CGRect {
         }
     }
     
+    /// Return a copy of `self` offset in the given edge directions by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edges: The edges to offset from.
+    ///   - amount: The offset amount.
     @inlinable
     public func offsettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
         guard edges.count > 0 else { return self }
         return edges.reduce(self) { return $0.offsettingEdge($1, by: amount) }
-    }
-    
-    @inlinable
-    public mutating func insetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
-        self = self.insettingEdges(edges, by: amount)
     }
     
     /// Insets `self` in the given edge direction by the given amount.
@@ -518,6 +528,21 @@ public extension CGRect {
         self = self.insettingEdge(edge, by: amount)
     }
     
+    /// Insets `self` in the given edge directions by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edges: The edges to inset from.
+    ///   - amount: The inset amount.
+    @inlinable
+    public mutating func insetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
+        self = self.insettingEdges(edges, by: amount)
+    }
+    
+    /// Return a copy of `self` inset in the given edge direction by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edge: The edge to inset from.
+    ///   - amount: The inset amount.
     @inlinable
     public func insettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
         switch edge {
@@ -532,6 +557,11 @@ public extension CGRect {
         }
     }
     
+    /// Return a copy of `self` inset in the given edge directions by the given amount.
+    ///
+    /// - Parameters:
+    ///   - edges: The edges to inset from.
+    ///   - amount: The inset amount.
     @inlinable
     public func insettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
         guard edges.count > 0 else { return self }
