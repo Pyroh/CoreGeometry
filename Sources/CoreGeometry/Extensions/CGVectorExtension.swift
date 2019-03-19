@@ -40,71 +40,7 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func * (lhs: CGVector, rhs: Int) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Int64) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Float) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Int8) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: UInt8) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
+        return lhs * CGFloat(rhs)
     }
     
     /// Multiplies a vector by the given value.
@@ -115,101 +51,7 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func * (lhs: CGVector, rhs: Double) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Int16) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: UInt32) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: UInt) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: UInt16) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Int32) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: UInt64) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
+        return lhs * CGFloat(rhs)
     }
     
     /// Multiplies a vector by the given value.
@@ -220,24 +62,8 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func * (lhs: CGVector, rhs: CGFloat) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Float80) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
+        let dx = lhs.dx * rhs
+        let dy = lhs.dy * rhs
         
         return CGVector(dx: dx, dy: dy)
     }
@@ -250,71 +76,7 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func / (lhs: CGVector, rhs: Int) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: Int64) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: Float) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: Int8) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: UInt8) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
+       return lhs / CGFloat(rhs)
     }
     
     /// Divides a vector by the given value.
@@ -325,101 +87,7 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func / (lhs: CGVector, rhs: Double) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: Int16) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: UInt32) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: UInt) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: UInt16) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: Int32) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: UInt64) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
+        return lhs / CGFloat(rhs)
     }
     
     /// Divides a vector by the given value.
@@ -430,24 +98,8 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Divides a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func / (lhs: CGVector, rhs: Float80) -> CGVector {
-        let factor = CGFloat(rhs)
-        let dx = lhs.dx * factor
-        let dy = lhs.dy * factor
+        let dx = lhs.dx / rhs
+        let dy = lhs.dy / rhs
         
         return CGVector(dx: dx, dy: dy)
     }
@@ -474,10 +126,7 @@ extension CGVector {
     /// - Returns: The resulting vector.
     @inlinable
     public static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
-        let dx = lhs.dx + rhs.dx
-        let dy = lhs.dy + rhs.dy
-        
-        return CGVector(dx: dx, dy: dy)
+        return lhs + rhs.reversed()
     }
 }
 
