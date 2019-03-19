@@ -287,25 +287,25 @@ public extension CGRect {
     
     /// Centers `self` relative to the given point.
     @inlinable
-    public mutating func center(to point: CGPoint) {
+    public mutating func center(at point: CGPoint) {
         self = self.centered(at: point)
     }
 
     /// Centers `self` at `(x,y)`
     @inlinable
-    public mutating func center(x: Int, y: Int) {
+    public mutating func center(atX x: Int, y: Int) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
     @inlinable
-    public mutating func center(x: Double, y: Double) {
+    public mutating func center(atX x: Double, y: Double) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
     @inlinable
-    public mutating func center(x: CGFloat, y: CGFloat) {
+    public mutating func center(atX x: CGFloat, y: CGFloat) {
         self = self.centered(atX: x, y: y)
     }
 }
