@@ -69,6 +69,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the smallest value of the x-coordinate and the smallest value of the y-coordinate of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var minXminYCorner: CGPoint {
         get {
@@ -80,6 +81,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the smallest value of the x-coordinate and the largest value of the y-coordinate of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var minXmaxYCorner: CGPoint {
         get {
@@ -91,6 +93,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the largest value of the x-coordinate and the smallest value of the y-coordinate of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var maxXminYCorner: CGPoint {
         get {
@@ -102,6 +105,7 @@ public extension CGRect {
     }
     
     /// A point representing the corner located at the largest value of the x-coordinate and the largest value of the y-coordinate of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var maxXmaxYCorner: CGPoint {
         get {
@@ -113,6 +117,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the smallest value of the x-coordinate and the of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var minXEdgeCenter: CGPoint {
         get {
@@ -124,6 +129,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the smallest value of the x-coordinate and the of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var maxXEdgeCenter: CGPoint {
         get {
@@ -135,6 +141,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the smallest value of the y-coordinate and the of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var minYEdgeCenter: CGPoint {
         get {
@@ -146,6 +153,7 @@ public extension CGRect {
     }
     
     /// A point representing the center of the edge located at the largest value of the y-coordinate and the of the rectangle.
+    @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
     public var maxYEdgeCenter: CGPoint {
         get {
@@ -430,12 +438,13 @@ public extension CGRect {
 }
 
 // MARK: -
-// MARK: Offset
+// MARK: Offset & Inset
 public extension CGRect {
     
     /// Offsets `self` by the given amount in the `maxX` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
     public mutating func offsetMaxX(by amount: CGFloat) {
         self = self.offsettingMaxX(by: amount)
@@ -444,6 +453,7 @@ public extension CGRect {
     /// Insets `self` by the given amount in the `maxX` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insetEdge")
     @inlinable
     public mutating func insetMaxX(by amount: CGFloat) {
         self = self.offsettingMaxX(by: -amount)
@@ -453,6 +463,7 @@ public extension CGRect {
     /// Returns a copy of `self` offset by the given amount in the `maxX` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
     public func offsettingMaxX(by amount: CGFloat) -> CGRect {
         return CGRect(origin: self.origin, size: .init(width: self.width + amount, height: self.height))
@@ -461,6 +472,7 @@ public extension CGRect {
     /// Returns a copy of `self` inset by the given amount in the `maxX` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
     public func insettingMaxX(by amount: CGFloat) -> CGRect {
         return self.offsettingMaxX(by: -amount)
@@ -469,6 +481,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `minX` direction.
     ///
     /// - Parameter amount: The amount of offseting
+    @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
     public mutating func offsetMinX(by amount: CGFloat) {
         self = self.offsettingMinX(by: amount)
@@ -477,6 +490,7 @@ public extension CGRect {
     /// Insets `self` by the given amount in the `minX` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insetEdge")
     @inlinable
     public mutating func insetMinX(by amount: CGFloat) {
         self = self.offsettingMinX(by: -amount)
@@ -485,6 +499,7 @@ public extension CGRect {
     /// Returns a copy of `self` inset by the given amount in the `minX` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
     public func offsettingMinX(by amount: CGFloat) -> CGRect {
         return CGRect(origin: .init(x: self.minX - amount, y: self.minY), size: .init(width: self.width + amount, height: self.height))
@@ -493,6 +508,7 @@ public extension CGRect {
     /// Returns a copy of `self` inset by the given amount in the `minX` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
     public func insettingMinX(by amount: CGFloat) -> CGRect {
         return self.offsettingMinX(by: -amount)
@@ -501,6 +517,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `maxY` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
     public mutating func offsetMaxY(by amount: CGFloat) {
         self = self.offsettingMaxY(by: amount)
@@ -509,6 +526,7 @@ public extension CGRect {
     /// Insets `self` by the given amount in the `maxY` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insetEdge")
     @inlinable
     public mutating func insetMaxY(by amount: CGFloat) {
         self = self.offsettingMaxY(by: -amount)
@@ -517,6 +535,7 @@ public extension CGRect {
     /// Returns a copy of `self` inset by the given amount in the `maxY` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
     public func offsettingMaxY(by amount: CGFloat) -> CGRect {
         return CGRect(origin: self.origin, size: .init(width: self.width, height: self.height + amount))
@@ -525,6 +544,7 @@ public extension CGRect {
     /// Returns a copy of `self` inset by the given amount in the `maxY` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
     public func insettingMaxY(by amount: CGFloat) -> CGRect {
         return self.offsettingMaxY(by: -amount)
@@ -533,6 +553,7 @@ public extension CGRect {
     /// Offsets `self` by the given amount in the `minY` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
     public mutating func offsetMinY(by amount: CGFloat) {
         self = self.offsettingMinY(by: amount)
@@ -541,6 +562,7 @@ public extension CGRect {
     /// Insets `self` by the given amount in the `minY` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "insetEdge")
     @inlinable
     public mutating func insetMinY(by amount: CGFloat) {
         self = self.offsettingMinY(by: -amount)
@@ -549,6 +571,7 @@ public extension CGRect {
     /// Returns a copy of `self` offset by the given amount in the `minY` direction.
     ///
     /// - Parameter amount: The amount of offsetting
+    @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
     public func offsettingMinY(by amount: CGFloat) -> CGRect {
         return CGRect(origin: .init(x: self.minX, y: self.minY - amount), size: .init(width: self.width, height: self.height + amount))
@@ -557,6 +580,7 @@ public extension CGRect {
     /// Returns a copy of `self` inset by the given amount in the `minY` direction.
     ///
     /// - Parameter amount: The amount of insetting
+    @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
     public func insettingMinY(by amount: CGFloat) -> CGRect {
         return self.offsettingMinY(by: -amount)
