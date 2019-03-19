@@ -34,8 +34,7 @@ extension CGSize {
     ///   - rhs: The factor
     @inlinable
     public static func * (lhs: CGSize, rhs: Int) -> CGSize {
-        let factor = CGFloat(rhs)
-        return CGSize(width: lhs.width * factor, height: lhs.height * factor)
+        return lhs * CGFloat(rhs)
     }
     
     /// Multiplies both width and height values of a size by a given factor.
@@ -45,8 +44,7 @@ extension CGSize {
     ///   - rhs: The factor
     @inlinable
     public static func * (lhs: CGSize, rhs: Double) -> CGSize {
-        let factor = CGFloat(rhs)
-        return CGSize(width: lhs.width * factor, height: lhs.height * factor)
+        return lhs * CGFloat(rhs)
     }
     
     /// Multiplies both width and height values of a size by a given factor.
@@ -56,8 +54,7 @@ extension CGSize {
     ///   - rhs: The factor
     @inlinable
     public static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        let factor = CGFloat(rhs)
-        return CGSize(width: lhs.width * factor, height: lhs.height * factor)
+        return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
     }
     
     /// Devides both width and height values of a size by a given factor.
@@ -67,8 +64,7 @@ extension CGSize {
     ///   - rhs: The factor
     @inlinable
     public static func / (lhs: CGSize, rhs: Int) -> CGSize {
-        let factor = CGFloat(rhs)
-        return CGSize(width: lhs.width / factor, height: lhs.height / factor)
+        return lhs / CGFloat(rhs)
     }
     
     /// Devides both width and height values of a size by a given factor.
@@ -78,8 +74,7 @@ extension CGSize {
     ///   - rhs: The factor
     @inlinable
     public static func / (lhs: CGSize, rhs: Double) -> CGSize {
-        let factor = CGFloat(rhs)
-        return CGSize(width: lhs.width / factor, height: lhs.height / factor)
+        return lhs / CGFloat(rhs)
     }
     
     /// Devides both width and height values of a size by a given factor.
@@ -89,7 +84,66 @@ extension CGSize {
     ///   - rhs: The factor
     @inlinable
     public static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        let factor = CGFloat(rhs)
-        return CGSize(width: lhs.width / factor, height: lhs.height / factor)
+        return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
+    }
+    
+    /// Adds the given value to both width and height values of a size.
+    ///
+    /// - Parameters:
+    ///   - lhs: The size (a `CGSize` instance)
+    ///   - rhs: The value
+    @inlinable
+    public static func + (lhs: CGSize, rhs: Int) -> CGSize {
+        return lhs + CGFloat(rhs)
+    }
+    
+    /// Adds the given value to both width and height values of a size.
+    ///
+    /// - Parameters:
+    ///   - lhs: The size (a `CGSize` instance)
+    ///   - rhs: The value
+    @inlinable
+    public static func + (lhs: CGSize, rhs: Double) -> CGSize {
+        return lhs + CGFloat(rhs)
+    }
+    
+    /// Adds the given value to both width and height values of a size.
+    ///
+    /// - Parameters:
+    ///   - lhs: The size (a `CGSize` instance)
+    ///   - rhs: The value
+    @inlinable
+    public static func + (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
+    }
+    
+    /// Substracts the given value to both width and height values of a size.
+    ///
+    /// - Parameters:
+    ///   - lhs: The size (a `CGSize` instance)
+    ///   - rhs: The value
+    @inlinable
+    public static func - (lhs: CGSize, rhs: Int) -> CGSize {
+        return lhs - CGFloat(rhs)
+    }
+    
+    /// Substracts the given value to both width and height values of a size.
+    ///
+    /// - Parameters:
+    ///   - lhs: The size (a `CGSize` instance)
+    ///   - rhs: The value
+    @inlinable
+    public static func - (lhs: CGSize, rhs: Double) -> CGSize {
+        return lhs - CGFloat(rhs)
+    }
+    
+    /// Substracts the given value to both width and height values of a size.
+    ///
+    /// - Parameters:
+    ///   - lhs: The size (a `CGSize` instance)
+    ///   - rhs: The value
+    @inlinable
+    public static func - (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width - rhs, height: lhs.height - rhs)
     }
 }
