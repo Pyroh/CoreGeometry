@@ -15,17 +15,17 @@ import CoreGraphics
 // MARK: Initializers
 public extension CGRect {
     /// Creates a rectangle with the specified size.
-    public init(size: CGSize) {
+    init(size: CGSize) {
         self.init(origin: .zero, size: size)
     }
     
     /// Creates a rectangle with the specified center and size.
-    public init(center: CGPoint, size: CGSize) {
+    init(center: CGPoint, size: CGSize) {
         let r = CGRect(origin: .zero, size: size)
         self = r.centered(at: center)
     }
 
-    public init(ratio: Ratio, maxSize: CGFloat) {
+    init(ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
         case .landscape:
@@ -42,7 +42,7 @@ public extension CGRect {
         self.init(size: .init(width: width, height: height))
     }
     
-    public init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
+    init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
         case .landscape:
@@ -66,7 +66,7 @@ public extension CGRect {
     
     /// A point representing the rectangle's center.
     @inlinable
-    public var center: CGPoint {
+    var center: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.midY)
         }
@@ -78,7 +78,7 @@ public extension CGRect {
     /// A point representing the corner located at the smallest value of the x-coordinate and the smallest value of the y-coordinate of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var minXminYCorner: CGPoint {
+    var minXminYCorner: CGPoint {
         get {
             return CGPoint(x: self.minX, y: self.minY)
         }
@@ -90,7 +90,7 @@ public extension CGRect {
     /// A point representing the corner located at the smallest value of the x-coordinate and the largest value of the y-coordinate of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var minXmaxYCorner: CGPoint {
+    var minXmaxYCorner: CGPoint {
         get {
             return CGPoint(x: self.minX, y: self.maxY)
         }
@@ -102,7 +102,7 @@ public extension CGRect {
     /// A point representing the corner located at the largest value of the x-coordinate and the smallest value of the y-coordinate of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var maxXminYCorner: CGPoint {
+    var maxXminYCorner: CGPoint {
         get {
             return CGPoint(x: self.maxX, y: self.minY)
         }
@@ -114,7 +114,7 @@ public extension CGRect {
     /// A point representing the corner located at the largest value of the x-coordinate and the largest value of the y-coordinate of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var maxXmaxYCorner: CGPoint {
+    var maxXmaxYCorner: CGPoint {
         get {
             return CGPoint(x: self.maxX, y: self.maxY)
         }
@@ -126,7 +126,7 @@ public extension CGRect {
     /// A point representing the center of the edge located at the smallest value of the x-coordinate and the of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var minXEdgeCenter: CGPoint {
+    var minXEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.minX, y: self.midY)
         }
@@ -138,7 +138,7 @@ public extension CGRect {
     /// A point representing the center of the edge located at the smallest value of the x-coordinate and the of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var maxXEdgeCenter: CGPoint {
+    var maxXEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.maxX, y: self.midY)
         }
@@ -150,7 +150,7 @@ public extension CGRect {
     /// A point representing the center of the edge located at the smallest value of the y-coordinate and the of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var minYEdgeCenter: CGPoint {
+    var minYEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.minY)
         }
@@ -162,7 +162,7 @@ public extension CGRect {
     /// A point representing the center of the edge located at the largest value of the y-coordinate and the of the rectangle.
     @available(*, deprecated, message: "This will be removed from CoreGeometry 3.0 use subscript instead.")
     @inlinable
-    public var maxYEdgeCenter: CGPoint {
+    var maxYEdgeCenter: CGPoint {
         get {
             return CGPoint(x: self.midX, y: self.maxY)
         }
@@ -172,7 +172,7 @@ public extension CGRect {
     }
     
     @inlinable
-    public subscript(xBound: RectBoundary, yBound: RectBoundary) -> CGPoint {
+    subscript(xBound: RectBoundary, yBound: RectBoundary) -> CGPoint {
         get {
             let x, y: CGFloat
             switch xBound {
@@ -205,34 +205,34 @@ public extension CGRect {
 public extension CGRect {
     /// The smallest square rectangle that can contain `self`.
     @inlinable
-    public var maxSquare: CGRect {
+    var maxSquare: CGRect {
         let maxEdge = max(self.width, self.height)
         return CGRect(origin: .zero, size: .init(width: maxEdge, height: maxEdge))
     }
     
     /// The biggest square rectangle that `self` can contain.
     @inlinable
-    public var minSquare: CGRect {
+    var minSquare: CGRect {
         let minEdge = min(self.width, self.height)
         return CGRect(origin: .zero, size: .init(width: minEdge, height: minEdge))
     }
     
     /// The ratio of `self`.
     @inlinable
-    public var ratio: CGFloat {
+    var ratio: CGFloat {
         return self.width / self.height
     }
     
     
     /// The diagonal of `self`.
     @inlinable
-    public var diagonal: CGFloat {
+    var diagonal: CGFloat {
         return sqrt(pow(self.width, 2.0) + pow(self.height, 2.0))
     }
     
     /// The orientation of `self`.
     @inlinable
-    public var orientation: Orientation {
+    var orientation: Orientation {
         switch self.width / self.height {
         case let x where x < 1.0:
             return .portrait
@@ -250,7 +250,7 @@ public extension CGRect {
 
     /// Returns a copy of `self` centered relative to the given rectangle.
     @inlinable
-    public func centered(in rect: CGRect) -> CGRect {
+    func centered(in rect: CGRect) -> CGRect {
         guard !self.isEmpty && !self.isInfinite else { return self }
         let rectCenter = rect.center
         let origin = CGPoint(x: rectCenter.x - self.width / 2.0, y: rectCenter.y - self.height / 2.0)
@@ -259,13 +259,13 @@ public extension CGRect {
 
     /// Centers `self` relative to the given rect.
     @inlinable
-    public mutating func center(in rect: CGRect) {
+    mutating func center(in rect: CGRect) {
         self = self.centered(in: rect)
     }
 
     /// Returns a copy of `self` centered to the given point.
     @inlinable
-    public func centered(at point: CGPoint) -> CGRect {
+    func centered(at point: CGPoint) -> CGRect {
         guard !self.isEmpty && !self.isInfinite else { return self }
         let origin = CGPoint(x: point.x - self.width / 2.0, y: point.y - self.height / 2.0)
         return CGRect(origin: origin, size: self.size)
@@ -273,46 +273,46 @@ public extension CGRect {
     
     /// Returns a copy of `self` centered at `(x,y)`.
     @inlinable
-    public func centered(atX x: Int, y: Int) -> CGRect {
+    func centered(atX x: Int, y: Int) -> CGRect {
         let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Returns a copy of `self` centered at `(x,y)`.
     @inlinable
-    public func centered(atX x: Double, y: Double) -> CGRect {
+    func centered(atX x: Double, y: Double) -> CGRect {
         let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Returns a copy of `self` centered at `(x,y)`.
     @inlinable
-    public func centered(atX x: CGFloat, y: CGFloat) -> CGRect {
+    func centered(atX x: CGFloat, y: CGFloat) -> CGRect {
         let center = CGPoint(x: x, y: y)
         return self.centered(at: center)
     }
     
     /// Centers `self` relative to the given point.
     @inlinable
-    public mutating func center(at point: CGPoint) {
+    mutating func center(at point: CGPoint) {
         self = self.centered(at: point)
     }
 
     /// Centers `self` at `(x,y)`
     @inlinable
-    public mutating func center(atX x: Int, y: Int) {
+    mutating func center(atX x: Int, y: Int) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
     @inlinable
-    public mutating func center(atX x: Double, y: Double) {
+    mutating func center(atX x: Double, y: Double) {
         self = self.centered(atX: x, y: y)
     }
     
     /// Centers `self` at `(x,y)`
     @inlinable
-    public mutating func center(atX x: CGFloat, y: CGFloat) {
+    mutating func center(atX x: CGFloat, y: CGFloat) {
         self = self.centered(atX: x, y: y)
     }
 }
@@ -328,7 +328,7 @@ public extension CGRect {
     ///   - yAxis: The y axis' constraint.
     /// - Returns: A properly aligned rect.
     @inlinable
-    public func aligned(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) -> CGRect {
+    func aligned(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) -> CGRect {
         let origin = self.origin
         let coord: [CGFloat] = [(a: xAxis, o: origin.x, lon: self.width, min: rect.minX, max: rect.maxX, mid: rect.midX),
                      (a: yAxis, o: origin.y, lon: self.height, min: rect.minY, max: rect.maxY, mid: rect.midY)].map {
@@ -355,19 +355,19 @@ public extension CGRect {
     ///   - xAxis: The x axis' constraint.
     ///   - yAxis: The y axis' constraint.
     @inlinable
-    public mutating func align(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) {
+    mutating func align(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) {
         self = self.aligned(relativeTo: rect, xAxis: xAxis, yAxis: yAxis)
     }
     
     /// Returns a copy of `self` with `origin` equals to `CGPointZero`.
     @inlinable
-    public func reseted() -> CGRect {
+    func reseted() -> CGRect {
         return CGRect(x: 0, y: 0, width: self.width, height: self.height)
     }
     
     /// Makes `self`'s origin equal to `CGPointZero`.
     @inlinable
-    public mutating func reset() {
+    mutating func reset() {
         self.origin = CGPoint(x: 0, y: 0)
     }
 }
@@ -377,49 +377,49 @@ public extension CGRect {
 public extension CGRect {
     /// Returns a copy of `self` translated by the given vector.
     @inlinable
-    public func translated(by vector: CGVector) -> CGRect {
+    func translated(by vector: CGVector) -> CGRect {
         return CGRect(origin: self.origin.translated(along: vector), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
     @inlinable
-    public func translated(byTx tx: Int, ty: Int) -> CGRect {
+    func translated(byTx tx: Int, ty: Int) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
     @inlinable
-    public func translated(byTx tx: Double, ty: Double) -> CGRect {
+    func translated(byTx tx: Double, ty: Double) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
     @inlinable
-    public func translated(byTx tx: CGFloat, ty: CGFloat) -> CGRect {
+    func translated(byTx tx: CGFloat, ty: CGFloat) -> CGRect {
         return CGRect(origin: self.origin.translated(tx: tx, ty: ty), size: self.size)
     }
 
     /// Translate `self` by the given vector.
     @inlinable
-    public mutating func translate(along vector: CGVector) {
+    mutating func translate(along vector: CGVector) {
         self = self.translated(by: vector)
     }
 
     /// Translate `self` by `(tx,ty)`.
     @inlinable
-    public mutating func translate(tx: Int, ty: Int) {
+    mutating func translate(tx: Int, ty: Int) {
         self = self.translated(byTx: tx, ty: ty)
     }
     
     /// Translate `self` by `(tx,ty)`.
     @inlinable
-    public mutating func translate(tx: Double, ty: Double) {
+    mutating func translate(tx: Double, ty: Double) {
         self = self.translated(byTx: tx, ty: ty)
     }
     
     /// Translate `self` by `(tx,ty)`.
     @inlinable
-    public mutating func translate(tx: CGFloat, ty: CGFloat) {
+    mutating func translate(tx: CGFloat, ty: CGFloat) {
         self = self.translated(byTx: tx, ty: ty)
     }
     
@@ -430,7 +430,7 @@ public extension CGRect {
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
     @inlinable
-    public func rotated(relativeTo center: CGPoint, by angle: CGFloat) -> CGRect {
+    func rotated(relativeTo center: CGPoint, by angle: CGFloat) -> CGRect {
         var transform = CGAffineTransform(translationX: center.x, y: center.y)
         transform = transform.rotated(by: angle)
         transform = transform.translatedBy(x: -center.x, y: -center.y)
@@ -444,7 +444,7 @@ public extension CGRect {
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
     @inlinable
-    public mutating func rotate(relativeTo center: CGPoint, by angle: CGFloat) {
+    mutating func rotate(relativeTo center: CGPoint, by angle: CGFloat) {
         self = self.rotated(relativeTo: center, by: angle)
     }
     
@@ -455,7 +455,7 @@ public extension CGRect {
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
     @inlinable
-    public func slided(relativeTo center: CGPoint, by angle: CGFloat) -> CGRect {
+    func slided(relativeTo center: CGPoint, by angle: CGFloat) -> CGRect {
         return self.centered(at: self.center.rotated(relativeTo: center, by: angle))
     }
     
@@ -466,7 +466,7 @@ public extension CGRect {
     ///   - center: The point the rotation will be applied around.
     ///   - angle: The rotation's angle in radians.
     @inlinable
-    public mutating func slide(relativeTo center: CGPoint, by angle: CGFloat) {
+    mutating func slide(relativeTo center: CGPoint, by angle: CGFloat) {
         self = self.slided(relativeTo: center, by: angle)
     }
 }
@@ -481,7 +481,7 @@ public extension CGRect {
     ///   - edge: The edge to offset from.
     ///   - amount: The offset amount.
     @inlinable
-    public mutating func offsetEdge(_ edge: CGRectEdge, by amount: CGFloat) {
+    mutating func offsetEdge(_ edge: CGRectEdge, by amount: CGFloat) {
         self = self.offsettingEdge(edge, by: amount)
     }
     
@@ -491,7 +491,7 @@ public extension CGRect {
     ///   - edges: The edges to offset from.
     ///   - amount: The offset amount.
     @inlinable
-    public mutating func offsetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
+    mutating func offsetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
         self = self.offsettingEdges(edges, by: amount)
     }
     
@@ -501,7 +501,7 @@ public extension CGRect {
     ///   - edge: The edge to offset from.
     ///   - amount: The offset amount.
     @inlinable
-    public func offsettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
+    func offsettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
         switch edge {
         case .minXEdge:
             return CGRect(origin: .init(x: self.minX - amount, y: self.minY), size: .init(width: self.width + amount, height: self.height))
@@ -520,7 +520,7 @@ public extension CGRect {
     ///   - edges: The edges to offset from.
     ///   - amount: The offset amount.
     @inlinable
-    public func offsettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
+    func offsettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
         guard edges.count > 0 else { return self }
         return edges.reduce(self) { return $0.offsettingEdge($1, by: amount) }
     }
@@ -531,7 +531,7 @@ public extension CGRect {
     ///   - edge: The edge to inset from.
     ///   - amount: The inset amount.
     @inlinable
-    public mutating func insetEdge(_ edge: CGRectEdge, by amount: CGFloat) {
+    mutating func insetEdge(_ edge: CGRectEdge, by amount: CGFloat) {
         self = self.insettingEdge(edge, by: amount)
     }
     
@@ -541,7 +541,7 @@ public extension CGRect {
     ///   - edges: The edges to inset from.
     ///   - amount: The inset amount.
     @inlinable
-    public mutating func insetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
+    mutating func insetEdges(_ edges: [CGRectEdge], by amount: CGFloat) {
         self = self.insettingEdges(edges, by: amount)
     }
     
@@ -551,7 +551,7 @@ public extension CGRect {
     ///   - edge: The edge to inset from.
     ///   - amount: The inset amount.
     @inlinable
-    public func insettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
+    func insettingEdge(_ edge: CGRectEdge, by amount: CGFloat) -> CGRect {
         switch edge {
         case .minXEdge:
             return CGRect(origin: .init(x: self.minX + amount, y: self.minY), size: .init(width: self.width - amount, height: self.height))
@@ -570,7 +570,7 @@ public extension CGRect {
     ///   - edges: The edges to inset from.
     ///   - amount: The inset amount.
     @inlinable
-    public func insettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
+    func insettingEdges(_ edges: [CGRectEdge], by amount: CGFloat) -> CGRect {
         guard edges.count > 0 else { return self }
         return edges.reduce(self) { return $0.insettingEdge($1, by: amount) }
     }
@@ -580,7 +580,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
-    public mutating func offsetMaxX(by amount: CGFloat) {
+    mutating func offsetMaxX(by amount: CGFloat) {
         self = self.offsettingMaxX(by: amount)
     }
     
@@ -589,7 +589,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insetEdge")
     @inlinable
-    public mutating func insetMaxX(by amount: CGFloat) {
+    mutating func insetMaxX(by amount: CGFloat) {
         self = self.offsettingMaxX(by: -amount)
     }
     
@@ -599,7 +599,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
-    public func offsettingMaxX(by amount: CGFloat) -> CGRect {
+    func offsettingMaxX(by amount: CGFloat) -> CGRect {
         return CGRect(origin: self.origin, size: .init(width: self.width + amount, height: self.height))
     }
     
@@ -608,7 +608,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
-    public func insettingMaxX(by amount: CGFloat) -> CGRect {
+    func insettingMaxX(by amount: CGFloat) -> CGRect {
         return self.offsettingMaxX(by: -amount)
     }
     
@@ -617,7 +617,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offseting
     @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
-    public mutating func offsetMinX(by amount: CGFloat) {
+    mutating func offsetMinX(by amount: CGFloat) {
         self = self.offsettingMinX(by: amount)
     }
     
@@ -626,7 +626,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insetEdge")
     @inlinable
-    public mutating func insetMinX(by amount: CGFloat) {
+    mutating func insetMinX(by amount: CGFloat) {
         self = self.offsettingMinX(by: -amount)
     }
     
@@ -635,7 +635,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
-    public func offsettingMinX(by amount: CGFloat) -> CGRect {
+    func offsettingMinX(by amount: CGFloat) -> CGRect {
         return CGRect(origin: .init(x: self.minX - amount, y: self.minY), size: .init(width: self.width + amount, height: self.height))
     }
     
@@ -644,7 +644,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
-    public func insettingMinX(by amount: CGFloat) -> CGRect {
+    func insettingMinX(by amount: CGFloat) -> CGRect {
         return self.offsettingMinX(by: -amount)
     }
     
@@ -653,7 +653,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
-    public mutating func offsetMaxY(by amount: CGFloat) {
+    mutating func offsetMaxY(by amount: CGFloat) {
         self = self.offsettingMaxY(by: amount)
     }
     
@@ -662,7 +662,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insetEdge")
     @inlinable
-    public mutating func insetMaxY(by amount: CGFloat) {
+    mutating func insetMaxY(by amount: CGFloat) {
         self = self.offsettingMaxY(by: -amount)
     }
     
@@ -671,7 +671,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
-    public func offsettingMaxY(by amount: CGFloat) -> CGRect {
+    func offsettingMaxY(by amount: CGFloat) -> CGRect {
         return CGRect(origin: self.origin, size: .init(width: self.width, height: self.height + amount))
     }
     
@@ -680,7 +680,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
-    public func insettingMaxY(by amount: CGFloat) -> CGRect {
+    func insettingMaxY(by amount: CGFloat) -> CGRect {
         return self.offsettingMaxY(by: -amount)
     }
     
@@ -689,7 +689,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsetEdge")
     @inlinable
-    public mutating func offsetMinY(by amount: CGFloat) {
+    mutating func offsetMinY(by amount: CGFloat) {
         self = self.offsettingMinY(by: amount)
     }
     
@@ -698,7 +698,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "insetEdge")
     @inlinable
-    public mutating func insetMinY(by amount: CGFloat) {
+    mutating func insetMinY(by amount: CGFloat) {
         self = self.offsettingMinY(by: -amount)
     }
     
@@ -707,7 +707,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of offsetting
     @available(*, deprecated, renamed: "offsettingEdge")
     @inlinable
-    public func offsettingMinY(by amount: CGFloat) -> CGRect {
+    func offsettingMinY(by amount: CGFloat) -> CGRect {
         return CGRect(origin: .init(x: self.minX, y: self.minY - amount), size: .init(width: self.width, height: self.height + amount))
     }
     
@@ -716,7 +716,7 @@ public extension CGRect {
     /// - Parameter amount: The amount of insetting
     @available(*, deprecated, renamed: "insettingEdge")
     @inlinable
-    public func insettingMinY(by amount: CGFloat) -> CGRect {
+    func insettingMinY(by amount: CGFloat) -> CGRect {
         return self.offsettingMinY(by: -amount)
     }
 }
