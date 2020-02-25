@@ -7,3 +7,5 @@
 /.jazzy.yml
 *.playground/
 docset_icon.png
+/resources
+/.swiftpm

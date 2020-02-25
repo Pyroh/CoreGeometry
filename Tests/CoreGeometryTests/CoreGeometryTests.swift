@@ -142,24 +142,25 @@ final class CoreGeometryTests: XCTestCase {
         let rminY = CGRect(origin: .init(x: 0, y: -10), size: .init(width: 10, height: 20))
         let rmaxY = CGRect(origin: .init(x: 0, y: 0), size: .init(width: 10, height: 20))
         
-        XCTAssert(r1.offsettingEdge(.minXEdge, by: 10) == rminX)
-        XCTAssert(r1.offsettingEdge(.minYEdge, by: 10) == rminY)
-        XCTAssert(r1.offsettingEdge(.maxXEdge, by: 10) == rmaxX)
-        XCTAssert(r1.offsettingEdge(.maxYEdge, by: 10) == rmaxY)
+        XCTAssert(r1.offsetting(.minXEdge, by: 10) == rminX)
+        XCTAssert(r1.offsetting(.minYEdge, by: 10) == rminY)
+        XCTAssert(r1.offsetting(.maxXEdge, by: 10) == rmaxX)
+        XCTAssert(r1.offsetting(.maxYEdge, by: 10) == rmaxY)
         
         var r2 = r1
-        r2.offsetEdge(.minXEdge, by: 10)
+        r2.offset(.minXEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: -10, y: 0), size: .init(width: 20, height: 10)))
-        r2.offsetEdge(.maxXEdge, by: 10)
+        r2.offset(.maxXEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: -10, y: 0), size: .init(width: 30, height: 10)))
-        r2.offsetEdge(.minYEdge, by: 10)
+        r2.offset(.minYEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: -10, y: -10), size: .init(width: 30, height: 20)))
-        r2.offsetEdge(.maxYEdge, by: 10)
+        r2.offset(.maxYEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: -10, y: -10), size: .init(width: 30, height: 30)))
         
-        XCTAssert(r1.offsettingEdges([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10) == r2)
+        XCTAssert(r1.offsetting([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10) == r2)
+        XCTAssert(r1.offsetting(.all, by: 10) == r2)
         var r3 = r1
-        r3.offsetEdges([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10)
+        r3.offset([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10)
         XCTAssert(r3 == r2)
     }
     
@@ -170,24 +171,24 @@ final class CoreGeometryTests: XCTestCase {
         let rminY = CGRect(origin: .init(x: 0, y: 10), size: .init(width: 20, height: 10))
         let rmaxY = CGRect(origin: .init(x: 0, y: 0), size: .init(width: 20, height: 10))
         
-        XCTAssert(r1.insettingEdge(.minXEdge, by: 10) == rminX)
-        XCTAssert(r1.insettingEdge(.minYEdge, by: 10) == rminY)
-        XCTAssert(r1.insettingEdge(.maxXEdge, by: 10) == rmaxX)
-        XCTAssert(r1.insettingEdge(.maxYEdge, by: 10) == rmaxY)
+        XCTAssert(r1.insetting(.minXEdge, by: 10) == rminX)
+        XCTAssert(r1.insetting(.minYEdge, by: 10) == rminY)
+        XCTAssert(r1.insetting(.maxXEdge, by: 10) == rmaxX)
+        XCTAssert(r1.insetting(.maxYEdge, by: 10) == rmaxY)
         
         var r2 = r1
-        r2.insetEdge(.minXEdge, by: 10)
+        r2.inset(.minXEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: 10, y: 0), size: .init(width: 10, height: 20)))
-        r2.insetEdge(.maxXEdge, by: 10)
+        r2.inset(.maxXEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: 10, y: 0), size: .init(width: 0, height: 20)))
-        r2.insetEdge(.minYEdge, by: 10)
+        r2.inset(.minYEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: 10, y: 10), size: .init(width: 0, height: 10)))
-        r2.insetEdge(.maxYEdge, by: 10)
+        r2.inset(.maxYEdge, by: 10)
         XCTAssert(r2 == CGRect(origin: .init(x: 10, y: 10), size: .init(width: 0, height: 0)))
         
-        XCTAssert(r1.insettingEdges([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10) == r2)
+        XCTAssert(r1.insetting([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10) == r2)
         var r3 = r1
-        r3.insetEdges([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10)
+        r3.inset([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10)
         XCTAssert(r3 == r2)
     }
     
