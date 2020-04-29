@@ -69,4 +69,15 @@ extension BinaryFloatingPoint {
         let r = CGFloat.pi * 2
         return (r + CGFloat(self).truncatingRemainder(dividingBy: r)).truncatingRemainder(dividingBy: r)
     }
+    
+    
+    /// Considers a value as an angle expressed in degrees and returns the corresponding angle in radians.
+    ///
+    /// - note: _x_`º` is equivalent to _x_`.degree`.
+    /// - Parameter lhs: The angle value expressed in degrees.
+    /// - Returns: The angle value expressed in radians.
+    @inlinable
+    public static postfix func ° (lhs: Self) -> CGFloat {
+        return lhs.radian
+    }
 }
