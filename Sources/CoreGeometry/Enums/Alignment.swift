@@ -12,16 +12,15 @@
 
 import Foundation
 
-
 /// Represents an axis alignment constraint.
 ///
 /// - none: No constraint.
-/// - center: Center constraint.
+/// - mid: Mid axis' value constraint.
 /// - max: Max axis' value constraint.
 /// - min: Min axis' value constraint.
 public enum Alignment {
     case none
-    case center
+    case mid
     case max
     case min
 }
