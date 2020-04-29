@@ -12,145 +12,120 @@
 
 import CoreGraphics
 
-extension CGSize {
-    /// Inits a size of `(square,square)`.
+public extension CGSize {
+    
+    /// Inits a size of `(amount,amount)`.
     @inlinable
-    public init(square: Int) {
-        self.init(width: square, height: square)
+    init(square amount: Int) {
+        self.init(width: amount, height: amount)
     }
     
-    /// Inits a size of `(square,square)`.
+    /// Inits a size of `(amount,amount)`.
     @inlinable
-    public init(square: Double) {
-        self.init(width:square, height: square)
+    init(square amount: Double) {
+        self.init(width: amount, height: amount)
     }
     
-    /// Inits a size of `(square,square)`.
+    /// Inits a size of `(amount,amount)`.
     @inlinable
-    public init(square: CGFloat) {
-        self.init(width: square, height: square)
+    init(square amount: CGFloat) {
+        self.init(width: amount, height: amount)
     }
 }
 
+public extension CGSize {
+    var horizontal: CGSize { CGSize(horizontal: width) }
+    var vertical: CGSize { CGSize(vertical: height) }
+    
+    init(horizontal amount: CGFloat) {
+        self.init(width: amount, height: .zero)
+    }
+    
+    init(horizontal amount: Double) { self.init(horizontal: CGFloat(amount)) }
+    init(horizontal amount: Int) { self.init(horizontal: CGFloat(amount)) }
+    
+    init(vertical amount: CGFloat) {
+        self.init(width: .zero, height: amount)
+    }
+    
+    init(vertical amount: Double) { self.init(vertical: CGFloat(amount)) }
+    init(vertical amount: Int) { self.init(vertical: CGFloat(amount)) }
+}
 
-extension CGSize {
-    /// Multiplies both width and height values of a size by a given factor.
-    ///
+
+public extension CGSize {
+    
+    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
     /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The factor
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
     @inlinable
-    public static func * (lhs: CGSize, rhs: Int) -> CGSize {
-        return lhs * CGFloat(rhs)
+    static func *<I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
+        lhs * CGFloat(rhs)
     }
     
-    /// Multiplies both width and height values of a size by a given factor.
-    ///
+    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
     /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The factor
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
     @inlinable
-    public static func * (lhs: CGSize, rhs: Double) -> CGSize {
-        return lhs * CGFloat(rhs)
+    static func *<F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
+        lhs * CGFloat(rhs)
     }
     
-    /// Multiplies both width and height values of a size by a given factor.
-    ///
+    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
     /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The factor
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
     @inlinable
-    public static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+    static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
     }
     
-    /// Devides both width and height values of a size by a given factor.
-    ///
-    /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The factor
     @inlinable
-    public static func / (lhs: CGSize, rhs: Int) -> CGSize {
-        return lhs / CGFloat(rhs)
+    static func * (lhs: CGSize, rhs: CGSize) -> CGSize {
+        CGSize(width: lhs.width * rhs.width, height: lhs.height * rhs.height)
     }
     
-    /// Devides both width and height values of a size by a given factor.
-    ///
+    /// Divides `width` and `height` by the given value and returns the resulting `CGSize`.
     /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The factor
+    ///   - lhs: The point to devide components.
+    ///   - rhs: The value to devide.
     @inlinable
-    public static func / (lhs: CGSize, rhs: Double) -> CGSize {
-        return lhs / CGFloat(rhs)
+    static func /<I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
+        lhs /  CGFloat(rhs)
     }
     
-    /// Devides both width and height values of a size by a given factor.
-    ///
+    /// Divides `width` and `height` by the given value and returns the resulting `CGSize`.
     /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The factor
+    ///   - lhs: The point to devide components.
+    ///   - rhs: The value to devide.
     @inlinable
-    public static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
+    static func /<F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
+        lhs / CGFloat(rhs)
     }
     
-    /// Adds the given value to both width and height values of a size.
-    ///
+    /// Divides `width` and `height` by the given value and returns the resulting `CGSize`.
     /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The value
+    ///   - lhs: The point to devide components.
+    ///   - rhs: The value to devide.
     @inlinable
-    public static func + (lhs: CGSize, rhs: Int) -> CGSize {
-        return lhs + CGFloat(rhs)
+    static func / (lhs: CGSize, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width / rhs, height: lhs.height / rhs)
     }
     
-    /// Adds the given value to both width and height values of a size.
-    ///
-    /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The value
     @inlinable
-    public static func + (lhs: CGSize, rhs: Double) -> CGSize {
-        return lhs + CGFloat(rhs)
+    static func / (lhs: CGSize, rhs: CGSize) -> CGSize {
+        CGSize(width: lhs.width / rhs.width, height: lhs.height / rhs.height)
+    }
+}
+
+extension CGSize: AdditiveArithmetic {
+    public static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
+        CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
     }
     
-    /// Adds the given value to both width and height values of a size.
-    ///
-    /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The value
-    @inlinable
-    public static func + (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
-    }
-    
-    /// Substracts the given value to both width and height values of a size.
-    ///
-    /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The value
-    @inlinable
-    public static func - (lhs: CGSize, rhs: Int) -> CGSize {
-        return lhs - CGFloat(rhs)
-    }
-    
-    /// Substracts the given value to both width and height values of a size.
-    ///
-    /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The value
-    @inlinable
-    public static func - (lhs: CGSize, rhs: Double) -> CGSize {
-        return lhs - CGFloat(rhs)
-    }
-    
-    /// Substracts the given value to both width and height values of a size.
-    ///
-    /// - Parameters:
-    ///   - lhs: The size (a `CGSize` instance)
-    ///   - rhs: The value
-    @inlinable
-    public static func - (lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width - rhs, height: lhs.height - rhs)
+    public static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
+        CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
     }
 }
