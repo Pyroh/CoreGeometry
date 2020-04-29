@@ -16,31 +16,31 @@ public extension CGPoint {
     /// Returns the vector that exists between `self` and `p2`.
     @inlinable
     func formVector(with p2: CGPoint) -> CGVector {
-        return CGVector(dx: p2.x - self.x, dy: p2.y - self.y)
+        CGVector(dx: p2.x - self.x, dy: p2.y - self.y)
     }
     
     /// Returns a copy of `self` translated along the given vector.
     @inlinable
     func translated(along vector: CGVector) -> CGPoint {
-        return CGPoint(x: self.x + vector.dx, y: self.y + vector.dy)
+        CGPoint(x: self.x + vector.dx, y: self.y + vector.dy)
     }
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    func translated(tx: Int, ty: Int) -> CGPoint {
-        return CGPoint(x: self.x + CGFloat(tx), y: self.y + CGFloat(ty))
+    func translated<I: BinaryInteger>(tx: I, ty: I) -> CGPoint {
+        CGPoint(x: self.x + CGFloat(tx), y: self.y + CGFloat(ty))
     }
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    func translated(tx: Double, ty: Double) -> CGPoint {
-        return CGPoint(x: self.x + CGFloat(tx), y: self.y + CGFloat(ty))
+    func translated<F: BinaryFloatingPoint>(tx: F, ty: F) -> CGPoint {
+        CGPoint(x: self.x + CGFloat(tx), y: self.y + CGFloat(ty))
     }
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
     func translated(tx: CGFloat, ty: CGFloat) -> CGPoint {
-        return CGPoint(x: self.x + tx, y: self.y + ty)
+        CGPoint(x: self.x + tx, y: self.y + ty)
     }
     
     /// Translates `self` along the given vector.
@@ -51,13 +51,13 @@ public extension CGPoint {
     
     /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    mutating func translate(tx: Int, ty: Int) {
+    mutating func translate<I: BinaryInteger>(tx: I, ty: I) {
         self = self.translated(tx: tx, ty: ty)
     }
     
     /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable
-    mutating func translate(tx: Double, ty: Double) {
+    mutating func translate<F: BinaryFloatingPoint>(tx: F, ty: F) {
         self = self.translated(tx: tx, ty: ty)
     }
     
@@ -89,70 +89,79 @@ public extension CGPoint {
 
 public extension CGPoint {
     
-    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
     /// - Parameters:
     ///   - lhs: The point to multiply components.
     ///   - rhs: The value to multiply.
     @inlinable
-    static func *<I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint { lhs * CGFloat(rhs) }
+    static func *<I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint {
+        lhs * CGFloat(rhs)
+    }
     
-    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
     /// - Parameters:
     ///   - lhs: The point to multiply components.
     ///   - rhs: The value to multiply.
     @inlinable
-    static func *<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint { lhs * CGFloat(rhs) }
+    static func *<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint {
+        lhs * CGFloat(rhs)
+    }
     
-    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The value to multiply.
-    ///   - rhs: The point to multiply components.
-    @inlinable
-    static func *<I: BinaryInteger>(lhs: I, rhs: CGPoint) -> CGPoint { rhs * CGFloat(lhs) }
-    
-    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The value to multiply.
-    ///   - rhs: The point to multiply components.
-    @inlinable
-    static func *<F: BinaryFloatingPoint>(lhs: F, rhs: CGPoint) -> CGPoint { rhs * CGFloat(lhs) }
-    
-    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
     /// - Parameters:
     ///   - lhs: The point to multiply components.
     ///   - rhs: The value to multiply.
     @inlinable
-    static func *(lhs: CGPoint, rhs: CGFloat) -> CGPoint { CGPoint(x: lhs.x * rhs, y: lhs.y * rhs) }
+    static func *(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+        CGPoint(x: lhs.x * rhs, y: lhs.y * rhs)
+    }
     
-    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    
+    /// Multiplies a point's components by another one's and returns the resulting `CGPoint`.
     /// - Parameters:
-    ///   - lhs: The value to multiply.
-    ///   - rhs: The point to multiply components.
+    ///   - lhs: A point to multiply.
+    ///   - rhs: Another point the multiply.
     @inlinable
-    static func *(lhs: CGFloat, rhs: CGPoint) -> CGPoint { rhs * lhs }
+    static func *(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+        CGPoint(x: lhs.x * rhs.x, y: lhs.y * rhs.y)
+    }
     
-    
-    /// Divides `x` and `y` by the given value and return the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to divide components.
-    ///   - rhs: The value to devide by.
-    @inlinable
-    static func /<I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint { lhs / CGFloat(rhs) }
-    
-    /// Divides `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// Divides `x` and `y` by the given value and returns the resulting `CGPoint`.
     /// - Parameters:
     ///   - lhs: The point to divide components.
     ///   - rhs: The value to devide by.
     @inlinable
-    static func /<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint { lhs / CGFloat(rhs) }
+    static func /<I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint {
+        lhs / CGFloat(rhs)
+    }
     
-    
-    /// Divides `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// Divides `x` and `y` by the given value and returns the resulting `CGPoint`.
     /// - Parameters:
     ///   - lhs: The point to divide components.
     ///   - rhs: The value to devide by.
     @inlinable
-    static func /(lhs: CGPoint, rhs: CGFloat) -> CGPoint { CGPoint(x: lhs.x / rhs, y: lhs.y / rhs) }
+    static func /<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint {
+        lhs / CGFloat(rhs)
+    }
+    
+    
+    /// Divides `x` and `y` by the given value and returns the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to divide components.
+    ///   - rhs: The value to devide by.
+    @inlinable
+    static func /(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+        CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
+    }
+    
+    /// Divides a point's components by another one's and returns the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: A point to devide.
+    ///   - rhs: Another point the devide.
+    @inlinable
+    static func /(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+        CGPoint(x: lhs.x / rhs.x, y: lhs.y / rhs.y)
+    }
 }
 
 extension CGPoint: AdditiveArithmetic {
