@@ -6,6 +6,8 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(90° == 90.radian)
         let r = 90
         XCTAssert(r° == r.radian)
+        let s = CGFloat(45)
+        XCTAssert(s° == s.radian)
         XCTAssert((3 * CGFloat.pi).normalized() == CGFloat.pi)
     }
     
@@ -34,16 +36,9 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(p1 * 2 == p2)
         XCTAssert(p1 * Int8(2) == p2)
         
-        XCTAssert(2 * p1 == p2)
-        XCTAssert(Int8(2) * p1 == p2)
-        
         XCTAssert(p1 * 2.0 == p2)
         XCTAssert(p1 * Float(2.0) == p2)
         XCTAssert(p1 * CGFloat(2.0) == p2)
-        
-        XCTAssert(2.0 * p1 == p2)
-        XCTAssert(Float(2.0) * p1 == p2)
-        XCTAssert(CGFloat(2.0) * p1 == p2)
         
         XCTAssert(p2 / 2 == p1)
         XCTAssert(p2 / Int8(2) == p1)
@@ -118,36 +113,36 @@ final class CoreGeometryTests: XCTestCase {
         let centerMax = CGRect(origin: .init(x: -50, y: 0), size: .init(square: 100))
         let maxMax = CGRect(origin: .init(x: 0, y: 0), size: .init(square: 100))
         
-        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .center, yAxis: .center) == r2)
+        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .mid, yAxis: .mid) == r2)
         XCTAssert(r2.aligned(relativeTo: r1, xAxis: .min, yAxis: .min) == minMin)
-        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .center, yAxis: .min) == centerMin)
+        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .mid, yAxis: .min) == centerMin)
         XCTAssert(r2.aligned(relativeTo: r1, xAxis: .max, yAxis: .min) == maxMin)
-        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .min, yAxis: .center) == minCenter)
-        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .center, yAxis: .center) == centerCenter)
-        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .max, yAxis: .center) == maxCenter)
+        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .min, yAxis: .mid) == minCenter)
+        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .mid, yAxis: .mid) == centerCenter)
+        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .max, yAxis: .mid) == maxCenter)
         XCTAssert(r2.aligned(relativeTo: r1, xAxis: .min, yAxis: .max) == minMax)
-        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .center, yAxis: .max) == centerMax)
+        XCTAssert(r2.aligned(relativeTo: r1, xAxis: .mid, yAxis: .max) == centerMax)
         XCTAssert(r2.aligned(relativeTo: r1, xAxis: .max, yAxis: .max) == maxMax)
         XCTAssert(r2.aligned(relativeTo: r1, xAxis: .none, yAxis: .none) == r2)
         
         var r3 = r2
-        r3.align(relativeTo: r1, xAxis: .center, yAxis: .center)
+        r3.align(relativeTo: r1, xAxis: .mid, yAxis: .mid)
         XCTAssert(r3 == r2)
         r3.align(relativeTo: r1, xAxis: .min, yAxis: .min)
         XCTAssert(r3 == minMin)
-        r3.align(relativeTo: r1, xAxis: .center, yAxis: .min)
+        r3.align(relativeTo: r1, xAxis: .mid, yAxis: .min)
         XCTAssert(r3 == centerMin)
         r3.align(relativeTo: r1, xAxis: .max, yAxis: .min)
         XCTAssert(r3 == maxMin)
-        r3.align(relativeTo: r1, xAxis: .min, yAxis: .center)
+        r3.align(relativeTo: r1, xAxis: .min, yAxis: .mid)
         XCTAssert(r3 == minCenter)
-        r3.align(relativeTo: r1, xAxis: .center, yAxis: .center)
+        r3.align(relativeTo: r1, xAxis: .mid, yAxis: .mid)
         XCTAssert(r3 == centerCenter)
-        r3.align(relativeTo: r1, xAxis: .max, yAxis: .center)
+        r3.align(relativeTo: r1, xAxis: .max, yAxis: .mid)
         XCTAssert(r3 == maxCenter)
         r3.align(relativeTo: r1, xAxis: .min, yAxis: .max)
         XCTAssert(r3 == minMax)
-        r3.align(relativeTo: r1, xAxis: .center, yAxis: .max)
+        r3.align(relativeTo: r1, xAxis: .mid, yAxis: .max)
         XCTAssert(r3 == centerMax)
         r3.align(relativeTo: r1, xAxis: .max, yAxis: .max)
         XCTAssert(r3 == maxMax)
@@ -159,35 +154,6 @@ final class CoreGeometryTests: XCTestCase {
         
         r3.reset()
         XCTAssert(r3 == r4)
-    }
-    
-    func testRectOffsetExtension() {
-        let r1 = CGRect(origin: .zero, size: .init(square: 10))
-        let rminX = CGRect(origin: .init(x: -10, y: 0), size: .init(width: 20, height: 10))
-        let rmaxX = CGRect(origin: .init(x: 0, y: 0), size: .init(width: 20, height: 10))
-        let rminY = CGRect(origin: .init(x: 0, y: -10), size: .init(width: 10, height: 20))
-        let rmaxY = CGRect(origin: .init(x: 0, y: 0), size: .init(width: 10, height: 20))
-        
-        XCTAssert(r1.offsetting(.minXEdge, by: 10) == rminX)
-        XCTAssert(r1.offsetting(.minYEdge, by: 10) == rminY)
-        XCTAssert(r1.offsetting(.maxXEdge, by: 10) == rmaxX)
-        XCTAssert(r1.offsetting(.maxYEdge, by: 10) == rmaxY)
-        
-        var r2 = r1
-        r2.offset(.minXEdge, by: 10)
-        XCTAssert(r2 == CGRect(origin: .init(x: -10, y: 0), size: .init(width: 20, height: 10)))
-        r2.offset(.maxXEdge, by: 10)
-        XCTAssert(r2 == CGRect(origin: .init(x: -10, y: 0), size: .init(width: 30, height: 10)))
-        r2.offset(.minYEdge, by: 10)
-        XCTAssert(r2 == CGRect(origin: .init(x: -10, y: -10), size: .init(width: 30, height: 20)))
-        r2.offset(.maxYEdge, by: 10)
-        XCTAssert(r2 == CGRect(origin: .init(x: -10, y: -10), size: .init(width: 30, height: 30)))
-        
-        XCTAssert(r1.offsetting([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10) == r2)
-        XCTAssert(r1.offsetting(.all, by: 10) == r2)
-        var r3 = r1
-        r3.offset([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10)
-        XCTAssert(r3 == r2)
     }
     
     func testRectInsetExtension() {
@@ -223,8 +189,17 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(s1 / 10 == .init(square: 10))
         XCTAssert(s1 * 10 == .init(square: 1000))
-        XCTAssert(s1 + 10 == .init(square: 110))
-        XCTAssert(s1 - 10 == .init(square: 90))
+        XCTAssert(s1 + .init(square:10) == .init(square: 110))
+        XCTAssert(s1 - .init(square:10) == .init(square: 90))
+        
+        let s2 = CGSize(width: 1, height: 2)
+        let s3 = CGSize(width: 3, height: 4)
+        let s4 = CGSize(width: 4, height: 6)
+        
+        XCTAssert(s2 + s3 == s4)
+        XCTAssert(s3 + s2 == s4)
+        XCTAssert(s4 - s2 == s3)
+        XCTAssert(s4 - s3 == s2)
     }
     
     func testVectorAlgebra() {
