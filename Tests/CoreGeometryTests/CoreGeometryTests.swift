@@ -27,6 +27,32 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(p3 == p2)
     }
     
+    func testPointAlgebra() {
+        let p1 = CGPoint(x: 10, y: 10)
+        let p2 = CGPoint(x: 20, y: 20)
+        
+        XCTAssert(p1 * 2 == p2)
+        XCTAssert(p1 * Int8(2) == p2)
+        
+        XCTAssert(2 * p1 == p2)
+        XCTAssert(Int8(2) * p1 == p2)
+        
+        XCTAssert(p1 * 2.0 == p2)
+        XCTAssert(p1 * Float(2.0) == p2)
+        XCTAssert(p1 * CGFloat(2.0) == p2)
+        
+        XCTAssert(2.0 * p1 == p2)
+        XCTAssert(Float(2.0) * p1 == p2)
+        XCTAssert(CGFloat(2.0) * p1 == p2)
+        
+        XCTAssert(p2 / 2 == p1)
+        XCTAssert(p2 / Int8(2) == p1)
+        
+        XCTAssert(p2 / 2.0 == p1)
+        XCTAssert(p2 / Float(2.0) == p1)
+        XCTAssert(p2 / CGFloat(2.0) == p1)
+    }
+    
     func testRectCornersExtention() {
         let r1 = CGRect(center: .zero, size: .init(square: 100))
         

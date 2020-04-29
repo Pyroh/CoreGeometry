@@ -88,73 +88,81 @@ public extension CGPoint {
 }
 
 public extension CGPoint {
-    @inlinable
-    static func *(lhs: CGPoint, rhs: Int) -> CGPoint {
-        return lhs * CGFloat(rhs)
-    }
     
+    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
     @inlinable
-    static func *(lhs: Int, rhs: CGPoint) -> CGPoint {
-        return rhs * lhs
-    }
+    static func *<I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint { lhs * CGFloat(rhs) }
     
+    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
     @inlinable
-    static func *(lhs: CGPoint, rhs: Double) -> CGPoint {
-        return lhs * CGFloat(rhs)
-    }
+    static func *<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint { lhs * CGFloat(rhs) }
     
+    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The value to multiply.
+    ///   - rhs: The point to multiply components.
     @inlinable
-    static func *(lhs: Double, rhs: CGPoint) -> CGPoint {
-        return rhs * lhs
-    }
+    static func *<I: BinaryInteger>(lhs: I, rhs: CGPoint) -> CGPoint { rhs * CGFloat(lhs) }
     
+    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The value to multiply.
+    ///   - rhs: The point to multiply components.
     @inlinable
-    static func *(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
-        return CGPoint(x: lhs.x * rhs, y: lhs.y * rhs)
-    }
+    static func *<F: BinaryFloatingPoint>(lhs: F, rhs: CGPoint) -> CGPoint { rhs * CGFloat(lhs) }
     
+    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
     @inlinable
-    static func *(lhs: CGFloat, rhs: CGPoint) -> CGPoint {
-        return rhs * lhs
-    }
+    static func *(lhs: CGPoint, rhs: CGFloat) -> CGPoint { CGPoint(x: lhs.x * rhs, y: lhs.y * rhs) }
     
+    /// Multiplies `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The value to multiply.
+    ///   - rhs: The point to multiply components.
     @inlinable
-    static func /(lhs: CGPoint, rhs: Int) -> CGPoint {
-        return lhs / CGFloat(rhs)
-    }
+    static func *(lhs: CGFloat, rhs: CGPoint) -> CGPoint { rhs * lhs }
     
-    @inlinable
-    static func /(lhs: Int, rhs: CGPoint) -> CGPoint {
-        return rhs / lhs
-    }
     
+    /// Divides `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to divide components.
+    ///   - rhs: The value to devide by.
     @inlinable
-    static func /(lhs: CGPoint, rhs: Double) -> CGPoint {
-        return lhs / CGFloat(rhs)
-    }
+    static func /<I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint { lhs / CGFloat(rhs) }
     
+    /// Divides `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to divide components.
+    ///   - rhs: The value to devide by.
     @inlinable
-    static func /(lhs: Double, rhs: CGPoint) -> CGPoint {
-        return rhs / lhs
-    }
+    static func /<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint { lhs / CGFloat(rhs) }
     
-    @inlinable
-    static func /(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
-        return CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
-    }
     
+    /// Divides `x` and `y` by the given value and return the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to divide components.
+    ///   - rhs: The value to devide by.
     @inlinable
-    static func /(lhs: CGFloat, rhs: CGPoint) -> CGPoint {
-        return rhs / lhs
-    }
-    
+    static func /(lhs: CGPoint, rhs: CGFloat) -> CGPoint { CGPoint(x: lhs.x / rhs, y: lhs.y / rhs) }
+}
+
+extension CGPoint: AdditiveArithmetic {
     @inlinable
-    static func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    public static func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
     
     @inlinable
-    static func -(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    public static func -(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 }

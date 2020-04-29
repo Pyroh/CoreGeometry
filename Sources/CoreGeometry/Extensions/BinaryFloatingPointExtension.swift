@@ -61,7 +61,7 @@ extension BinaryFloatingPoint {
         return CoreGraphics.atan(CGFloat(self))
     }
     
-    /// Considers the value as an angle expressed in radians and contrains it to the range `[0..2π]`.
+    /// Considers the value as an angle expressed in radians and constrains it to the range `[0..2π]`.
     ///
     /// - Returns: The constrained angle expressed in radians.
     @inlinable
