@@ -12,43 +12,53 @@
 
 import CoreGraphics
 
-extension CGVector {
+public extension CGVector {
+    var horizontal: CGSize { CGSize(horizontal: dx) }
+    var vertical: CGSize { CGSize(vertical: dy) }
+    
+    init(horizontal amount: CGFloat) {
+        self.init(dx: amount, dy: .zero)
+    }
+    
+    init(horizontal amount: Double) { self.init(horizontal: CGFloat(amount)) }
+    init(horizontal amount: Int) { self.init(horizontal: CGFloat(amount)) }
+    
+    init(vertical amount: CGFloat) {
+        self.init(dx: .zero, dy: amount)
+    }
+    
+    init(vertical amount: Double) { self.init(vertical: CGFloat(amount)) }
+    init(vertical amount: Int) { self.init(vertical: CGFloat(amount)) }
+}
+
+public extension CGVector {
+    
     /// The vector magnitude.
     @inlinable
-    public var magnitude: CGFloat {
-        return sqrt(pow(dx, 2) + pow(dy, 2))
+    var magnitude: CGFloat {
+        sqrt(pow(dx, 2) + pow(dy, 2))
     }
     
     /// The vector direction.
     @inlinable
-    public var direction: CGFloat {
-        return CGFloat(atan2(dy, dx))
+    var direction: CGFloat {
+        CGFloat(atan2(dy, dx))
     }
     
     /// Returns a reversed copy of `self`.
     @inlinable
-    public func reversed() -> CGVector {
-        return CGVector(dx: -self.dx, dy: -self.dy)
+    func reversed() -> CGVector {
+        CGVector(dx: -self.dx, dy: -self.dy)
     }
     
     /// Reverse `self`
     @inlinable
-    public mutating func reverse() {
+    mutating func reverse() {
         self = self.reversed()
     }
 }
 
-extension CGVector {
-    /// Multiplies a vector by the given value.
-    ///
-    /// - Parameters:
-    ///   - lhs: The vector.
-    ///   - rhs: The given value.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func * (lhs: CGVector, rhs: Int) -> CGVector {
-        return lhs * CGFloat(rhs)
-    }
+public extension CGVector {
     
     /// Multiplies a vector by the given value.
     ///
@@ -57,8 +67,8 @@ extension CGVector {
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
     @inlinable
-    public static func * (lhs: CGVector, rhs: Double) -> CGVector {
-        return lhs * CGFloat(rhs)
+    static func *<I: BinaryInteger>(lhs: CGVector, rhs: I) -> CGVector {
+        lhs * CGFloat(rhs)
     }
     
     /// Multiplies a vector by the given value.
@@ -68,11 +78,19 @@ extension CGVector {
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
     @inlinable
-    public static func * (lhs: CGVector, rhs: CGFloat) -> CGVector {
-        let dx = lhs.dx * rhs
-        let dy = lhs.dy * rhs
-        
-        return CGVector(dx: dx, dy: dy)
+    static func *<F: BinaryFloatingPoint>(lhs: CGVector, rhs: F) -> CGVector {
+        lhs * CGFloat(rhs)
+    }
+    
+    /// Multiplies a vector by the given value.
+    ///
+    /// - Parameters:
+    ///   - lhs: The vector.
+    ///   - rhs: The given value.
+    /// - Returns: The resulting vector.
+    @inlinable
+    static func * (lhs: CGVector, rhs: CGFloat) -> CGVector {
+        CGVector(dx: lhs.dx * rhs, dy: lhs.dy * rhs)
     }
     
     /// Divides a vector by the given value.
@@ -82,8 +100,8 @@ extension CGVector {
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
     @inlinable
-    public static func / (lhs: CGVector, rhs: Int) -> CGVector {
-       return lhs / CGFloat(rhs)
+    static func /<I: BinaryInteger>(lhs: CGVector, rhs: I) -> CGVector {
+       lhs / CGFloat(rhs)
     }
     
     /// Divides a vector by the given value.
@@ -93,8 +111,8 @@ extension CGVector {
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
     @inlinable
-    public static func / (lhs: CGVector, rhs: Double) -> CGVector {
-        return lhs / CGFloat(rhs)
+    static func /<F:BinaryFloatingPoint>(lhs: CGVector, rhs: F) -> CGVector {
+        lhs / CGFloat(rhs)
     }
     
     /// Divides a vector by the given value.
@@ -104,36 +122,19 @@ extension CGVector {
     ///   - rhs: The given value.
     /// - Returns: The resulting vector.
     @inlinable
-    public static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {
-        let dx = lhs.dx / rhs
-        let dy = lhs.dy / rhs
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Adds two vectors and returns the result.
-    ///
-    /// - Parameters:
-    ///   - lhs: A vector.
-    ///   - rhs: Another vector.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func + (lhs: CGVector, rhs: CGVector) -> CGVector {
-        let dx = lhs.dx + rhs.dx
-        let dy = lhs.dy + rhs.dy
-        
-        return CGVector(dx: dx, dy: dy)
-    }
-    
-    /// Substracts two vectors and returns the result.
-    ///
-    /// - Parameters:
-    ///   - lhs: A vector.
-    ///   - rhs: Another vector.
-    /// - Returns: The resulting vector.
-    @inlinable
-    public static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
-        return lhs + rhs.reversed()
+    static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {
+        CGVector(dx: lhs.dx / rhs, dy: lhs.dy / rhs)
     }
 }
 
+extension CGVector: AdditiveArithmetic {
+    @inlinable
+    public static func + (lhs: CGVector, rhs: CGVector) -> CGVector {
+        CGVector(dx: lhs.dx + rhs.dx, dy: lhs.dy + rhs.dy)
+    }
+    
+    @inlinable
+    public static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
+        CGVector(dx: lhs.dx - rhs.dx, dy: lhs.dy - rhs.dy)
+    }
+}
