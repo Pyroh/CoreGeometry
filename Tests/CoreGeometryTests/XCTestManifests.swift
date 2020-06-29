@@ -27,9 +27,9 @@
 //
 
 
+#if !os(macOS) && !os(iOS) && !os(tvOS) && !os(watchOS)
 import XCTest
 
-#if !os(macOS)
 public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(CoreGeometryTests.allTests),

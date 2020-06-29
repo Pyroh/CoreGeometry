@@ -27,6 +27,7 @@
 //
 
 
+#if !os(watchOS)
 import XCTest
 @testable import CoreGeometry
 
@@ -241,3 +242,5 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(v1 - v2 == .init(dx: 90, dy: 90))
     }
 }
+
+#endif

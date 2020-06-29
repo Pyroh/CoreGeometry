@@ -26,6 +26,7 @@
 //  SOFTWARE.
 //
 
+#if !os(macOS) && !os(iOS) && !os(tvOS) && !os(watchOS)
 
 import XCTest
 
@@ -34,3 +35,5 @@ import CoreGeometryTests
 var tests = [XCTestCaseEntry]()
 tests += CoreGeometryTests.allTests()
 XCTMain(tests)
+
+#endif

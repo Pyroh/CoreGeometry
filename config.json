@@ -2,14 +2,15 @@
     "clean": true,
     "sdk": "macos",
     "author": "Pierre Tacchi",
-    "author_url": "https://pyrolyse.it",
+    "author_url": "https://pyrolyse.co",
     "module": "CoreGeometry",
-    "module_version": "2.5",
+    "module_version": "4.0.0",
     "readme": "../README.md",
     "docset_icon": "docset_icon.png",
     "dash_url": "https://pyroh.github.io/docsets/SwiftMark.xml",
     "github_url": "https://github.com/Pyroh/SwiftMark",
     "skip_undocumented": true,
     "hide_documentation_coverage": true,
-    "root_url": "https://pyroh.github.io/docs/SwiftMark/"
+    "root_url": "https://pyroh.github.io/docs/SwiftMark/",
+    "copyright": "Copyright © Pyrolyse 2020"
 }
