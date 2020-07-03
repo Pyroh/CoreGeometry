@@ -3,7 +3,7 @@
 ![](https://img.shields.io/badge/Platforms-macOS|iOS|tvOS|wathOS-green.svg)
 [![](https://img.shields.io/badge/Documentation-Dash-purple.svg)]()
 
-![](https://raw.githubusercontent.com/Pyroh/CoreGeometry/master/resources/Banner.png)
+![](https://raw.githubusercontent.com/Pyroh/CoreGeometry/master/resources/Title.png)
 
 CoreGeometry is a set of Core Graphics structs extensions and utility functions. It also offers a set of extensions and utility fonction for some Swift's numeric type.
 
