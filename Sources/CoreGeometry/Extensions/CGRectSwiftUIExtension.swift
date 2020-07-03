@@ -106,17 +106,9 @@ private func convert(_ alignement: SwiftUI.HorizontalAlignment) -> RectBoundary 
 private func convert(_ alignement: SwiftUI.VerticalAlignment) -> Alignment {
     switch alignement {
     case .top:
-        #if os(macOS)
-        return .max
-        #else
         return .min
-        #endif
     case .bottom:
-        #if os(macOS)
-        return .min
-        #else
         return .max
-        #endif
     default:
         return .mid
     }
@@ -126,17 +118,9 @@ private func convert(_ alignement: SwiftUI.VerticalAlignment) -> Alignment {
 private func convert(_ alignement: SwiftUI.VerticalAlignment) -> RectBoundary {
     switch alignement {
     case .top:
-        #if os(macOS)
-        return .max
-        #else
         return .min
-        #endif
     case .bottom:
-        #if os(macOS)
-        return .min
-        #else
         return .max
-        #endif
     default:
         return .mid
     }
