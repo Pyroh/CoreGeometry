@@ -1,5 +1,5 @@
 
-![](https://img.shields.io/badge/Swift-5.0-orange.svg)
+![](https://img.shields.io/badge/Swift-5.2-orange.svg)
 ![](https://img.shields.io/badge/Platforms-macOS|iOS|tvOS|wathOS-green.svg)
 [![](https://img.shields.io/badge/Documentation-Dash-purple.svg)]()
 

@@ -67,18 +67,18 @@ private func layoutDirection() -> LayoutDirection {
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 @usableFromInline
-func convert(_ alignment: SwiftUI.Alignment) -> (x: Alignment, y: Alignment) {
+func convert(_ alignment: Alignment) -> (x: AxisAlignment, y: AxisAlignment) {
     (convert(alignment.horizontal), convert(alignment.vertical))
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 @usableFromInline
-func convert(_ alignment: SwiftUI.Alignment) -> (x: RectBoundary, y: RectBoundary) {
+func convert(_ alignment: Alignment) -> (x: RectBoundary, y: RectBoundary) {
     (convert(alignment.horizontal), convert(alignment.vertical))
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-private func convert(_ alignement: SwiftUI.HorizontalAlignment) -> Alignment {
+private func convert(_ alignement: HorizontalAlignment) -> AxisAlignment {
     switch alignement {
     case .leading:
         return layoutDirection() == .leftToRight ? .min : .max
@@ -90,7 +90,7 @@ private func convert(_ alignement: SwiftUI.HorizontalAlignment) -> Alignment {
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-private func convert(_ alignement: SwiftUI.HorizontalAlignment) -> RectBoundary {
+private func convert(_ alignement: HorizontalAlignment) -> RectBoundary {
     switch alignement {
     case .leading:
         return layoutDirection() == .leftToRight ? .min : .max
@@ -102,7 +102,7 @@ private func convert(_ alignement: SwiftUI.HorizontalAlignment) -> RectBoundary 
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-private func convert(_ alignement: SwiftUI.VerticalAlignment) -> Alignment {
+private func convert(_ alignement: VerticalAlignment) -> AxisAlignment {
     switch alignement {
     case .top:
         return .min
@@ -114,7 +114,7 @@ private func convert(_ alignement: SwiftUI.VerticalAlignment) -> Alignment {
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-private func convert(_ alignement: SwiftUI.VerticalAlignment) -> RectBoundary {
+private func convert(_ alignement: VerticalAlignment) -> RectBoundary {
     switch alignement {
     case .top:
         return .min
@@ -128,7 +128,7 @@ private func convert(_ alignement: SwiftUI.VerticalAlignment) -> RectBoundary {
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 public extension CGRect {
     @inlinable
-    subscript(alignment: SwiftUI.Alignment) -> CGPoint {
+    subscript(alignment: Alignment) -> CGPoint {
         get {
             let pair: (x: RectBoundary, y: RectBoundary) = convert(alignment)
             return self[pair.x, pair.y]
@@ -146,8 +146,8 @@ public extension CGRect {
     ///   - alignment: The alignment constraint.
     /// - Returns: A properly aligned rect.
     @inlinable
-    func aligned(relativeTo rect: CGRect, alignment: SwiftUI.Alignment) -> CGRect {
-        let pair: (x: Alignment, y: Alignment) = convert(alignment)
+    func aligned(relativeTo rect: CGRect, alignment: Alignment) -> CGRect {
+        let pair: (x: AxisAlignment, y: AxisAlignment) = convert(alignment)
         return aligned(relativeTo: rect, xAxis: pair.x, yAxis: pair.y)
     }
 
@@ -157,8 +157,8 @@ public extension CGRect {
     ///   - rect: The rect to align against.
     ///   - alignment: The alignment constraint.
     @inlinable
-    mutating func align(relativeTo rect: CGRect, alignment: SwiftUI.Alignment) {
-        let pair: (x: Alignment, y: Alignment) = convert(alignment)
+    mutating func align(relativeTo rect: CGRect, alignment: Alignment) {
+        let pair: (x: AxisAlignment, y: AxisAlignment) = convert(alignment)
         self = self.aligned(relativeTo: rect, xAxis: pair.x, yAxis: pair.y)
     }
 }

@@ -249,7 +249,7 @@ public extension CGRect {
     ///   - yAxis: The y axis' constraint.
     /// - Returns: A properly aligned rect.
     @inlinable
-    func aligned(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) -> CGRect {
+    func aligned(relativeTo rect: CGRect, xAxis: AxisAlignment, yAxis: AxisAlignment) -> CGRect {
         let origin = self.origin
         let coord: [CGFloat] = [(a: xAxis, o: origin.x, lon: self.width, min: rect.minX, max: rect.maxX, mid: rect.midX),
                      (a: yAxis, o: origin.y, lon: self.height, min: rect.minY, max: rect.maxY, mid: rect.midY)].map {
@@ -276,7 +276,7 @@ public extension CGRect {
     ///   - xAxis: The x axis' constraint.
     ///   - yAxis: The y axis' constraint.
     @inlinable
-    mutating func align(relativeTo rect: CGRect, xAxis: Alignment, yAxis: Alignment) {
+    mutating func align(relativeTo rect: CGRect, xAxis: AxisAlignment, yAxis: AxisAlignment) {
         self = self.aligned(relativeTo: rect, xAxis: xAxis, yAxis: yAxis)
     }
     

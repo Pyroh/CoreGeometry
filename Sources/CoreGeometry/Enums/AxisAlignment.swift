@@ -35,7 +35,7 @@ import Foundation
 /// - mid: Mid axis' value constraint.
 /// - max: Max axis' value constraint.
 /// - min: Min axis' value constraint.
-public enum Alignment {
+public enum AxisAlignment {
     case none
     case mid
     case max
