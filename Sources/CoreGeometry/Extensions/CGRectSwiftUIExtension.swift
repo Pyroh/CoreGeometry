@@ -26,8 +26,6 @@
 //  SOFTWARE.
 //
 
-#if canImport(SwiftUI)
-
 import SwiftUI
 
 #if os(macOS)
@@ -38,6 +36,7 @@ private func layoutDirection() -> LayoutDirection {
     switch NSApp.userInterfaceLayoutDirection {
     case .leftToRight: return .leftToRight
     case .rightToLeft: return .rightToLeft
+    @unknown default: fatalError()
     }
 }
 
@@ -163,5 +162,3 @@ public extension CGRect {
         self = self.aligned(relativeTo: rect, xAxis: pair.x, yAxis: pair.y)
     }
 }
-
-#endif
