@@ -32,16 +32,19 @@ import CoreGraphics
 // MARK: Initializers
 public extension CGRect {
     /// Creates a rectangle with the specified size.
+    @inlinable
     init(size: CGSize) {
         self.init(origin: .zero, size: size)
     }
     
     /// Creates a rectangle with the specified center and size.
+    @inlinable
     init(center: CGPoint, size: CGSize) {
         let r = CGRect(origin: .zero, size: size)
         self = r.centered(at: center)
     }
 
+    @inlinable
     init(ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
@@ -59,6 +62,7 @@ public extension CGRect {
         self.init(size: .init(width: width, height: height))
     }
     
+    @inlinable
     init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
@@ -74,6 +78,26 @@ public extension CGRect {
         }
         
         self.init(center: center, size: .init(width: width, height: height))
+    }
+    
+    @inlinable
+    init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
+        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+    }
+    
+    @inlinable
+    init<T: BinaryFloatingPoint>(_ x: T, _ y: T, _ width: T, _ height: T) {
+        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+    }
+    
+    @inlinable
+    init<T: BinaryInteger>(_ width: T, _ height: T) {
+        self.init(size: .init(width, height))
+    }
+    
+    @inlinable
+    init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
+        self.init(size: .init(width, height))
     }
 }
 

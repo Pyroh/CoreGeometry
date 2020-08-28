@@ -49,25 +49,61 @@ public extension CGSize {
     init(square amount: CGFloat) {
         self.init(width: amount, height: amount)
     }
+    
+    @inlinable
+    init<T: BinaryInteger>(_ square: T) {
+        self.init(square: CGFloat(square))
+    }
+    
+    @inlinable
+    init<T: BinaryFloatingPoint>(_ square: T) {
+        self.init(square: CGFloat(square))
+    }
+    
+    @inlinable
+    init<T: BinaryInteger>(_ width: T, _ height: T) {
+        self.init(width: CGFloat(width), height: CGFloat(height))
+    }
+    
+    @inlinable
+    init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
+        self.init(width: CGFloat(width), height: CGFloat(height))
+    }
 }
 
 public extension CGSize {
     var horizontal: CGSize { CGSize(horizontal: width) }
     var vertical: CGSize { CGSize(vertical: height) }
     
+    @inlinable
     init(horizontal amount: CGFloat) {
         self.init(width: amount, height: .zero)
     }
     
-    init(horizontal amount: Double) { self.init(horizontal: CGFloat(amount)) }
-    init(horizontal amount: Int) { self.init(horizontal: CGFloat(amount)) }
+    @inlinable
+    init(horizontal amount: Double) {
+        self.init(horizontal: CGFloat(amount))
+    }
     
+    @inlinable
+    init(horizontal amount: Int) {
+        self.init(horizontal: CGFloat(amount))
+    }
+    
+    @inlinable
     init(vertical amount: CGFloat) {
         self.init(width: .zero, height: amount)
     }
     
-    init(vertical amount: Double) { self.init(vertical: CGFloat(amount)) }
-    init(vertical amount: Int) { self.init(vertical: CGFloat(amount)) }
+    @inlinable
+    init(vertical amount: Double) {
+        self.init(vertical: CGFloat(amount))
+    }
+    
+    @inlinable
+    init(vertical amount: Int) {
+        self.init(vertical: CGFloat(amount))
+    }
 }
 
 

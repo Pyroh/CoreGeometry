@@ -30,6 +30,20 @@
 import CoreGraphics
 
 public extension CGPoint {
+    /// Creates a point with coordinates specified as integer values.
+    @inlinable
+    init<T: BinaryInteger>(_ x: T, _ y: T) {
+        self.init(x: CGFloat(x), y: CGFloat(y))
+    }
+    
+    /// Creates a point with coordinates specified as floating-point values.
+    @inlinable
+    init<T: BinaryFloatingPoint>(_ x: T, _ y: T) {
+        self.init(x: CGFloat(x), y: CGFloat(y))
+    }
+}
+
+public extension CGPoint {
     /// Returns the vector that exists between `self` and `p2`.
     @inlinable
     func formVector(with p2: CGPoint) -> CGVector {

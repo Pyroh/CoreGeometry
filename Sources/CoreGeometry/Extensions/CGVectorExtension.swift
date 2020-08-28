@@ -30,22 +30,51 @@
 import CoreGraphics
 
 public extension CGVector {
+    
+    @inlinable
+    init<T: BinaryInteger>(_ dx: T, _ dy: T) {
+        self.init(dx: CGFloat(dx), dy: CGFloat(dy))
+    }
+    
+    @inlinable
+    init<T: BinaryFloatingPoint>(_ dx: T, _ dy: T) {
+        self.init(dx: CGFloat(dx), dy: CGFloat(dy))
+    }
+}
+
+public extension CGVector {
     var horizontal: CGSize { CGSize(horizontal: dx) }
     var vertical: CGSize { CGSize(vertical: dy) }
     
+    @inlinable
     init(horizontal amount: CGFloat) {
         self.init(dx: amount, dy: .zero)
     }
     
-    init(horizontal amount: Double) { self.init(horizontal: CGFloat(amount)) }
-    init(horizontal amount: Int) { self.init(horizontal: CGFloat(amount)) }
+    @inlinable
+    init(horizontal amount: Double) {
+        self.init(horizontal: CGFloat(amount))
+    }
     
+    @inlinable
+    init(horizontal amount: Int) {
+        self.init(horizontal: CGFloat(amount))
+    }
+    
+    @inlinable
     init(vertical amount: CGFloat) {
         self.init(dx: .zero, dy: amount)
     }
     
-    init(vertical amount: Double) { self.init(vertical: CGFloat(amount)) }
-    init(vertical amount: Int) { self.init(vertical: CGFloat(amount)) }
+    @inlinable
+    init(vertical amount: Double) {
+        self.init(vertical: CGFloat(amount))
+    }
+    
+    @inlinable
+    init(vertical amount: Int) {
+        self.init(vertical: CGFloat(amount))
+    }
 }
 
 public extension CGVector {

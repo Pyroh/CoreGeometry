@@ -78,6 +78,14 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(p2 / CGFloat(2.0) == p1)
     }
     
+    func testPointInit() {
+        let p1 = CGPoint(1, 2)
+        let p2 = CGPoint(3, 4)
+        
+        XCTAssert(p1 == .init(x: 1, y: 2))
+        XCTAssert(p2 == .init(x: 3, y: 4))
+    }
+    
     func testRectCornersExtention() {
         let r1 = CGRect(center: .zero, size: .init(square: 100))
         
@@ -214,6 +222,14 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(r3 == r2)
     }
     
+    func testRectInit() {
+        let r1 = CGRect(1, 2, 3, 4)
+        let r2 = CGRect(1, 2)
+        
+        XCTAssert(r1 == CGRect(x: 1, y: 2, width: 3, height: 4))
+        XCTAssert(r2 == CGRect(x: 0, y: 0, width: 1, height: 2))
+    }
+    
     func testSizeAlgebra() {
         let s1 = CGSize(square: 100)
         
@@ -230,6 +246,16 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(s3 + s2 == s4)
         XCTAssert(s4 - s2 == s3)
         XCTAssert(s4 - s3 == s2)
+    }
+    
+    func testSizeInit() {
+        let s1 = CGSize(1, 2)
+        let s2 = CGSize(3, 4)
+        let s3 = CGSize(5)
+        
+        XCTAssert(s1 == .init(width: 1, height: 2))
+        XCTAssert(s2 == .init(width: 3, height: 4))
+        XCTAssert(s3 == .init(width: 5, height: 5))
     }
     
     func testVectorAlgebra() {
