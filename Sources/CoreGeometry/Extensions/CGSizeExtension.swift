@@ -29,6 +29,7 @@
 
 
 import CoreGraphics
+import SwiftUI
 
 public extension CGSize {
     
@@ -125,6 +126,24 @@ public extension CGSize {
     @inlinable
     static func *<F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
         lhs * CGFloat(rhs)
+    }
+    
+    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
+    @inlinable
+    static func *<I: BinaryInteger>(lhs: CGSize, rhs: (x: I, y: I)) -> CGSize {
+        .init(width: lhs.width * CGFloat(rhs.x), height: lhs.height * CGFloat(rhs.y))
+    }
+    
+    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
+    @inlinable
+    static func *<F: BinaryFloatingPoint>(lhs: CGSize, rhs: (x: F, y: F)) -> CGSize {
+        .init(width: lhs.width * CGFloat(rhs.x), height: lhs.height * CGFloat(rhs.y))
     }
     
     /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.

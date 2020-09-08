@@ -28,6 +28,7 @@
 
 
 import CoreGraphics
+import SwiftUI
 
 public extension CGPoint {
     /// Creates a point with coordinates specified as integer values.
@@ -136,6 +137,24 @@ public extension CGPoint {
     @inlinable
     static func *<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint {
         lhs * CGFloat(rhs)
+    }
+    
+    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
+    @inlinable
+    static func *<I: BinaryInteger>(lhs: CGPoint, rhs: (x: I, y: I)) -> CGPoint {
+        .init(x: lhs.x * CGFloat(rhs.x), y: lhs.y * CGFloat(rhs.y))
+    }
+    
+    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
+    /// - Parameters:
+    ///   - lhs: The point to multiply components.
+    ///   - rhs: The value to multiply.
+    @inlinable
+    static func *<F: BinaryFloatingPoint>(lhs: CGPoint, rhs: (x: F, y: F)) -> CGPoint {
+        .init(x: lhs.x * CGFloat(rhs.x), y: lhs.y * CGFloat(rhs.y))
     }
     
     /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.

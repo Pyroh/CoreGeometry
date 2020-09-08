@@ -138,6 +138,11 @@ public extension CGRect {
             self[pair.x, pair.y] = newValue
         }
     }
+    
+    @inlinable
+    subscript(anchor: UnitPoint) -> CGPoint {
+        origin + CGPoint(x: size.width * anchor.x, y: size.height * anchor.y)
+    }
 
     /// Return a copy of `self` aligned relative to the given rect following a given alignement constraint.
     ///

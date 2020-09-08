@@ -29,6 +29,7 @@
 
 #if !os(watchOS)
 import XCTest
+import SwiftUI
 @testable import CoreGeometry
 
 final class CoreGeometryTests: XCTestCase {
@@ -192,6 +193,19 @@ final class CoreGeometryTests: XCTestCase {
         
         r3.reset()
         XCTAssert(r3 == r4)
+    }
+    
+    func testRectAnchor() {
+        let r = CGRect(20, 20)
+        XCTAssert(r[UnitPoint.topLeading] == .init(0, 0))
+        XCTAssert(r[UnitPoint.top] == .init(10, 0))
+        XCTAssert(r[UnitPoint.topTrailing] == .init(20, 0))
+        XCTAssert(r[UnitPoint.trailing] == .init(20, 10))
+        XCTAssert(r[UnitPoint.bottomLeading] == .init(0, 20))
+        XCTAssert(r[UnitPoint.bottom] == .init(10, 20) )
+        XCTAssert(r[UnitPoint.bottomTrailing] == .init(20, 20))
+        XCTAssert(r[UnitPoint.leading] == .init(0, 10))
+        XCTAssert(r[UnitPoint.center] == .init(10, 10))
     }
     
     func testRectInsetExtension() {
