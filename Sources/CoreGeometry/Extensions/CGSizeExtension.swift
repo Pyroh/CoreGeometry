@@ -193,12 +193,54 @@ public extension CGSize {
     }
 }
 
-extension CGSize: AdditiveArithmetic {
-    public static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
+public extension CGSize {
+    @inlinable
+    static func +<I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
+        .init(lhs.width + CGFloat(rhs), lhs.height + CGFloat(rhs))
+    }
+    
+    @inlinable
+    static func +<F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
+        .init(lhs.width + CGFloat(rhs), lhs.height + CGFloat(rhs))
+    }
+    
+    @inlinable
+    static func +<I: BinaryInteger>(lhs: CGSize, rhs: (width: I, height: I)) -> CGSize {
+        .init(lhs.width + CGFloat(rhs.width), lhs.height + CGFloat(rhs.height))
+    }
+    
+    @inlinable
+    static func +<F: BinaryFloatingPoint>(lhs: CGSize, rhs: (width: F, height: F)) -> CGSize {
+        .init(lhs.width + CGFloat(rhs.width), lhs.height + CGFloat(rhs.height))
+    }
+    
+    @inlinable
+    static func -<I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
+        .init(lhs.width - CGFloat(rhs), lhs.height - CGFloat(rhs))
+    }
+    
+    @inlinable
+    static func -<F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
+        .init(lhs.width - CGFloat(rhs), lhs.height - CGFloat(rhs))
+    }
+    
+    @inlinable
+    static func -<I: BinaryInteger>(lhs: CGSize, rhs: (width: I, height: I)) -> CGSize {
+        .init(lhs.width - CGFloat(rhs.width), lhs.height - CGFloat(rhs.height))
+    }
+    
+    @inlinable
+    static func -<F: BinaryFloatingPoint>(lhs: CGSize, rhs: (width: F, height: F)) -> CGSize {
+        .init(lhs.width - CGFloat(rhs.width), lhs.height - CGFloat(rhs.height))
+    }
+
+    @inlinable
+    static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
         CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
     }
     
-    public static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
+    @inlinable
+    static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
         CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
     }
 }

@@ -260,6 +260,18 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(s3 + s2 == s4)
         XCTAssert(s4 - s2 == s3)
         XCTAssert(s4 - s3 == s2)
+        
+        let s5 = CGSize(104)
+        let s6 = CGSize(101, 102)
+        
+        XCTAssert(s1 + 4 == s5)
+        XCTAssert(s1 + (1, 2) == s6)
+        
+        let s7 = CGSize(96)
+        let s8 = CGSize(99, 98)
+        
+        XCTAssert(s1 - 4 == s7)
+        XCTAssert(s1 - (1, 2) == s8)
     }
     
     func testSizeInit() {
