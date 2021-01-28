@@ -439,3 +439,56 @@ public extension CGRect {
         return .init(origin: origin, size: size)
     }
 }
+
+public extension CGRect {
+    
+    /// The rectangle's origin's x position.
+    @inlinable
+    var x: CGFloat { origin.x }
+    
+    /// The rectangle's origin's y position.
+    @inlinable
+    var y: CGFloat { origin.x }
+    
+    /// Returns a copy of `self` with the given origin.
+    /// - Parameter origin: The new origin.
+    @inlinable
+    func with(origin: CGPoint) -> CGRect {
+        .init(origin: origin, size: size)
+    }
+    
+    /// Returns a copy of `self` with the given size.
+    /// - Parameter origin: The new size.
+    @inlinable
+    func with(size: CGSize) -> CGRect {
+        .init(origin: origin, size: size)
+    }
+    
+    /// Returns a copy of `self` with the given x position.
+    /// - Parameter origin: The new x position.
+    @inlinable
+    func with(x: CGFloat) -> CGRect {
+        .init(origin: .init(x, y), size: size)
+    }
+    
+    /// Returns a copy of `self` with the given y position.
+    /// - Parameter origin: The new y position.
+    @inlinable
+    func with(y: CGFloat) -> CGRect {
+        .init(origin: .init(x, y), size: size)
+    }
+    
+    /// Returns a copy of `self` with the given width.
+    /// - Parameter origin: The new width.
+    @inlinable
+    func with(width: CGFloat) -> CGRect {
+        .init(origin: origin, size: .init(width, height))
+    }
+    
+    /// Returns a copy of `self` with the given height.
+    /// - Parameter origin: The new height.
+    @inlinable
+    func with(height: CGFloat) -> CGRect {
+        .init(origin: origin, size: .init(width, height))
+    }
+}
