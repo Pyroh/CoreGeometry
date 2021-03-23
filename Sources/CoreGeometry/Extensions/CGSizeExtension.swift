@@ -244,3 +244,19 @@ public extension CGSize {
         CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
     }
 }
+
+public extension CGSize {
+    
+    /// Contrains `self` to the given size.
+    /// - Parameter size: The size to contrain to.
+    @inlinable mutating func constrain(to size: CGSize) {
+        width = min(width, size.width)
+        height = min(height, size.height)
+    }
+    
+    /// Return `self` constrained to the given size.
+    /// - Parameter size: The size to contrain to.
+    @inlinable func constrained(to size: CGSize) -> CGSize {
+        .init(width: min(width, size.width), height: min(height, size.height))
+    }
+}
