@@ -448,7 +448,7 @@ public extension CGRect {
     
     /// The rectangle's origin's y position.
     @inlinable
-    var y: CGFloat { origin.x }
+    var y: CGFloat { origin.y }
     
     /// Returns a copy of `self` with the given origin.
     /// - Parameter origin: The new origin.
