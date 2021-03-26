@@ -30,7 +30,10 @@
 import Foundation
 @_exported import CoreGraphics
 
+@usableFromInline typealias Native = CGFloat.NativeType
+
 postfix operator °
 
 @usableFromInline internal let degreeFactor = 180 / CGFloat.pi
 @usableFromInline internal let radianFactor = 1 / degreeFactor
+

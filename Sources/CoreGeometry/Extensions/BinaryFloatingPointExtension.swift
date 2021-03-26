@@ -98,3 +98,8 @@ extension BinaryFloatingPoint {
         return lhs.radian
     }
 }
+
+extension BinaryFloatingPoint {
+    @inlinable var cgFloat: CGFloat { .init(self) }
+    @inlinable var native: Native { .init(self) }
+}

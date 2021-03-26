@@ -52,3 +52,8 @@ extension BinaryInteger {
         return lhs.radian
     }
 }
+
+extension BinaryInteger {
+    @inlinable var cgFloat: CGFloat { .init(self) }
+    @inlinable var native: Native { .init(self) }
+}
