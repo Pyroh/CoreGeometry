@@ -53,7 +53,7 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(p1.translated(tx: 10, ty: 10) == p2)
         
         var p3 = p1
-        p3.translate(by: v1)
+        p3.translate(along: v1)
         XCTAssert(p3 == p2)
         p3 = p1
         p3.translate(tx: 10, ty: 10)
@@ -100,6 +100,27 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(r1[.min, .max] == .init(x: -50, y: 50))
         XCTAssert(r1[.mid, .max] == .init(x: 0, y: 50))
         XCTAssert(r1[.max, .max] == .init(x: 50, y: 50))
+        
+        var r2 = CGRect(center: .init(5, 5), size: .init(10))
+        
+        r2[.min, .min] = .zero
+        XCTAssert(r2[.min, .min] == .zero)
+        r2[.mid, .min] = .zero
+        XCTAssert(r2[.mid, .min] == .zero)
+        r2[.max, .min] = .zero
+        XCTAssert(r2[.max, .min] == .zero)
+        r2[.min, .mid] = .zero
+        XCTAssert(r2[.min, .mid] == .zero)
+        r2[.mid, .mid] = .zero
+        XCTAssert(r2[.mid, .mid] == .zero)
+        r2[.max, .mid] = .zero
+        XCTAssert(r2[.max, .mid] == .zero)
+        r2[.min, .max] = .zero
+        XCTAssert(r2[.min, .max] == .zero)
+        r2[.mid, .max] = .zero
+        XCTAssert(r2[.mid, .max] == .zero)
+        r2[.max, .max] = .zero
+        XCTAssert(r2[.max, .max] == .zero)
     }
     
     func testRectGeometryExtension() {
@@ -196,16 +217,37 @@ final class CoreGeometryTests: XCTestCase {
     }
     
     func testRectAnchor() {
-        let r = CGRect(20, 20)
-        XCTAssert(r[UnitPoint.topLeading] == .init(0, 0))
-        XCTAssert(r[UnitPoint.top] == .init(10, 0))
-        XCTAssert(r[UnitPoint.topTrailing] == .init(20, 0))
-        XCTAssert(r[UnitPoint.trailing] == .init(20, 10))
-        XCTAssert(r[UnitPoint.bottomLeading] == .init(0, 20))
-        XCTAssert(r[UnitPoint.bottom] == .init(10, 20) )
-        XCTAssert(r[UnitPoint.bottomTrailing] == .init(20, 20))
-        XCTAssert(r[UnitPoint.leading] == .init(0, 10))
-        XCTAssert(r[UnitPoint.center] == .init(10, 10))
+        let r1 = CGRect(20, 20)
+        XCTAssert(r1[UnitPoint.topLeading] == .init(0, 0))
+        XCTAssert(r1[UnitPoint.top] == .init(10, 0))
+        XCTAssert(r1[UnitPoint.topTrailing] == .init(20, 0))
+        XCTAssert(r1[UnitPoint.trailing] == .init(20, 10))
+        XCTAssert(r1[UnitPoint.bottomLeading] == .init(0, 20))
+        XCTAssert(r1[UnitPoint.bottom] == .init(10, 20) )
+        XCTAssert(r1[UnitPoint.bottomTrailing] == .init(20, 20))
+        XCTAssert(r1[UnitPoint.leading] == .init(0, 10))
+        XCTAssert(r1[UnitPoint.center] == .init(10, 10))
+        
+        var r2 = CGRect(20, 20)
+        
+        r2[UnitPoint.topLeading] = .zero
+        XCTAssert(r2[UnitPoint.topLeading] == .zero)
+        r2[UnitPoint.top] = .zero
+        XCTAssert(r2[UnitPoint.top] == .zero)
+        r2[UnitPoint.topTrailing] = .zero
+        XCTAssert(r2[UnitPoint.topTrailing] == .zero)
+        r2[UnitPoint.trailing] = .zero
+        XCTAssert(r2[UnitPoint.trailing] == .zero)
+        r2[UnitPoint.bottomLeading] = .zero
+        XCTAssert(r2[UnitPoint.bottomLeading] == .zero)
+        r2[UnitPoint.bottom] = .zero
+        XCTAssert(r2[UnitPoint.bottom] == .zero)
+        r2[UnitPoint.bottomTrailing] = .zero
+        XCTAssert(r2[UnitPoint.bottomTrailing] == .zero)
+        r2[UnitPoint.leading] = .zero
+        XCTAssert(r2[UnitPoint.leading] == .zero)
+        r2[UnitPoint.center] = .zero
+        XCTAssert(r2[UnitPoint.center] == .zero)
     }
     
     func testRectInsetExtension() {
