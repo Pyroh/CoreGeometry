@@ -32,6 +32,16 @@ import SwiftUI
 
 public extension CGPoint {
     /// Creates a point with coordinates specified as integer values.
+    @inlinable init<T: BinaryInteger>(x: T, y: T) {
+        self.init(x: x.cgFloat, y: y.cgFloat)
+    }
+    
+    /// Creates a point with coordinates specified as floating-point values.
+    @inlinable init<T: BinaryFloatingPoint>(x: T, y: T) {
+        self.init(x: x.cgFloat, y: y.cgFloat)
+    }
+    
+    /// Creates a point with coordinates specified as integer values.
     @inlinable init<T: BinaryInteger>(_ x: T, _ y: T) {
         self.init(x: x.cgFloat, y: y.cgFloat)
     }
@@ -56,10 +66,7 @@ public extension CGPoint {
     }
     
     @inlinable init(simd2: SIMD2<CGFloat.NativeType>) {
-        self.init()
-        
-        self.x.native = simd2.x
-        self.y.native = simd2.y
+        self.init(x: simd2.x, y: simd2.y)
     }
 }
 
@@ -91,6 +98,7 @@ public extension CGPoint {
     
     /// FIXME: deprecated.
     /// Translates `self` along the given vector.
+    @available(*, deprecated, renamed: "translate(along:)")
     @inlinable mutating func translate(by vector: CGVector) {
         simd2 += vector.simd2
     }
