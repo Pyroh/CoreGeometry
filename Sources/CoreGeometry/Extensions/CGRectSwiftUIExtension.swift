@@ -28,6 +28,10 @@
 
 import SwiftUI
 
+extension UnitPoint {
+    @usableFromInline var simd2: SIMD2<Native> { .init(x.native, y.native) }
+}
+
 #if os(macOS)
 import AppKit
 
@@ -66,31 +70,26 @@ private func layoutDirection() -> LayoutDirection {
 #endif
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-@usableFromInline
-func convert(_ alignment: Alignment) -> (x: AxisAlignment, y: AxisAlignment) {
+@usableFromInline func convert(_ alignment: Alignment) -> (x: AxisAlignment, y: AxisAlignment) {
     (convert(alignment.horizontal), convert(alignment.vertical))
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-@usableFromInline
-func convert(_ alignment: Alignment) -> (x: RectBoundary, y: RectBoundary) {
+@usableFromInline func convert(_ alignment: Alignment) -> (x: RectBoundary, y: RectBoundary) {
     (convert(alignment.horizontal), convert(alignment.vertical))
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-private func convert(_ alignement: HorizontalAlignment) -> AxisAlignment {
+@usableFromInline func convert(_ alignement: HorizontalAlignment) -> AxisAlignment {
     switch alignement {
-    case .leading:
-        return layoutDirection() == .leftToRight ? .min : .max
-    case .trailing:
-        return layoutDirection() == .leftToRight ? .max : .min
-    default:
-        return .mid
+    case .leading: return layoutDirection() == .leftToRight ? .min : .max
+    case .trailing: return layoutDirection() == .leftToRight ? .max : .min
+    default: return .mid
     }
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-private func convert(_ alignement: HorizontalAlignment) -> RectBoundary {
+@usableFromInline func convert(_ alignement: HorizontalAlignment) -> RectBoundary {
     switch alignement {
     case .leading:
         return layoutDirection() == .leftToRight ? .min : .max
@@ -126,9 +125,8 @@ private func convert(_ alignement: VerticalAlignment) -> RectBoundary {
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-public extension CGRect {
-    @inlinable
-    subscript(alignment: Alignment) -> CGPoint {
+extension CGRect {
+    @inlinable subscript(alignment: Alignment) -> CGPoint {
         get {
             let pair: (x: RectBoundary, y: RectBoundary) = convert(alignment)
             return self[pair.x, pair.y]
@@ -138,10 +136,34 @@ public extension CGRect {
             self[pair.x, pair.y] = newValue
         }
     }
+}
+
+@available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
+public extension CGRect {
     
-    @inlinable
-    subscript(anchor: UnitPoint) -> CGPoint {
-        origin + CGPoint(x: size.width * anchor.x, y: size.height * anchor.y)
+    @inlinable subscript(anchor: UnitPoint) -> CGPoint {
+        get { .init(simd2: origin.simd2 + size.simd2 * anchor.simd2) }
+        set { origin.simd2 += newValue.simd2 - self[anchor].simd2 }
+    }
+    
+    /// Return a copy of `self` aligned relative to the given rect following a given anchor.
+    ///
+    /// - Parameters:
+    ///   - rect: The rect to align against.
+    ///   - anchor: The alignment constraint.
+    /// - Returns: A properly aligned rect.
+    @inlinable func aligned(relativeTo rect: CGRect, anchor: UnitPoint) -> CGRect {
+        let origin = CGPoint(simd2: origin.simd2 + rect[anchor].simd2 - self[anchor].simd2)
+        return .init(origin: origin, size: size)
+    }
+    
+    /// Aligns `self` relative to the given rect following a given anchor.
+    ///
+    /// - Parameters:
+    ///   - rect: The rect to align against.
+    ///   - anchor: The alignment constraint.
+    @inlinable mutating func align(relativeTo rect: CGRect, anchor: UnitPoint) {
+        self[anchor] = rect[anchor]
     }
 
     /// Return a copy of `self` aligned relative to the given rect following a given alignement constraint.
@@ -150,8 +172,8 @@ public extension CGRect {
     ///   - rect: The rect to align against.
     ///   - alignment: The alignment constraint.
     /// - Returns: A properly aligned rect.
-    @inlinable
-    func aligned(relativeTo rect: CGRect, alignment: Alignment) -> CGRect {
+    @available(*, deprecated)
+    @inlinable func aligned(relativeTo rect: CGRect, alignment: Alignment) -> CGRect {
         let pair: (x: AxisAlignment, y: AxisAlignment) = convert(alignment)
         return aligned(relativeTo: rect, xAxis: pair.x, yAxis: pair.y)
     }
@@ -161,9 +183,10 @@ public extension CGRect {
     /// - Parameters:
     ///   - rect: The rect to align against.
     ///   - alignment: The alignment constraint.
-    @inlinable
-    mutating func align(relativeTo rect: CGRect, alignment: Alignment) {
+    @available(*, deprecated)
+    @inlinable mutating func align(relativeTo rect: CGRect, alignment: Alignment) {
         let pair: (x: AxisAlignment, y: AxisAlignment) = convert(alignment)
         self = self.aligned(relativeTo: rect, xAxis: pair.x, yAxis: pair.y)
     }
 }
+

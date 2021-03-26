@@ -112,10 +112,7 @@ public extension CGSize {
     }
     
     @inlinable init(simd2: SIMD2<CGFloat.NativeType>) {
-        self.init()
-        
-        self.width.native = simd2.x
-        self.height.native = simd2.y
+        self.init(width: simd2.x, height: simd2.y)
     }
 }
 

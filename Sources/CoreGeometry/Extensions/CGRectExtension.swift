@@ -60,8 +60,7 @@ public extension CGRect {
         self.init(size: .init(width: width, height: height))
     }
     
-    @inlinable
-    init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
+    @inlinable init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
         case .landscape:
@@ -78,23 +77,19 @@ public extension CGRect {
         self.init(center: center, size: .init(width: width, height: height))
     }
     
-    @inlinable
-    init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
+    @inlinable init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
         self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
     }
     
-    @inlinable
-    init<T: BinaryFloatingPoint>(_ x: T, _ y: T, _ width: T, _ height: T) {
+    @inlinable init<T: BinaryFloatingPoint>(_ x: T, _ y: T, _ width: T, _ height: T) {
         self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
     }
     
-    @inlinable
-    init<T: BinaryInteger>(_ width: T, _ height: T) {
+    @inlinable init<T: BinaryInteger>(_ width: T, _ height: T) {
         self.init(size: .init(width, height))
     }
     
-    @inlinable
-    init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
+    @inlinable init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
         self.init(size: .init(width, height))
     }
 }
@@ -433,6 +428,9 @@ public extension CGRect {
         return .init(origin: origin, size: size)
     }
 }
+
+// MARK: -
+// MARK: Functional modifiers
 
 public extension CGRect {
     

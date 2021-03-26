@@ -31,6 +31,10 @@ import CoreGraphics
 import simd
 
 public extension CGVector {
+
+    @inlinable init(_ dx: CGFloat, _ dy: CGFloat) {
+        self.init(dx: dx, dy: dy)
+    }
     
     @inlinable init<T: BinaryInteger>(_ dx: T, _ dy: T) {
         self.init(dx: dx.cgFloat, dy: dy.cgFloat)
@@ -38,10 +42,6 @@ public extension CGVector {
     
     @inlinable init<T: BinaryFloatingPoint>(_ dx: T, _ dy: T) {
         self.init(dx: dx.cgFloat, dy: dy.cgFloat)
-    }
-    
-    @inlinable init(_ dx: CGFloat, _ dy: CGFloat) {
-        self.init(dx: dx, dy: dy)
     }
 }
 
@@ -54,10 +54,7 @@ public extension CGVector {
     }
     
     @inlinable init(simd2: SIMD2<CGFloat.NativeType>) {
-        self.init()
-        
-        self.dx.native = simd2.x
-        self.dy.native = simd2.y
+        self.init(dx: simd2.x, dy: simd2.y)
     }
 }
 
