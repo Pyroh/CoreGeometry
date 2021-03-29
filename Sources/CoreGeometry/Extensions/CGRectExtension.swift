@@ -92,6 +92,24 @@ public extension CGRect {
     @inlinable init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
         self.init(size: .init(width, height))
     }
+    
+    /// Creates the greatest absolute rectangle possible with `p1` and `p2` as opposite corners.
+    /// - Parameters:
+    ///   - p1: A corner of the rectangle.
+    ///   - p2: The opposite corner.
+    @inlinable init(p1: CGPoint, p2: CGPoint) {
+        let x = min(p1.x, p2.x)
+        let y = min(p1.y, p2.y)
+        let width = max(p1.x, p2.x) - x
+        let height = max(p1.y, p2.y) - y
+        
+        self = .init(x, y, width, height)
+    }
+    
+    @inlinable init(origin p1: CGPoint, opposite p2: CGPoint) {
+        let size = CGSize(simd2: p2.simd2 - p1.simd2)
+        self.init(origin: p1, size: size)
+    }
 }
 
 public extension CGRect {
