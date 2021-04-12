@@ -271,3 +271,41 @@ public extension CGSize {
         .init(simd2: min(simd2, size.simd2))
     }
 }
+
+public extension CGSize {
+    /// Returns a copy of `self` with the given width.
+    /// - Parameter origin: The new width.
+    @inlinable func with(width: CGFloat) -> CGSize {
+        .init(width, height)
+    }
+    
+    /// Returns a copy of `self` with the given width.
+    /// - Parameter origin: The new width.
+    @inlinable func with<I: BinaryInteger>(width: I) -> CGSize {
+        .init(CGFloat(width), height)
+    }
+    
+    /// Returns a copy of `self` with the given width.
+    /// - Parameter origin: The new width.
+    @inlinable func with<F: BinaryFloatingPoint>(width: F) -> CGSize {
+        .init(CGFloat(width), height)
+    }
+    
+    /// Returns a copy of `self` with the given height.
+    /// - Parameter origin: The new height.
+    @inlinable func with(height: CGFloat) -> CGSize {
+        .init(width, height)
+    }
+    
+    /// Returns a copy of `self` with the given height.
+    /// - Parameter origin: The new height.
+    @inlinable func with<I: BinaryInteger>(height: I) -> CGSize {
+        .init(width, CGFloat(height))
+    }
+    
+    /// Returns a copy of `self` with the given height.
+    /// - Parameter origin: The new height.
+    @inlinable func with<F: BinaryFloatingPoint>(height: F) -> CGSize {
+        .init(width, CGFloat(height))
+    }
+}
