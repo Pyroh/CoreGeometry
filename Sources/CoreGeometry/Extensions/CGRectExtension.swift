@@ -542,3 +542,35 @@ public extension CGRect {
         .init(origin: origin, size: .init(width, height.cgFloat))
     }
 }
+
+public extension CGRect {
+    @inlinable func transformOrigin(_ transform: (CGPoint) throws -> CGPoint) rethrows -> CGRect {
+        with(origin: try transform(origin))
+    }
+    
+    @inlinable func transformX(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(x: try transform(x))
+    }
+    
+    @inlinable func transformY(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(y: try transform(y))
+    }
+    
+    @inlinable func transformSize(_ transform: (CGSize) throws -> CGSize) rethrows -> CGRect {
+        with(size: try transform(size))
+    }
+    
+    @inlinable func transformWidth(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(width: try transform(width))
+    }
+    
+    @inlinable func transformHeight(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(height: try transform(height))
+    }
+}
+
+public extension CGRect {
+    func map<T>(_ transform: (CGRect) throws -> T) rethrows -> T {
+        try transform(self)
+    }
+}
