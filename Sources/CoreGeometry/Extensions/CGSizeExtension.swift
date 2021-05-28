@@ -309,3 +309,14 @@ public extension CGSize {
         .init(width, CGFloat(height))
     }
 }
+
+public extension CGSize {
+    
+    @inlinable func transformWidth(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGSize {
+        with(width: try transform(width))
+    }
+    
+    @inlinable func transformHeight(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGSize {
+        with(height: try transform(height))
+    }
+}
