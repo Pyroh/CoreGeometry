@@ -189,4 +189,3 @@ public extension CGRect {
         self = self.aligned(relativeTo: rect, xAxis: pair.x, yAxis: pair.y)
     }
 }
-

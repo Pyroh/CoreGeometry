@@ -141,6 +141,23 @@ public extension CGPoint {
     }
 }
 
+extension CGPoint {
+    
+    /// Creates a new `CGRect` with the receiver for its origin and sized to the given size.
+    /// - Parameter size: The size of the `CGRect`.
+    /// - Returns: The resulting `CGRect`.
+    @inlinable public func makeRect(withSize size: CGSize) -> CGRect {
+        .init(origin: self, size: size)
+    }
+    
+    /// Creates a new `CGRect` with the receiver for its center and sized to the given size.
+    /// - Parameter size: The size of the `CGRect`.
+    /// - Returns: The resulting `CGRect`.
+    @inlinable public func makeRect(centeredWithSize size: CGSize) -> CGRect {
+        .init(center: self, size: size)
+    }
+}
+
 public extension CGPoint {
     
     /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.

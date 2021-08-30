@@ -320,3 +320,27 @@ public extension CGSize {
         with(height: try transform(height))
     }
 }
+
+public extension CGSize {
+    
+    /// Creates a new `CGRect` with the receiver for its size and its origin set to the given point.
+    /// - Parameter origin: The origin of the `CGRect`.
+    /// - Returns: The resulting `CGRect`.
+    @inlinable func makeRect(withOrigin origin: CGPoint) ->  CGRect {
+        .init(origin: origin, size: self)
+    }
+    
+    /// Creates a new `CGRect` with the receiver for its size and its center set to the given point.
+    /// - Parameter origin: The center of the `CGRect`.
+    /// - Returns: The resulting `CGRect`.
+    @inlinable func makeRect(withCenter center: CGPoint) -> CGRect {
+        .init(center: center, size: self)
+    }
+}
+
+@available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
+public extension CGSize {
+    @inlinable static func * (lhs: Self, rhs: UnitPoint) -> Self {
+        .init(simd2: lhs.simd2 * rhs.simd2)
+    }
+}
