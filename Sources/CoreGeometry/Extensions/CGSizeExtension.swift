@@ -326,7 +326,7 @@ public extension CGSize {
     /// Creates a new `CGRect` with the receiver for its size and its origin set to the given point.
     /// - Parameter origin: The origin of the `CGRect`.
     /// - Returns: The resulting `CGRect`.
-    @inlinable func makeRect(withOrigin origin: CGPoint) ->  CGRect {
+    @inlinable func makeRect(withOrigin origin: CGPoint = .zero) ->  CGRect {
         .init(origin: origin, size: self)
     }
     
