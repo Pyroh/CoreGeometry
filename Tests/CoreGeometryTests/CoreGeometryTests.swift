@@ -77,6 +77,15 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(p2 / 2.0 == p1)
         XCTAssert(p2 / Float(2.0) == p1)
         XCTAssert(p2 / CGFloat(2.0) == p1)
+        
+        let p3 = CGPoint(0.7, 1.3)
+        let p4 = CGPoint(1.0, 1.0)
+        let p5 = CGPoint(0.5, 1.5)
+        
+        print(p3.aligned(.half))
+        
+        XCTAssert(p3.aligned() == p4)
+        XCTAssert(p3.aligned(.half) == p5)
     }
     
     func testPointInit() {
@@ -276,6 +285,16 @@ final class CoreGeometryTests: XCTestCase {
         var r3 = r1
         r3.inset([.minXEdge, .minYEdge, .maxXEdge, .maxYEdge], by: 10)
         XCTAssert(r3 == r2)
+        
+        let r4 = CGRect(origin: .zero, size: .init(square: 100))
+        let r5 = CGRect(10, 5, 80, 90)
+        
+        XCTAssert(r4.insetting(by: .init(10, 5)) == r5)
+        
+        var r6 = r4
+        r6.inset(by: .init(10, 5))
+        
+        XCTAssert(r5 == r6)
     }
     
     func testRectInit() {
@@ -291,8 +310,10 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(s1 / 10 == .init(square: 10))
         XCTAssert(s1 * 10 == .init(square: 1000))
-        XCTAssert(s1 + .init(square:10) == .init(square: 110))
-        XCTAssert(s1 - .init(square:10) == .init(square: 90))
+        XCTAssert(s1 + .init(square: 10) == .init(square: 110))
+        XCTAssert(s1 - .init(square: 10) == .init(square: 90))
+        print(s1 * .init(square: 0.5))
+        XCTAssert(s1 * .init(square: 0.5) == .init(square: 50))
         
         let s2 = CGSize(width: 1, height: 2)
         let s3 = CGSize(width: 3, height: 4)
@@ -314,6 +335,10 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(s1 - 4 == s7)
         XCTAssert(s1 - (1, 2) == s8)
+        
+        let s9 = CGSize(1.2, 0.8)
+        let s10 = CGSize(2, 1)
+        XCTAssert(s9.integral == s10)
     }
     
     func testSizeInit() {
@@ -335,6 +360,7 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(v1 + v2 == .init(dx: 110, dy: 110))
         XCTAssert(v1 - v2 == .init(dx: 90, dy: 90))
     }
+    
 }
 
 #endif

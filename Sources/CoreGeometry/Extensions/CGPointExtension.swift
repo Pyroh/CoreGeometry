@@ -31,6 +31,21 @@ import CoreGraphics
 import SwiftUI
 
 public extension CGPoint {
+    enum Alignment { case whole, half }
+    
+    func aligned(_ alignment: Alignment = .whole) -> Self {
+        alignment == .whole ?
+            .init(simd2: simd2.rounded(.toNearestOrAwayFromZero)) :
+            .init(simd2: (simd2 * 2).rounded(.toNearestOrAwayFromZero) / 2)
+    }
+    
+    mutating func align(_ alignment: Alignment = .whole) {
+        if alignment == .whole { simd2 = simd2.rounded(.toNearestOrAwayFromZero) }
+        else { simd2 = (simd2 * 2).rounded(.toNearestOrAwayFromZero) / 2 }
+    }
+}
+
+public extension CGPoint {
     /// Creates a point with coordinates specified as integer values.
     @inlinable init<T: BinaryInteger>(x: T, y: T) {
         self.init(x: x.cgFloat, y: y.cgFloat)
@@ -279,6 +294,24 @@ extension CGPoint: AdditiveArithmetic {
     /// - Returns: The resulting point.
     @inlinable public static func + <I: BinaryFloatingPoint>(lhs: CGPoint, rhs: I) -> CGPoint {
         .init(simd2: lhs.simd2 + rhs.native)
+    }
+    
+    /// Adds a value to a point's component.
+    /// - Parameters:
+    ///   - lhs: A point.
+    ///   - rhs: The value to add.
+    /// - Returns: The resulting point.
+    @inlinable public static func + <I: BinaryInteger>(lhs: CGPoint, rhs: (I, I)) -> CGPoint {
+        .init(simd2: lhs.simd2 + .init(rhs.0.native, rhs.1.native))
+    }
+    
+    /// Adds a value to a point's component.
+    /// - Parameters:
+    ///   - lhs: A point.
+    ///   - rhs: The value to add.
+    /// - Returns: The resulting point.
+    @inlinable public static func + <I: BinaryFloatingPoint>(lhs: CGPoint, rhs: (I, I)) -> CGPoint {
+        .init(simd2: lhs.simd2 + .init(rhs.0.native, rhs.1.native))
     }
     
     /// Adds a value to a point's component.

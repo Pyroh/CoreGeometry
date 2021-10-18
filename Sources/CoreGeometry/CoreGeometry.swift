@@ -37,3 +37,10 @@ postfix operator °
 @usableFromInline internal let degreeFactor = 180 / CGFloat.pi
 @usableFromInline internal let radianFactor = 1 / degreeFactor
 
+
+@usableFromInline func withMutable<T>(_ subject: T, transform: @escaping (inout T) throws -> ()) rethrows -> T {
+    var proxy = subject
+    try transform(&proxy)
+    
+    return proxy
+}

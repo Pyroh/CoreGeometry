@@ -417,6 +417,15 @@ public extension CGRect {
         }
     }
     
+    /// Insets `self` in the given edge directions by the given amount.
+    /// - Parameter size: The inset amount.
+    @inlinable mutating func inset(by size: CGSize) {
+        guard size != .zero else { return }
+        
+        self.origin.simd2 += size.simd2
+        self.size.simd2 -= size.simd2 * 2
+    }
+    
     /// Return a copy of `self` inset in the given edge directions by the given amount.
     ///
     /// - Parameters:
@@ -444,6 +453,15 @@ public extension CGRect {
         }
         
         return .init(origin: origin, size: size)
+    }
+    
+    @inlinable func insetting(by size: CGSize) -> CGRect {
+        guard size != .zero else { return self }
+        
+        return withMutable(self) {
+            $0.origin.simd2 += size.simd2
+            $0.size.simd2 -= size.simd2 * 2
+        }
     }
 }
 

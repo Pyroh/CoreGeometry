@@ -33,6 +33,11 @@ import SwiftUI
 import simd
 
 public extension CGSize {
+    @inlinable var integral: Self { .init(simd2: simd2.rounded(.up)) }
+    @inlinable var isSquare: Bool { width == height }
+}
+
+public extension CGSize {
     
     /// Inits a size of `(amount,amount)`.
     @inlinable init(square amount: CGFloat) {
@@ -72,7 +77,6 @@ public extension CGSize {
     @inlinable init<F: BinaryFloatingPoint>(_ width: F, _ height: F) {
         self.init(width: width.cgFloat, height: height.cgFloat)
     }
-    
 }
 
 public extension CGSize {
