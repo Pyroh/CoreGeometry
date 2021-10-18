@@ -353,4 +353,8 @@ extension CGPoint: AdditiveArithmetic {
     @inlinable public static func - (lhs: CGPoint, rhs: CGFloat.NativeType) -> CGPoint {
         .init(simd2: lhs.simd2 - rhs)
     }
+    
+    @inlinable public static prefix func - (rhs: CGPoint) -> CGPoint {
+        .init(simd2: -rhs.simd2)
+    }
 }

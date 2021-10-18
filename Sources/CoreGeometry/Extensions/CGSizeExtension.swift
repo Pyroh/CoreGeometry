@@ -259,6 +259,10 @@ public extension CGSize {
     @inlinable static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
         .init(simd2: lhs.simd2 - rhs.simd2)
     }
+    
+    @inlinable static prefix func - (rhs: CGSize) -> CGSize {
+        .init(simd2: -rhs.simd2)
+    }
 }
 
 public extension CGSize {

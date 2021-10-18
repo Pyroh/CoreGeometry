@@ -250,6 +250,10 @@ extension CGVector: AdditiveArithmetic {
     @inlinable public static func - (lhs: CGVector, rhs: CGFloat.NativeType) -> CGVector {
         .init(simd2: lhs.simd2 - rhs)
     }
+    
+    @inlinable public static prefix func - (rhs: CGVector) -> CGVector {
+        .init(simd2: -rhs.simd2)
+    }
 }
 
 public extension CGVector {

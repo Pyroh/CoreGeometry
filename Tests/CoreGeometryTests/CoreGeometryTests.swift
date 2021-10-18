@@ -86,6 +86,9 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(p3.aligned() == p4)
         XCTAssert(p3.aligned(.half) == p5)
+        
+        let p6 = CGPoint(-10, -10)
+        XCTAssert(-p1 == p6)
     }
     
     func testPointInit() {
@@ -339,6 +342,9 @@ final class CoreGeometryTests: XCTestCase {
         let s9 = CGSize(1.2, 0.8)
         let s10 = CGSize(2, 1)
         XCTAssert(s9.integral == s10)
+        
+        let s11 = CGSize(square: -100)
+        XCTAssert(-s1 == s11)
     }
     
     func testSizeInit() {
@@ -359,6 +365,9 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(v1 * 10 == .init(dx: 1000, dy: 1000))
         XCTAssert(v1 + v2 == .init(dx: 110, dy: 110))
         XCTAssert(v1 - v2 == .init(dx: 90, dy: 90))
+        
+        let v3 = CGVector(-100, -100)
+        XCTAssert(-v1 == v3)
     }
     
 }
