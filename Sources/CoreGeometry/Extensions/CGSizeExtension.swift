@@ -35,6 +35,7 @@ import simd
 public extension CGSize {
     @inlinable var integral: Self { .init(simd2: simd2.rounded(.up)) }
     @inlinable var isSquare: Bool { width == height }
+    @inlinable var aspectRatio: CGFloat { width / height }
 }
 
 public extension CGSize {
@@ -105,6 +106,36 @@ public extension CGSize {
     
     @inlinable init<F: BinaryFloatingPoint>(vertical amount: F) {
         self.init(width: .zero, height: amount.cgFloat)
+    }
+}
+
+public extension CGSize {
+    @inlinable init(aspectRatio: CGFloat, maxEdge: CGFloat) {
+        guard aspectRatio > 0 else { self = .zero; return }
+        
+        if aspectRatio > 1 {
+            self.init(width: maxEdge, height: maxEdge / aspectRatio)
+        } else if aspectRatio < 1 {
+            self.init(width: maxEdge * aspectRatio, height: maxEdge)
+        } else {
+            self.init(width: maxEdge, height: maxEdge)
+        }
+    }
+    
+    @inlinable init<E: BinaryInteger>(aspectRatio: @autoclosure () -> CGFloat, maxEdge: E) {
+        self.init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat)
+    }
+    
+    @inlinable init<E: BinaryFloatingPoint>(aspectRatio: @autoclosure () -> CGFloat, maxEdge: E) {
+        self.init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat)
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(aspectRatio: A, maxEdge: E) {
+        self.init(aspectRatio: aspectRatio.cgFloat, maxEdge: maxEdge.cgFloat)
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(aspectRatio: A, maxEdge: E) {
+        self.init(aspectRatio: aspectRatio.cgFloat, maxEdge: maxEdge.cgFloat)
     }
 }
 

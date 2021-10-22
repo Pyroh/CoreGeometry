@@ -352,9 +352,17 @@ final class CoreGeometryTests: XCTestCase {
         let s2 = CGSize(3, 4)
         let s3 = CGSize(5)
         
+        let s4 = CGSize(800, 600)
+        let s5 = CGSize(600, 800)
+        let s6 = CGSize(800, 800)
+        
         XCTAssert(s1 == .init(width: 1, height: 2))
         XCTAssert(s2 == .init(width: 3, height: 4))
         XCTAssert(s3 == .init(width: 5, height: 5))
+        
+        XCTAssert(s4 == .init(aspectRatio: 4/3, maxEdge: 800))
+        XCTAssert(s5 == .init(aspectRatio: 3/4, maxEdge: 800))
+        XCTAssert(s6 == .init(aspectRatio: 1, maxEdge: 800))
     }
     
     func testVectorAlgebra() {

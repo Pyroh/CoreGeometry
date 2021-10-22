@@ -43,6 +43,7 @@ public extension CGRect {
         self.init(origin: origin, size: size)
     }
 
+    @available(*, deprecated)
     @inlinable init(ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
@@ -60,6 +61,7 @@ public extension CGRect {
         self.init(size: .init(width: width, height: height))
     }
     
+    @available(*, deprecated)
     @inlinable init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
         let width: CGFloat, height: CGFloat
         switch ratio.orientation {
@@ -75,6 +77,69 @@ public extension CGRect {
         }
         
         self.init(center: center, size: .init(width: width, height: height))
+    }
+    
+    @inlinable init(aspectRatio: CGFloat, maxEdge: CGFloat) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge))
+    }
+    
+    @inlinable init<T: BinaryInteger>(aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(aspectRatio: A, maxEdge: E) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(aspectRatio: A, maxEdge: E) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init(origin: CGPoint, aspectRatio: CGFloat, maxEdge: CGFloat) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge))
+    }
+    
+    @inlinable init<T: BinaryInteger>(origin: CGPoint, aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(origin: CGPoint, aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(origin: CGPoint, aspectRatio: A, maxEdge: E) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(origin: CGPoint, aspectRatio: A, maxEdge: E) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init(center: CGPoint, aspectRatio: CGFloat, maxEdge: CGFloat) {
+        let size = CGSize(aspectRatio: aspectRatio, maxEdge: maxEdge)
+        let origin = CGPoint(simd2: center.simd2 - (size.simd2 / 2))
+        
+        self.init(origin: origin, size: size)
+    }
+    
+    @inlinable init<T: BinaryInteger>(center: CGPoint, aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
+        self.init(center: origin, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(center: CGPoint, aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
+        self.init(center: origin, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(center: CGPoint, aspectRatio: A, maxEdge: E) {
+        self.init(center: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(center: CGPoint, aspectRatio: A, maxEdge: E) {
+        self.init(center: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
     }
     
     @inlinable init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
