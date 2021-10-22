@@ -127,19 +127,19 @@ public extension CGRect {
     }
     
     @inlinable init<T: BinaryInteger>(center: CGPoint, aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
-        self.init(center: origin, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+        self.init(center: center, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
     }
     
     @inlinable init<T: BinaryFloatingPoint>(center: CGPoint, aspectRatio: @autoclosure () -> CGFloat, maxEdge: T) {
-        self.init(center: origin, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
+        self.init(center: center, size: .init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat))
     }
     
     @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(center: CGPoint, aspectRatio: A, maxEdge: E) {
-        self.init(center: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+        self.init(center: center, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
     }
     
     @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(center: CGPoint, aspectRatio: A, maxEdge: E) {
-        self.init(center: origin, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
+        self.init(center: center, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
     }
     
     @inlinable init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
