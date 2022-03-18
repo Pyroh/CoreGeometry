@@ -378,6 +378,12 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(-v1 == v3)
     }
     
+    func testCGRectTransform() {
+        let r1 = CGRect(10, 10, 100, 100)
+        let r2 = r1.transformed { $0.origin = .zero }
+        
+        XCTAssert(r2 == CGRect(0, 0, 100, 100))
+    }
 }
 
 #endif

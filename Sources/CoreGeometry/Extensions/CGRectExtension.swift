@@ -627,33 +627,70 @@ public extension CGRect {
 }
 
 public extension CGRect {
+    @available(*, deprecated, renamed: "transformingOrigin")
     @inlinable func transformOrigin(_ transform: (CGPoint) throws -> CGPoint) rethrows -> CGRect {
         with(origin: try transform(origin))
     }
     
+    @available(*, deprecated, renamed: "transformingX")
     @inlinable func transformX(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
         with(x: try transform(x))
     }
     
+    @available(*, deprecated, renamed: "transformingY")
     @inlinable func transformY(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
         with(y: try transform(y))
     }
     
+    @available(*, deprecated, renamed: "transformingSize")
     @inlinable func transformSize(_ transform: (CGSize) throws -> CGSize) rethrows -> CGRect {
         with(size: try transform(size))
     }
     
+    @available(*, deprecated, renamed: "transformingWidth")
     @inlinable func transformWidth(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
         with(width: try transform(width))
     }
     
+    @available(*, deprecated, renamed: "transformingHeight")
     @inlinable func transformHeight(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(height: try transform(height))
+    }
+    
+    @inlinable func transformingOrigin(_ transform: (CGPoint) throws -> CGPoint) rethrows -> CGRect {
+        with(origin: try transform(origin))
+    }
+    
+    @inlinable func transformingX(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(x: try transform(x))
+    }
+    
+    @inlinable func transformingY(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(y: try transform(y))
+    }
+    
+    @inlinable func transformingSize(_ transform: (CGSize) throws -> CGSize) rethrows -> CGRect {
+        with(size: try transform(size))
+    }
+    
+    @inlinable func transformingWidth(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
+        with(width: try transform(width))
+    }
+    
+    @inlinable func transformingHeight(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
         with(height: try transform(height))
     }
 }
 
 public extension CGRect {
-    func map<T>(_ transform: (CGRect) throws -> T) rethrows -> T {
+    @inlinable func map<T>(_ transform: (CGRect) throws -> T) rethrows -> T {
         try transform(self)
+    }
+    
+    @inlinable func transformed(using transform: (inout CGRect) throws -> ()) rethrows -> CGRect {
+        var resultRect = self
+        try transform(&resultRect)
+        
+        return resultRect
     }
 }
