@@ -308,6 +308,33 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(r2 == CGRect(x: 0, y: 0, width: 1, height: 2))
     }
     
+    func testPointRectComparison() {
+        let r = CGRect(10, 10, 100, 100)
+        let p1 = CGPoint.zero
+        let p2 = CGPoint(0, 55)
+        let p3 = CGPoint(55, 0)
+        
+        let e1 = p1 < r
+        let e2 = p2 < r
+        let e3 = p3 < r
+        
+        XCTAssert(e1.x == true && e1.y == true)
+        XCTAssert(e2.x == true && e2.y == false)
+        XCTAssert(e3.x == false && e3.y == true)
+        
+        let p4 = CGPoint(120, 120)
+        let p5 = CGPoint(120, 55)
+        let p6 = CGPoint(55, 120)
+        
+        let e4 = p4 > r
+        let e5 = p5 > r
+        let e6 = p6 > r
+        
+        XCTAssert(e4.x == true && e4.y == true)
+        XCTAssert(e5.x == true && e5.y == false)
+        XCTAssert(e6.x == false && e6.y == true)
+    }
+    
     func testSizeAlgebra() {
         let s1 = CGSize(square: 100)
         

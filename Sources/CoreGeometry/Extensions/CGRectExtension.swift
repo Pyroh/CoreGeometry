@@ -694,3 +694,33 @@ public extension CGRect {
         return resultRect
     }
 }
+
+public extension CGRect {
+    @inlinable static func <(_ lhs: CGPoint, _ rhs: CGRect) -> (x: Bool, y: Bool) {
+        let lhs2 = lhs.simd2
+        let rhs2 = rhs.origin.simd2
+        
+        return (lhs2.x < rhs2.x, lhs2.y < rhs2.y)
+    }
+    
+    @inlinable static func <=(_ lhs: CGPoint, _ rhs: CGRect) -> (x: Bool, y: Bool) {
+        let lhs2 = lhs.simd2
+        let rhs2 = rhs.origin.simd2
+        
+        return (lhs2.x <= rhs2.x, lhs2.y <= rhs2.y)
+    }
+    
+    @inlinable static func >(_ lhs: CGPoint, _ rhs: CGRect) -> (x: Bool, y: Bool) {
+        let lhs2 = lhs.simd2
+        let rhs2 = rhs.origin.simd2 + rhs.size.simd2
+        
+        return (lhs2.x > rhs2.x, lhs2.y > rhs2.y)
+    }
+    
+    @inlinable static func >=(_ lhs: CGPoint, _ rhs: CGRect) -> (x: Bool, y: Bool) {
+        let lhs2 = lhs.simd2
+        let rhs2 = rhs.origin.simd2 + rhs.size.simd2
+        
+        return (lhs2.x >= rhs2.x, lhs2.y >= rhs2.y)
+    }
+}
