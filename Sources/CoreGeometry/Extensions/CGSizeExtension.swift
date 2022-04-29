@@ -39,6 +39,11 @@ public extension CGSize {
 }
 
 public extension CGSize {
+    @inlinable var integralWidth: Int { Int(width.rounded(.up)) }
+    @inlinable var integralHeight: Int { Int(height.rounded(.up)) }
+}
+
+public extension CGSize {
     
     /// Inits a size of `(amount,amount)`.
     @inlinable init(square amount: CGFloat) {

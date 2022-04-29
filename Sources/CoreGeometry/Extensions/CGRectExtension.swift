@@ -724,3 +724,8 @@ public extension CGRect {
         return (lhs2.x >= rhs2.x, lhs2.y >= rhs2.y)
     }
 }
+
+public extension CGRect {
+    @inlinable var integralWidth: Int { size.integralWidth }
+    @inlinable var integralHeight: Int { size.integralHeight }
+}

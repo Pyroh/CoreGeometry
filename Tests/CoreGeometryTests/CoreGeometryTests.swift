@@ -411,6 +411,18 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(r2 == CGRect(0, 0, 100, 100))
     }
+    
+    func testIntegralSize() {
+        let size = CGSize(1.23, 2.34)
+        
+        XCTAssert(size.integralWidth == 2)
+        XCTAssert(size.integralHeight == 3)
+        
+        let rect = CGRect(size: size)
+        
+        XCTAssert(rect.integralWidth == 2)
+        XCTAssert(rect.integralHeight == 3)
+    }
 }
 
 #endif
