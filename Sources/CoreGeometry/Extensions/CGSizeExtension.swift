@@ -36,6 +36,12 @@ public extension CGSize {
     @inlinable var integral: Self { .init(simd2: simd2.rounded(.up)) }
     @inlinable var isSquare: Bool { width == height }
     @inlinable var aspectRatio: CGFloat { width / height }
+    
+    @inlinable var min: CGFloat { width < height ? width : height }
+    @inlinable var max: CGFloat { width < height ? height : width }
+    
+    @inlinable var minSize: CGSize { .init(square: min) }
+    @inlinable var maxSize: CGSize { .init(square: max) }
 }
 
 public extension CGSize {
@@ -306,13 +312,13 @@ public extension CGSize {
     /// Contrains `self` to the given size.
     /// - Parameter size: The size to contrain to.
     @inlinable mutating func constrain(to size: CGSize) {
-        simd2 = min(simd2, size.simd2)
+        simd2 = simd.min(simd2, size.simd2)
     }
     
     /// Return `self` constrained to the given size.
     /// - Parameter size: The size to contrain to.
     @inlinable func constrained(to size: CGSize) -> CGSize {
-        .init(simd2: min(simd2, size.simd2))
+        .init(simd2: simd.min(simd2, size.simd2))
     }
 }
 
