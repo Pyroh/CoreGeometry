@@ -306,6 +306,14 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(r1 == CGRect(x: 1, y: 2, width: 3, height: 4))
         XCTAssert(r2 == CGRect(x: 0, y: 0, width: 1, height: 2))
+        
+        let r3 = CGRect(square: 40)
+        let r4 = CGRect(center: .zero, square: 40)
+        let r5 = CGRect(origin: .init(20, 20), square: 40)
+        
+        XCTAssert(r3 == CGRect(x: 0, y: 0, width: 40, height: 40))
+        XCTAssert(r4 == CGRect(x: -20, y: -20, width: 40, height: 40))
+        XCTAssert(r5 == CGRect(x: 20, y: 20, width: 40, height: 40))
     }
     
     func testPointRectComparison() {
