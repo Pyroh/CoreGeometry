@@ -774,4 +774,12 @@ public extension CGRect {
     @inlinable static func *=(lhs: inout Self, rhs: SIMD2<CGFloat.NativeType>) {
         lhs = lhs * rhs
     }
+    
+    @inlinable static func /(lhs: Self, rhs: SIMD2<CGFloat.NativeType>) -> Self {
+        .init(simd4: .init(lowHalf: lhs.origin.simd2, highHalf: lhs.size.simd2 / rhs))
+    }
+    
+    @inlinable static func /=(lhs: inout Self, rhs: SIMD2<CGFloat.NativeType>) {
+        lhs = lhs / rhs
+    }
 }

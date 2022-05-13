@@ -469,12 +469,15 @@ final class CoreGeometryTests: XCTestCase {
         let rect1 = CGRect(1, 2, 3, 4)
         var rect2 = rect1
         let result = CGRect(1, 2, 6, 8)
+        var rect3 = result
         
         XCTAssert(rect1 * .init(2, 2) == result)
-        
         rect2 *= .init(2, 2)
-        
         XCTAssert(rect2 == result)
+        
+        XCTAssert(result / .init(2, 2) == rect1)
+        rect3 /= .init(2, 2)
+        XCTAssert(rect3 == rect1)
     }
 }
 
