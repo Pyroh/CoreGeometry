@@ -432,7 +432,7 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(rect.integralHeight == 3)
     }
     
-    func minMaxSize() {
+    func testMinMaxSize() {
         let size = CGSize(10, 20)
         
         XCTAssert(size.min == 10)
@@ -440,7 +440,41 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(size.minSize == .init(square: 10))
         XCTAssert(size.maxSize == .init(square: 20))
+    }
+    
+    func testCGPointClamp() {
+        let rect = CGRect(square: 32)
+        let out0 = CGPoint(-10, -10)
+        let out1 = CGPoint(-10, 16)
+        let out2 = CGPoint(-10, 42)
+        let out3 = CGPoint(16, 42)
+        let out4 = CGPoint(42, 42)
+        let out5 = CGPoint(42, 16)
+        let out6 = CGPoint(42, -10)
+        let out7 = CGPoint(16, -10)
+        let in0 = CGPoint(16, 16)
         
+        XCTAssert(out0.clamped(to: rect) == rect[.min, .min])
+        XCTAssert(out1.clamped(to: rect) == rect[.min, .mid])
+        XCTAssert(out2.clamped(to: rect) == rect[.min, .max])
+        XCTAssert(out3.clamped(to: rect) == rect[.mid, .max])
+        XCTAssert(out4.clamped(to: rect) == rect[.max, .max])
+        XCTAssert(out5.clamped(to: rect) == rect[.max, .mid])
+        XCTAssert(out6.clamped(to: rect) == rect[.max, .min])
+        XCTAssert(out7.clamped(to: rect) == rect[.mid, .min])
+        XCTAssert(in0.clamped(to: rect) == in0)
+    }
+    
+    func testRectProduct() {
+        let rect1 = CGRect(1, 2, 3, 4)
+        var rect2 = rect1
+        let result = CGRect(1, 2, 6, 8)
+        
+        XCTAssert(rect1 * .init(2, 2) == result)
+        
+        rect2 *= .init(2, 2)
+        
+        XCTAssert(rect2 == result)
     }
 }
 

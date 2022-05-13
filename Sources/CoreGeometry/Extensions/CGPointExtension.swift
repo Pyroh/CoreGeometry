@@ -358,3 +358,13 @@ extension CGPoint: AdditiveArithmetic {
         .init(simd2: -rhs.simd2)
     }
 }
+
+public extension CGPoint {
+    @inlinable mutating func clamp(to rect: CGRect) {
+        self = clamped(to: rect)
+    }
+    
+    @inlinable func clamped(to rect: CGRect) -> CGPoint {
+        .init(simd2: self.simd2.clamped(lowerBound: rect.origin.simd2, upperBound: rect.origin.simd2 + rect.size.simd2))
+    }
+}
