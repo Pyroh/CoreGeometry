@@ -30,13 +30,20 @@ import SwiftUI
 
 extension UnitPoint {
     @usableFromInline var simd2: SIMD2<Native> { .init(x.native, y.native) }
+    @usableFromInline func flipped(x flagX: Bool, y flagY: Bool) -> Self {
+        let x = flagX ? 1 - x : x
+        let y = flagY ? 1 - y : y
+        
+        return .init(x: x, y: y)
+    }
 }
 
 #if os(macOS)
 import AppKit
 
 @available(OSX 10.15, *)
-private func layoutDirection() -> LayoutDirection {
+@usableFromInline func layoutDirection() -> LayoutDirection {
+    if NSApp == nil { return .leftToRight }
     switch NSApp.userInterfaceLayoutDirection {
     case .leftToRight: return .leftToRight
     case .rightToLeft: return .rightToLeft
@@ -44,11 +51,15 @@ private func layoutDirection() -> LayoutDirection {
     }
 }
 
+@usableFromInline func contextIsFlipped() -> Bool {
+    NSGraphicsContext.current?.isFlipped ?? false
+}
+
 #elseif os(watchOS)
 import WatchKit
 
 @available(watchOS 6.0, *)
-private func layoutDirection() -> LayoutDirection {
+@usableFromInline func layoutDirection() -> LayoutDirection {
     switch WKInterfaceDevice.current().layoutDirection {
     case .leftToRight: return .leftToRight
     case .rightToLeft: return .rightToLeft
@@ -56,17 +67,20 @@ private func layoutDirection() -> LayoutDirection {
     }
 }
 
+private func contextIsFlipped() -> Bool { true }
 #else
 import UIKit
 
 @available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-private func layoutDirection() -> LayoutDirection {
+@usableFromInline func layoutDirection() -> LayoutDirection {
     switch UIApplication.shared.userInterfaceLayoutDirection {
     case .leftToRight: return .leftToRight
     case .rightToLeft: return .rightToLeft
     @unknown default: return .leftToRight
     }
 }
+
+@usableFromInline  private func contextIsFlipped() -> Bool { true }
 #endif
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
@@ -140,10 +154,18 @@ extension CGRect {
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 public extension CGRect {
-    
     @inlinable subscript(anchor: UnitPoint) -> CGPoint {
-        get { .init(simd2: origin.simd2 + size.simd2 * anchor.simd2) }
-        set { origin.simd2 += newValue.simd2 - self[anchor].simd2 }
+        get {
+            let flipX = layoutDirection() == .rightToLeft
+            let flipY = !contextIsFlipped()
+            
+            let anchor = anchor.flipped(x: flipX, y: flipY)
+            
+            return .init(simd2: origin.simd2 + size.simd2 * anchor.simd2)
+        }
+        set {
+            origin.simd2 += newValue.simd2 - self[anchor].simd2
+        }
     }
     
     /// Return a copy of `self` aligned relative to the given rect following a given anchor.

@@ -230,13 +230,14 @@ final class CoreGeometryTests: XCTestCase {
     
     func testRectAnchor() {
         let r1 = CGRect(20, 20)
-        XCTAssert(r1[UnitPoint.topLeading] == .init(0, 0))
-        XCTAssert(r1[UnitPoint.top] == .init(10, 0))
-        XCTAssert(r1[UnitPoint.topTrailing] == .init(20, 0))
+        print(r1[UnitPoint.topLeading])
+        XCTAssert(r1[UnitPoint.topLeading] == .init(0, 20))
+        XCTAssert(r1[UnitPoint.top] == .init(10, 20))
+        XCTAssert(r1[UnitPoint.topTrailing] == .init(20, 20))
         XCTAssert(r1[UnitPoint.trailing] == .init(20, 10))
-        XCTAssert(r1[UnitPoint.bottomLeading] == .init(0, 20))
-        XCTAssert(r1[UnitPoint.bottom] == .init(10, 20) )
-        XCTAssert(r1[UnitPoint.bottomTrailing] == .init(20, 20))
+        XCTAssert(r1[UnitPoint.bottomLeading] == .init(0, 0))
+        XCTAssert(r1[UnitPoint.bottom] == .init(10, 0) )
+        XCTAssert(r1[UnitPoint.bottomTrailing] == .init(20, 0))
         XCTAssert(r1[UnitPoint.leading] == .init(0, 10))
         XCTAssert(r1[UnitPoint.center] == .init(10, 10))
         
