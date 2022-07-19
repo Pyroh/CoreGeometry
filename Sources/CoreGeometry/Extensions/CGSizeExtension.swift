@@ -47,6 +47,10 @@ public extension CGSize {
 public extension CGSize {
     @inlinable var integralWidth: Int { Int(width.rounded(.up)) }
     @inlinable var integralHeight: Int { Int(height.rounded(.up)) }
+    
+    @inlinable func integral(_ rule: FloatingPointRoundingRule) -> Self {
+        .init(simd2: simd2.rounded(rule))
+    }
 }
 
 public extension CGSize {

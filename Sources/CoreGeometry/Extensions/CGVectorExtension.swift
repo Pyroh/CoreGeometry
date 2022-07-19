@@ -46,6 +46,15 @@ public extension CGVector {
 }
 
 public extension CGVector {
+    @inlinable init(angle: CGFloat) {
+        let x: CGFloat = cos(angle)
+        let y: CGFloat = sin(angle)
+        
+        self.init(dx: x, dy: y)
+    }
+}
+
+public extension CGVector {
     
     /// The receiver's SIMD representation.
     @inlinable var simd2: SIMD2<CGFloat.NativeType> {

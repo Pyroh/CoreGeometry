@@ -427,10 +427,16 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(size.integralWidth == 2)
         XCTAssert(size.integralHeight == 3)
         
+        XCTAssert(size.integral(.down) == .init(1, 2))
+        XCTAssert(size.integral(.up) == .init(2, 3))
+        
         let rect = CGRect(size: size)
         
         XCTAssert(rect.integralWidth == 2)
         XCTAssert(rect.integralHeight == 3)
+        
+        XCTAssert(rect.integral(.down) == .init(1, 2))
+        XCTAssert(rect.integral(.up) == .init(2, 3))
     }
     
     func testMinMaxSize() {

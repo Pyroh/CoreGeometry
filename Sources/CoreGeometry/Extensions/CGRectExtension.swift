@@ -764,6 +764,10 @@ public extension CGRect {
 public extension CGRect {
     @inlinable var integralWidth: Int { size.integralWidth }
     @inlinable var integralHeight: Int { size.integralHeight }
+    
+    @inlinable func integral(_ rule: FloatingPointRoundingRule) -> Self {
+        .init(simd4: simd4.rounded(rule))
+    }
 }
 
 public extension CGRect {
