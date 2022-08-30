@@ -80,7 +80,7 @@ import UIKit
     }
 }
 
-@usableFromInline  private func contextIsFlipped() -> Bool { true }
+@usableFromInline func contextIsFlipped() -> Bool { true }
 #endif
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
