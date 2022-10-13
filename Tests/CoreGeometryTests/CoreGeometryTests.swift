@@ -486,6 +486,14 @@ final class CoreGeometryTests: XCTestCase {
         rect3 /= .init(2, 2)
         XCTAssert(rect3 == rect1)
     }
+    
+    func testArea() {
+        let size = CGSize(50, 20)
+        let rect = CGRect(10, 20, 30, 40)
+        
+        XCTAssert(size.area == 1000)
+        XCTAssert(rect.area == 1200)
+    }
 }
 
 #endif

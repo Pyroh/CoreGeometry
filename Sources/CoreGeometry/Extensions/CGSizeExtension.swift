@@ -33,21 +33,41 @@ import SwiftUI
 import simd
 
 public extension CGSize {
+
+    /// The largest size that result from converting the source size values to integers.
     @inlinable var integral: Self { .init(simd2: simd2.rounded(.up)) }
+
+    /// `true` if `width` == `height`. `false` otherwise.
     @inlinable var isSquare: Bool { width == height }
+    
+    /// The receiver's aspect ratio.
     @inlinable var aspectRatio: CGFloat { width / height }
     
+    /// The minimum value of the size. Can be either the width or the height.
     @inlinable var min: CGFloat { width < height ? width : height }
+    
+    /// The maximum value of the size. Can be either the width or the height.
     @inlinable var max: CGFloat { width < height ? height : width }
     
+    /// The largest square size the receiver can fit.
     @inlinable var minSize: CGSize { .init(square: min) }
+    
+    /// The smallest square that can contain the receiver.
     @inlinable var maxSize: CGSize { .init(square: max) }
+    
+    /// The area of the size.
+    @inlinable var area: CGFloat { width * height }
 }
 
 public extension CGSize {
+    
+    /// The width rounded to the upper integer.
     @inlinable var integralWidth: Int { Int(width.rounded(.up)) }
+    
+    /// The height rounded to the upper integer.
     @inlinable var integralHeight: Int { Int(height.rounded(.up)) }
     
+    /// Same as `integral` but with a given rounding rule.
     @inlinable func integral(_ rule: FloatingPointRoundingRule) -> Self {
         .init(simd2: simd2.rounded(rule))
     }
@@ -55,70 +75,86 @@ public extension CGSize {
 
 public extension CGSize {
     
-    /// Inits a size of `(amount,amount)`.
+    /// Inits a size of `(amount, amount)`.
     @inlinable init(square amount: CGFloat) {
         self.init(width: amount, height: amount)
     }
     
-    /// Inits a size of `(amount,amount)`.
+    /// Inits a size of `(amount, amount)`.
     @inlinable init<I: BinaryInteger>(square amount: I) {
         self.init(width: amount.cgFloat, height: amount.cgFloat)
     }
     
-    /// Inits a size of `(amount,amount)`.
+    /// Inits a size of `(amount, amount)`.
     @inlinable init<F: BinaryFloatingPoint>(square amount: F) {
         self.init(width: amount.cgFloat, height: amount.cgFloat)
     }
     
+    /// Inits a size of `(amount, amount)`.
     @inlinable init(_ square: CGFloat) {
         self.init(width: square.cgFloat, height: square.cgFloat)
     }
     
+    /// Inits a size of `(amount, amount)`.
     @inlinable init<I: BinaryInteger>(_ square: I) {
         self.init(width: square.cgFloat, height: square.cgFloat)
     }
     
+    /// Inits a size of `(amount, amount)`.
     @inlinable init<F: BinaryFloatingPoint>(_ square: F) {
         self.init(width: square.cgFloat, height: square.cgFloat)
     }
     
+    /// Inits a size of `(width, height)`.
     @inlinable init(_ width: CGFloat, _ height: CGFloat) {
         self.init(width: width, height: height)
     }
     
+    /// Inits a size of `(width, height)`.
     @inlinable init<I: BinaryInteger>(_ width: I, _ height: I) {
         self.init(width: width.cgFloat, height: height.cgFloat)
     }
     
+    /// Inits a size of `(width, height)`.
     @inlinable init<F: BinaryFloatingPoint>(_ width: F, _ height: F) {
         self.init(width: width.cgFloat, height: height.cgFloat)
     }
 }
 
 public extension CGSize {
+    
+    /// The size with an height equal to zero.
     @inlinable var horizontal: CGSize { .init(width: width, height: .zero) }
+    
+    /// The size with a width equal to zero.
     @inlinable var vertical: CGSize { .init(width: .zero, height: height) }
     
+    /// Inits a size of `(amount, 0)`.
     @inlinable init(horizontal amount: CGFloat) {
         self.init(width: amount, height: .zero)
     }
     
+    /// Inits a size of `(amount, 0)`.
     @inlinable init<I: BinaryInteger>(horizontal amount: I) {
         self.init(width: amount.cgFloat, height: .zero)
     }
     
+    /// Inits a size of `(amount, 0)`.
     @inlinable init<F: BinaryFloatingPoint>(horizontal amount: F) {
         self.init(width: amount.cgFloat, height: .zero)
     }
     
+    /// Inits a size of `(0, amount)`.
     @inlinable init(vertical amount: CGFloat) {
         self.init(width: .zero, height: amount)
     }
     
+    /// Inits a size of `(0, amount)`.
     @inlinable init<I: BinaryInteger>(vertical amount: I) {
         self.init(width: .zero, height: amount.cgFloat)
     }
     
+    /// Inits a size of `(0, amount)`.
     @inlinable init<F: BinaryFloatingPoint>(vertical amount: F) {
         self.init(width: .zero, height: amount.cgFloat)
     }
@@ -161,6 +197,7 @@ public extension CGSize {
         set { (width, height) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
+    /// Inits a size from its SIMD representation.
     @inlinable init(simd2: SIMD2<CGFloat.NativeType>) {
         self.init(width: simd2.x, height: simd2.y)
     }

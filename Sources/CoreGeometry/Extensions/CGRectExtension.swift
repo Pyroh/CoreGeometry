@@ -294,6 +294,9 @@ public extension CGRect {
         default: return .square
         }
     }
+    
+    /// The area of `self`.
+    @inlinable var area: CGFloat { size.area }
 }
 
 // MARK: -
