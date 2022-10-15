@@ -504,6 +504,11 @@ public extension CGSize {
         
         return .init(aspectRatio: aspectRatio, maxEdge: maxEdge)
     }
+    
+    /// Returns `true` if the given size's elements are both lesser that or equel to the receiver's one, respectivelty. `false` otherwise.
+    @inlinable func contains(_ other: CGSize) -> Bool {
+        all(other.simd2 .<= simd2)
+    }
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
