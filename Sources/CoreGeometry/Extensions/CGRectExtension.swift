@@ -115,6 +115,42 @@ public extension CGRect {
         self.init(center: center, size: .init(square: edge))
     }
     
+    @inlinable init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
+        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(_ x: T, _ y: T, _ width: T, _ height: T) {
+        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+    }
+    
+    @inlinable init<T: BinaryInteger>(_ width: T, _ height: T) {
+        self.init(size: .init(width, height))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
+        self.init(size: .init(width, height))
+    }
+    
+    /// Creates the greatest absolute rectangle possible with `p1` and `p2` as opposite corners.
+    /// - Parameters:
+    ///   - p1: A corner of the rectangle.
+    ///   - p2: The opposite corner.
+    @inlinable init(p1: CGPoint, p2: CGPoint) {
+        let x = min(p1.x, p2.x)
+        let y = min(p1.y, p2.y)
+        let width = max(p1.x, p2.x) - x
+        let height = max(p1.y, p2.y) - y
+        
+        self = .init(x, y, width, height)
+    }
+    
+    @inlinable init(origin p1: CGPoint, opposite p2: CGPoint) {
+        let size = CGSize(simd2: p2.simd2 - p1.simd2)
+        self.init(origin: p1, size: size)
+    }
+}
+
+public extension CGRect {
     @inlinable init(aspectRatio: CGFloat, maxEdge: CGFloat) {
         self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge))
     }
@@ -177,39 +213,70 @@ public extension CGRect {
     @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(center: CGPoint, aspectRatio: A, maxEdge: E) {
         self.init(center: center, size: .init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat))
     }
-    
-    @inlinable init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
-        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+}
+
+public extension CGRect {
+    @inlinable init(aspectRatio: CGFloat, minEdge: CGFloat) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, minEdge: minEdge))
     }
     
-    @inlinable init<T: BinaryFloatingPoint>(_ x: T, _ y: T, _ width: T, _ height: T) {
-        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+    @inlinable init<T: BinaryInteger>(aspectRatio: CGFloat, minEdge: T) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
     }
     
-    @inlinable init<T: BinaryInteger>(_ width: T, _ height: T) {
-        self.init(size: .init(width, height))
+    @inlinable init<T: BinaryFloatingPoint>(aspectRatio: CGFloat, minEdge: T) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
     }
     
-    @inlinable init<T: BinaryFloatingPoint>(_ width: T, _ height: T) {
-        self.init(size: .init(width, height))
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(aspectRatio: A, minEdge: E) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
     }
     
-    /// Creates the greatest absolute rectangle possible with `p1` and `p2` as opposite corners.
-    /// - Parameters:
-    ///   - p1: A corner of the rectangle.
-    ///   - p2: The opposite corner.
-    @inlinable init(p1: CGPoint, p2: CGPoint) {
-        let x = min(p1.x, p2.x)
-        let y = min(p1.y, p2.y)
-        let width = max(p1.x, p2.x) - x
-        let height = max(p1.y, p2.y) - y
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(aspectRatio: A, minEdge: E) {
+        self.init(origin: .zero, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init(origin: CGPoint, aspectRatio: CGFloat, minEdge: CGFloat) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, minEdge: minEdge))
+    }
+    
+    @inlinable init<T: BinaryInteger>(origin: CGPoint, aspectRatio: CGFloat, minEdge: T) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(origin: CGPoint, aspectRatio: CGFloat, minEdge: T) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(origin: CGPoint, aspectRatio: A, minEdge: E) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(origin: CGPoint, aspectRatio: A, minEdge: E) {
+        self.init(origin: origin, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init(center: CGPoint, aspectRatio: CGFloat, minEdge: CGFloat) {
+        let size = CGSize(aspectRatio: aspectRatio, minEdge: minEdge)
+        let origin = CGPoint(simd2: center.simd2 - (size.simd2 / 2))
         
-        self = .init(x, y, width, height)
+        self.init(origin: origin, size: size)
     }
     
-    @inlinable init(origin p1: CGPoint, opposite p2: CGPoint) {
-        let size = CGSize(simd2: p2.simd2 - p1.simd2)
-        self.init(origin: p1, size: size)
+    @inlinable init<T: BinaryInteger>(center: CGPoint, aspectRatio: CGFloat, minEdge: T) {
+        self.init(center: center, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init<T: BinaryFloatingPoint>(center: CGPoint, aspectRatio: CGFloat, minEdge: T) {
+        self.init(center: center, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(center: CGPoint, aspectRatio: A, minEdge: E) {
+        self.init(center: center, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
+    }
+    
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(center: CGPoint, aspectRatio: A, minEdge: E) {
+        self.init(center: center, size: .init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat))
     }
 }
 

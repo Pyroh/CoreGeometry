@@ -41,8 +41,15 @@ public extension CGSize {
     /// `true` if `width` == `height`. `false` otherwise.
     @inlinable var isSquare: Bool { width == height }
     
-    /// The receiver's aspect ratio.
-    @inlinable var aspectRatio: CGFloat { width / height }
+    /// `true` if `width` and `height` both equal 0. `false` otherwise.
+    @inlinable var isZero: Bool { width.isZero && height.isZero }
+    
+    /// The receiver's aspect ratio. Equals to `width / height`.
+    @inlinable var aspectRatio: CGFloat {
+        if isZero { return 1 }
+        else if height.isZero { return 0 }
+        else { return abs(width) / abs(height) }
+    }
     
     /// The minimum value of the size. Can be either the width or the height.
     @inlinable var min: CGFloat { width < height ? width : height }
@@ -163,7 +170,8 @@ public extension CGSize {
 
 public extension CGSize {
     @inlinable init(aspectRatio: CGFloat, maxEdge: CGFloat) {
-        guard aspectRatio > 0 else { self = .zero; return }
+        guard aspectRatio > 0 else { self = .init(maxEdge); return }
+        guard aspectRatio.isFinite else { self = .init(.infinity, .infinity); return }
         
         if aspectRatio > 1 {
             self.init(width: maxEdge, height: maxEdge / aspectRatio)
@@ -174,12 +182,12 @@ public extension CGSize {
         }
     }
     
-    @inlinable init<E: BinaryInteger>(aspectRatio: @autoclosure () -> CGFloat, maxEdge: E) {
-        self.init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat)
+    @inlinable init<E: BinaryInteger>(aspectRatio: CGFloat, maxEdge: E) {
+        self.init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat)
     }
     
-    @inlinable init<E: BinaryFloatingPoint>(aspectRatio: @autoclosure () -> CGFloat, maxEdge: E) {
-        self.init(aspectRatio: aspectRatio(), maxEdge: maxEdge.cgFloat)
+    @inlinable init<E: BinaryFloatingPoint>(aspectRatio: CGFloat, maxEdge: E) {
+        self.init(aspectRatio: aspectRatio, maxEdge: maxEdge.cgFloat)
     }
     
     @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(aspectRatio: A, maxEdge: E) {
@@ -188,6 +196,37 @@ public extension CGSize {
     
     @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(aspectRatio: A, maxEdge: E) {
         self.init(aspectRatio: aspectRatio.cgFloat, maxEdge: maxEdge.cgFloat)
+    }
+}
+
+public extension CGSize {
+    @inlinable init(aspectRatio: CGFloat, minEdge: CGFloat) {
+        guard aspectRatio > 0 else { self = .init(minEdge); return }
+        guard aspectRatio.isFinite else { self = .init(.infinity, .infinity); return }
+        
+        if aspectRatio > 1 {
+            self.init(width: minEdge * aspectRatio, height: minEdge)
+        } else if aspectRatio < 1 {
+            self.init(width: minEdge, height: minEdge / aspectRatio)
+        } else {
+            self.init(width: minEdge, height: minEdge)
+        }
+    }
+    
+    @inlinable init<E: BinaryInteger>(aspectRatio: CGFloat, minEdge: E) {
+        self.init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat)
+    }
+
+    @inlinable init<E: BinaryFloatingPoint>(aspectRatio: CGFloat, minEdge: E) {
+        self.init(aspectRatio: aspectRatio, minEdge: minEdge.cgFloat)
+    }
+
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryInteger>(aspectRatio: A, minEdge: E) {
+        self.init(aspectRatio: aspectRatio.cgFloat, minEdge: minEdge.cgFloat)
+    }
+
+    @inlinable init<A: BinaryFloatingPoint, E: BinaryFloatingPoint>(aspectRatio: A, minEdge: E) {
+        self.init(aspectRatio: aspectRatio.cgFloat, minEdge: minEdge.cgFloat)
     }
 }
 
