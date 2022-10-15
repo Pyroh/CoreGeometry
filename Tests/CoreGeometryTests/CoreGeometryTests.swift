@@ -494,6 +494,15 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(size.area == 1000)
         XCTAssert(rect.area == 1200)
     }
+    
+    func testFittingSize() {
+        let ref = CGSize(200, 100)
+        
+        XCTAssert(CGSize(50, 50).fitted(to: ref) == CGSize(50, 50))
+        XCTAssert(CGSize(250, 50).fitted(to: ref) == CGSize(200, 40))
+        XCTAssert(CGSize(50, 200).fitted(to: ref) == CGSize(25, 100))
+        XCTAssert(CGSize(250, 200).fitted(to: ref) == CGSize(100, 80))
+    }
 }
 
 #endif

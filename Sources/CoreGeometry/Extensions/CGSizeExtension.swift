@@ -30,6 +30,7 @@
 
 import CoreGraphics
 import SwiftUI
+import SwizzleIMD
 import simd
 
 public extension CGSize {
@@ -426,6 +427,43 @@ public extension CGSize {
     /// - Returns: The resulting `CGRect`.
     @inlinable func makeRect(withCenter center: CGPoint) -> CGRect {
         .init(center: center, size: self)
+    }
+}
+
+public extension CGSize {
+    /// Fits the receiver to the reference size.
+    /// - Parameter reference: The reference size.
+    /// - Note: The receiver and the reference size elements must be greater of equal than zero.
+    @inlinable mutating func fit(to reference: CGSize) {
+        guard all(simd2 .<= reference.simd2) else { return }
+        
+        let mask = Array((simd2 .> reference.simd2).elements)
+        let maxEdge: CGFloat
+        
+        switch mask {
+        case [true, false]: maxEdge = reference.width
+        case [false, true]: maxEdge = reference.height
+        default: maxEdge = reference.width < reference.height ? reference.width : reference.height
+        }
+        
+        self = .init(aspectRatio: aspectRatio, maxEdge: maxEdge)
+    }
+    
+    /// Returns the size scaled to fit the reference size.
+    /// - Parameter reference: The reference size.
+    /// - Note: The receiver and the reference size elements must be greater of equal than zero.
+    @inlinable func fitted(to reference: CGSize) -> CGSize {
+        guard !all(simd2 .<= reference.simd2) else { return self }
+        let mask = Array((simd2 .> reference.simd2).elements)
+        let maxEdge: CGFloat
+        
+        switch mask {
+        case [true, false]: maxEdge = reference.width
+        case [false, true]: maxEdge = reference.height
+        default: maxEdge = reference.width < reference.height ? reference.width : reference.height
+        }
+        
+        return .init(aspectRatio: aspectRatio, maxEdge: maxEdge)
     }
 }
 
