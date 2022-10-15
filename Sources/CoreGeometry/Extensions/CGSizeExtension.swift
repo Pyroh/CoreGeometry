@@ -474,8 +474,6 @@ public extension CGSize {
     /// - Parameter reference: The reference size.
     /// - Note: The receiver and the reference size elements must be greater of equal than zero.
     @inlinable mutating func fit(to reference: CGSize) {
-        guard all(simd2 .<= reference.simd2) else { return }
-        
         let mask = Array((simd2 .> reference.simd2).elements)
         let maxEdge: CGFloat
         
@@ -492,7 +490,6 @@ public extension CGSize {
     /// - Parameter reference: The reference size.
     /// - Note: The receiver and the reference size elements must be greater of equal than zero.
     @inlinable func fitted(to reference: CGSize) -> CGSize {
-        guard !all(simd2 .<= reference.simd2) else { return self }
         let mask = Array((simd2 .> reference.simd2).elements)
         let maxEdge: CGFloat
         
