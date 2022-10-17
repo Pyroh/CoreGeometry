@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwizzleIMD",
+        "repositoryURL": "https://github.com/Pyroh/SwizzleIMD",
+        "state": {
+          "branch": null,
+          "revision": "69083176999367e18f301a7bc93a34da7be4f661",
+          "version": "1.4.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
