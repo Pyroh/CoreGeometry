@@ -507,8 +507,12 @@ public extension CGSize {
         all(other.simd2 .<= simd2)
     }
     
-    @inlinable func clamp(min: CGSize, max: CGSize) -> CGSize {
+    @inlinable func clamped(min: CGSize, max: CGSize) -> CGSize {
         .init(simd2: simd.clamp(simd2, min: min.simd2, max: max.simd2))
+    }
+    
+    @inlinable mutating func clamp(min: CGSize, max: CGSize) {
+        self = clamped(min: min, max: max)
     }
 }
 

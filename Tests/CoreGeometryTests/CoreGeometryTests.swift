@@ -578,7 +578,7 @@ final class CoreGeometryTests: XCTestCase {
         let smax = CGSize(20, 20)
         let stest = CGSize(9, 30)
         
-        XCTAssert(stest.clamp(min: smin, max: smax) == .init(10, 20))
+        XCTAssert(stest.clamped(min: smin, max: smax) == .init(10, 20))
     }
 }
 
