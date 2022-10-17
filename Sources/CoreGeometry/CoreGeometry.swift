@@ -44,3 +44,90 @@ postfix operator °
     
     return proxy
 }
+
+#if !os(Linux)
+#if os(macOS)
+import Cocoa
+#else
+import UIKit
+#endif
+
+public enum CoreGeometry {
+    public enum CoordinatesFlippedState {
+        /// Default for platform, independent on the context. Not flipped on macOS, flipped otherwise.
+        case auto
+        
+        case flipped
+        case notFlipped
+        
+        @usableFromInline
+        var flipped: Bool {
+            switch self {
+            case .auto:
+                #if os(macOS)
+                return NSView.focusView?.isFlipped ?? false
+                #else
+                return true
+                #endif
+            case .flipped:
+                return true
+            case .notFlipped:
+                return false
+            }
+        }
+    }
+    
+    @usableFromInline
+    static var flippedState: CoordinatesFlippedState = .auto
+    
+    @usableFromInline
+    static var flippedStateStack: [CoordinatesFlippedState] = []
+    
+    @usableFromInline
+    static var flippedVertically: Bool {
+        flippedState.flipped
+    }
+    
+    @inlinable
+    public static func saveFlippedState() {
+        flippedStateStack.append(flippedState)
+    }
+    
+    @inlinable
+    public static func restoreFlippedState() {
+        guard !flippedStateStack.isEmpty else {
+            fatalError("Tried to perform an unbalanced call to \(#function). Don't try to perform unbalanced call to \(#function).")
+        }
+        
+        flippedState = flippedStateStack.removeLast()
+    }
+    
+    @inlinable
+    public static func resetFlippedState() {
+        flippedState = .auto
+        flippedStateStack = []
+    }
+    
+    @inlinable
+    static func setFlippedState(_ state: CoordinatesFlippedState) {
+        flippedState = state
+    }
+    
+    @inlinable
+    public static func setFlippedState(from layer: CALayer) {
+        flippedState = layer.isGeometryFlipped ? .flipped : .notFlipped
+    }
+    
+    #if os(macOS)
+    @inlinable
+    public static func setFlippedState(from context: NSGraphicsContext) {
+        flippedState = context.isFlipped ? .flipped : .notFlipped
+    }
+    
+    @inlinable
+    public static func setFlippedState(from view: NSView) {
+        flippedState = view.isFlipped ? .flipped : .notFlipped
+    }
+    #endif
+}
+#endif

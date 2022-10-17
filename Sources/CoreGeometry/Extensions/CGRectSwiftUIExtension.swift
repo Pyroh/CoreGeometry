@@ -51,10 +51,6 @@ import AppKit
     }
 }
 
-@usableFromInline func contextIsFlipped() -> Bool {
-    NSGraphicsContext.current?.isFlipped ?? false
-}
-
 #elseif os(watchOS)
 import WatchKit
 
@@ -66,8 +62,6 @@ import WatchKit
     @unknown default: return .leftToRight
     }
 }
-
-private func contextIsFlipped() -> Bool { true }
 #else
 import UIKit
 
@@ -79,8 +73,6 @@ import UIKit
     @unknown default: return .leftToRight
     }
 }
-
-@usableFromInline func contextIsFlipped() -> Bool { true }
 #endif
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
@@ -105,10 +97,8 @@ import UIKit
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 @usableFromInline func convert(_ alignement: HorizontalAlignment) -> RectBoundary {
     switch alignement {
-    case .leading:
-        return layoutDirection() == .leftToRight ? .min : .max
-    case .trailing:
-        return layoutDirection() == .leftToRight ? .max : .min
+    case .leading: return layoutDirection() == .leftToRight ? .min : .max
+    case .trailing: return layoutDirection() == .leftToRight ? .max : .min
     default:
         return .mid
     }
@@ -117,22 +107,17 @@ import UIKit
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 private func convert(_ alignement: VerticalAlignment) -> AxisAlignment {
     switch alignement {
-    case .top:
-        return .min
-    case .bottom:
-        return .max
-    default:
-        return .mid
+    case .top: return CoreGeometry.flippedVertically ? .min : .max
+    case .bottom: return CoreGeometry.flippedVertically ? .max : .min
+    default: return .mid
     }
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 private func convert(_ alignement: VerticalAlignment) -> RectBoundary {
     switch alignement {
-    case .top:
-        return .min
-    case .bottom:
-        return .max
+    case .top: return CoreGeometry.flippedVertically ? .min : .max
+    case .bottom: return CoreGeometry.flippedVertically ? .max : .min
     default:
         return .mid
     }
@@ -157,7 +142,7 @@ public extension CGRect {
     @inlinable subscript(anchor: UnitPoint) -> CGPoint {
         get {
             let flipX = layoutDirection() == .rightToLeft
-            let flipY = !contextIsFlipped()
+            let flipY = !CoreGeometry.flippedVertically
             
             let anchor = anchor.flipped(x: flipX, y: flipY)
             

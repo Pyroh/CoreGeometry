@@ -506,6 +506,10 @@ public extension CGSize {
     @inlinable func contains(_ other: CGSize) -> Bool {
         all(other.simd2 .<= simd2)
     }
+    
+    @inlinable func clamp(min: CGSize, max: CGSize) -> CGSize {
+        .init(simd2: simd.clamp(simd2, min: min.simd2, max: max.simd2))
+    }
 }
 
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
