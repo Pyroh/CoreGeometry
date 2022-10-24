@@ -364,6 +364,12 @@ public extension CGRect {
     
     /// The area of `self`.
     @inlinable var area: CGFloat { size.area }
+    
+    /// The width, halved.
+    @inlinable var halfWidth: CGFloat { size.halfWidth }
+    
+    /// The height, halved.
+    @inlinable var halfHeight: CGFloat { size.halfHeight }
 }
 
 // MARK: -

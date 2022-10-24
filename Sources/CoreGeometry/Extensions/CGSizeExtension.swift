@@ -65,6 +65,12 @@ public extension CGSize {
     
     /// The area of the size.
     @inlinable var area: CGFloat { width * height }
+    
+    /// The width, halved.
+    @inlinable var halfWidth: CGFloat { width / 2 }
+    
+    /// The height, halved.
+    @inlinable var halfHeight: CGFloat { height / 2 }
 }
 
 public extension CGSize {
