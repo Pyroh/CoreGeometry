@@ -81,7 +81,7 @@ import Cocoa
 import UIKit
 #endif
 
-extension NSDirectionalEdgeInsets {
+public extension NSDirectionalEdgeInsets {
     
     /// Horizontal edge insets SIMD representation.
     /// Orderd `leading, trailing`.
