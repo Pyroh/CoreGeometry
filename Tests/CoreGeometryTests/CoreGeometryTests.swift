@@ -580,6 +580,122 @@ final class CoreGeometryTests: XCTestCase {
         
         XCTAssert(stest.clamped(min: smin, max: smax) == .init(10, 20))
     }
+    
+    func testEdgeInsets() {
+        let insets1 = EdgeInsets(simd4: .init(2, 1, 2, 1))
+        
+        XCTAssert(insets1 == .init(horizontal: 1, top: 2, bottom: 2))
+        XCTAssert(insets1 == .init(vertical: 2, leading: 1, trailing: 1))
+        XCTAssert(insets1 == .init(horizontal: .init(1, 1), vertical: .init(2, 2)))
+        XCTAssert(insets1.simd4 == .init(2, 1, 2, 1))
+        XCTAssert(insets1.horizontal == .init(1, 1))
+        XCTAssert(insets1.vertical == .init(2, 2))
+        XCTAssert(insets1.top == 2)
+        XCTAssert(insets1.leading == 1)
+        XCTAssert(insets1.bottom == 2)
+        XCTAssert(insets1.trailing == 1)
+        
+        let insets2 = EdgeInsets(all: 1)
+        XCTAssert(insets2 == .init(horizontal: 1, top: 1, bottom: 1))
+        XCTAssert(insets2 == .init(vertical: 1, leading: 1, trailing: 1))
+        XCTAssert(insets2 == .init(horizontal: .init(1, 1), vertical: .init(1, 1)))
+        XCTAssert(insets2.simd4 == .init(1, 1, 1, 1))
+        XCTAssert(insets2.horizontal == .init(1, 1))
+        XCTAssert(insets2.vertical == .init(1, 1))
+        XCTAssert(insets2.top == 1)
+        XCTAssert(insets2.leading == 1)
+        XCTAssert(insets2.bottom == 1)
+        XCTAssert(insets2.trailing == 1)
+    }
+    
+    func testDirectionalEdgeInsets() {
+        let insets1 = NSDirectionalEdgeInsets(simd4: .init(2, 1, 2, 1))
+        
+        #if os(iOS)
+        XCTAssert(insets1 == .init(horizontal: 1, top: 2, bottom: 2))
+        XCTAssert(insets1 == .init(vertical: 2, leading: 1, trailing: 1))
+        XCTAssert(insets1 == .init(horizontal: .init(1, 1), vertical: .init(2, 2)))
+        #endif
+        XCTAssert(insets1.simd4 == .init(2, 1, 2, 1))
+        XCTAssert(insets1.horizontal == .init(1, 1))
+        XCTAssert(insets1.vertical == .init(2, 2))
+        XCTAssert(insets1.top == 2)
+        XCTAssert(insets1.leading == 1)
+        XCTAssert(insets1.bottom == 2)
+        XCTAssert(insets1.trailing == 1)
+        
+        let insets2 = NSDirectionalEdgeInsets(all: 1)
+        #if os(iOS)
+        XCTAssert(insets2 == .init(horizontal: 1, top: 1, bottom: 1))
+        XCTAssert(insets2 == .init(vertical: 1, leading: 1, trailing: 1))
+        XCTAssert(insets2 == .init(horizontal: .init(1, 1), vertical: .init(1, 1)))
+        #endif
+        XCTAssert(insets2.simd4 == .init(1, 1, 1, 1))
+        XCTAssert(insets2.horizontal == .init(1, 1))
+        XCTAssert(insets2.vertical == .init(1, 1))
+        XCTAssert(insets2.top == 1)
+        XCTAssert(insets2.leading == 1)
+        XCTAssert(insets2.bottom == 1)
+        XCTAssert(insets2.trailing == 1)
+    }
+    
+    #if os(macOS)
+    func testNSEdgeInsets() {
+        let insets1 = NSEdgeInsets(simd4: .init(2, 1, 2, 1))
+        
+        XCTAssert(NSEdgeInsetsEqual(insets1, .init(horizontal: 1, top: 2, bottom: 2)))
+        XCTAssert(NSEdgeInsetsEqual(insets1, .init(vertical: 2, leading: 1, trailing: 1)))
+        XCTAssert(NSEdgeInsetsEqual(insets1, .init(horizontal: .init(1, 1), vertical: .init(2, 2))))
+        XCTAssert(insets1.simd4 == .init(2, 1, 2, 1))
+        XCTAssert(insets1.horizontal == .init(1, 1))
+        XCTAssert(insets1.vertical == .init(2, 2))
+        XCTAssert(insets1.top == 2)
+        XCTAssert(insets1.left == 1)
+        XCTAssert(insets1.bottom == 2)
+        XCTAssert(insets1.right == 1)
+        
+        let insets2 = NSEdgeInsets(all: 1)
+        XCTAssert(NSEdgeInsetsEqual(insets2, .init(horizontal: 1, top: 1, bottom: 1)))
+        XCTAssert(NSEdgeInsetsEqual(insets2, .init(vertical: 1, leading: 1, trailing: 1)))
+        XCTAssert(NSEdgeInsetsEqual(insets2, .init(horizontal: .init(1, 1), vertical: .init(1, 1))))
+        XCTAssert(insets2.simd4 == .init(1, 1, 1, 1))
+        XCTAssert(insets2.horizontal == .init(1, 1))
+        XCTAssert(insets2.vertical == .init(1, 1))
+        XCTAssert(insets2.top == 1)
+        XCTAssert(insets2.left == 1)
+        XCTAssert(insets2.bottom == 1)
+        XCTAssert(insets2.right == 1)
+    }
+    #endif
+    
+    #if os(iOS)
+    func testUIEdgeInsets() {
+        let insets1 = UIEdgeInsets(simd4: .init(2, 1, 2, 1))
+        
+        XCTAssert(insets1 == .init(horizontal: 1, top: 2, bottom: 2))
+        XCTAssert(insets1 == .init(vertical: 2, leading: 1, trailing: 1))
+        XCTAssert(insets1 == .init(horizontal: .init(1, 1), vertical: .init(2, 2)))
+        XCTAssert(insets1.simd4 == .init(2, 1, 2, 1))
+        XCTAssert(insets1.horizontal == .init(1, 1))
+        XCTAssert(insets1.vertical == .init(2, 2))
+        XCTAssert(insets1.top == 2)
+        XCTAssert(insets1.left == 1)
+        XCTAssert(insets1.bottom == 2)
+        XCTAssert(insets1.right == 1)
+        
+        let insets2 = UIEdgeInsets(all: 1)
+        XCTAssert(insets2 == .init(horizontal: 1, top: 1, bottom: 1))
+        XCTAssert(insets2 == .init(vertical: 1, leading: 1, trailing: 1))
+        XCTAssert(insets2 == .init(horizontal: .init(1, 1), vertical: .init(1, 1)))
+        XCTAssert(insets2.simd4 == .init(1, 1, 1, 1))
+        XCTAssert(insets2.horizontal == .init(1, 1))
+        XCTAssert(insets2.vertical == .init(1, 1))
+        XCTAssert(insets2.top == 1)
+        XCTAssert(insets2.left == 1)
+        XCTAssert(insets2.bottom == 1)
+        XCTAssert(insets2.right == 1)
+    }
+    #endif
 }
 
 #endif
