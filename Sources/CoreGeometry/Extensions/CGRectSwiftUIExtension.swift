@@ -28,16 +28,6 @@
 
 import SwiftUI
 
-extension UnitPoint {
-    @usableFromInline var simd2: SIMD2<Native> { .init(x.native, y.native) }
-    @usableFromInline func flipped(x flagX: Bool, y flagY: Bool) -> Self {
-        let x = flagX ? 1 - x : x
-        let y = flagY ? 1 - y : y
-        
-        return .init(x: x, y: y)
-    }
-}
-
 #if os(macOS)
 import AppKit
 
@@ -140,17 +130,17 @@ extension CGRect {
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 public extension CGRect {
     @inlinable subscript(anchor: UnitPoint) -> CGPoint {
-        get {
-            let flipX = layoutDirection() == .rightToLeft
-            let flipY = !CoreGeometry.flippedVertically
-            
-            let anchor = anchor.flipped(x: flipX, y: flipY)
-            
-            return .init(simd2: origin.simd2 + size.simd2 * anchor.simd2)
-        }
-        set {
-            origin.simd2 += newValue.simd2 - self[anchor].simd2
-        }
+        get { origin + size * anchor.autoFlipped() }
+        set { origin += newValue - self[anchor] }
+    }
+    
+    @inlinable func aligning(_ sourceAnchor: UnitPoint, to rect: CGRect, anchor: UnitPoint) ->  CGRect {
+        let origin = origin + rect[anchor] - self[sourceAnchor]
+        return with(origin: origin)
+    }
+    
+    @inlinable mutating func align(_ sourceAnchor: UnitPoint, to rect: CGRect, anchor: UnitPoint) {
+        self[sourceAnchor] = rect[anchor]
     }
     
     /// Return a copy of `self` aligned relative to the given rect following a given anchor.
@@ -160,8 +150,8 @@ public extension CGRect {
     ///   - anchor: The alignment constraint.
     /// - Returns: A properly aligned rect.
     @inlinable func aligned(relativeTo rect: CGRect, anchor: UnitPoint) -> CGRect {
-        let origin = CGPoint(simd2: origin.simd2 + rect[anchor].simd2 - self[anchor].simd2)
-        return .init(origin: origin, size: size)
+        let origin = origin + rect[anchor] - self[anchor]
+        return with(origin: origin)
     }
     
     /// Aligns `self` relative to the given rect following a given anchor.

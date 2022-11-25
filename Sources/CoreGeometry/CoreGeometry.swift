@@ -30,7 +30,7 @@
 import Foundation
 @_exported import CoreGraphics
 
-@usableFromInline typealias Native = CGFloat.NativeType
+public typealias Native = CGFloat.NativeType
 
 postfix operator °
 

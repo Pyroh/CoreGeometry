@@ -42,42 +42,6 @@ public extension CGRect {
         let origin = CGPoint(simd2: center.simd2 - (size.simd2 / 2))
         self.init(origin: origin, size: size)
     }
-
-    @available(*, deprecated)
-    @inlinable init(ratio: Ratio, maxSize: CGFloat) {
-        let width: CGFloat, height: CGFloat
-        switch ratio.orientation {
-        case .landscape:
-            width = maxSize
-            height = maxSize / ratio.factor
-        case .portrait:
-            width = maxSize * ratio.factor
-            height = maxSize
-        case .square:
-            width = maxSize
-            height = maxSize
-        }
-        
-        self.init(size: .init(width: width, height: height))
-    }
-    
-    @available(*, deprecated)
-    @inlinable init(center: CGPoint, ratio: Ratio, maxSize: CGFloat) {
-        let width: CGFloat, height: CGFloat
-        switch ratio.orientation {
-        case .landscape:
-            width = maxSize
-            height = maxSize / ratio.factor
-        case .portrait:
-            width = maxSize * ratio.factor
-            height = maxSize
-        case .square:
-            width = maxSize
-            height = maxSize
-        }
-        
-        self.init(center: center, size: .init(width: width, height: height))
-    }
     
     @inlinable init(square edge: CGFloat) {
         self.init(origin: .zero, size: .init(square: edge))
@@ -116,11 +80,11 @@ public extension CGRect {
     }
     
     @inlinable init<T: BinaryInteger>(_ x: T, _ y: T, _ width: T, _ height: T) {
-        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+        self.init(x: x.cgFloat, y: y.cgFloat, width: width.cgFloat, height: height.cgFloat)
     }
     
     @inlinable init<T: BinaryFloatingPoint>(_ x: T, _ y: T, _ width: T, _ height: T) {
-        self.init(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+        self.init(x: x.cgFloat, y: y.cgFloat, width: width.cgFloat, height: height.cgFloat)
     }
     
     @inlinable init<T: BinaryInteger>(_ width: T, _ height: T) {
@@ -193,7 +157,7 @@ public extension CGRect {
     
     @inlinable init(center: CGPoint, aspectRatio: CGFloat, maxEdge: CGFloat) {
         let size = CGSize(aspectRatio: aspectRatio, maxEdge: maxEdge)
-        let origin = CGPoint(simd2: center.simd2 - (size.simd2 / 2))
+        let origin = center - size / 2
         
         self.init(origin: origin, size: size)
     }
@@ -258,7 +222,7 @@ public extension CGRect {
     
     @inlinable init(center: CGPoint, aspectRatio: CGFloat, minEdge: CGFloat) {
         let size = CGSize(aspectRatio: aspectRatio, minEdge: minEdge)
-        let origin = CGPoint(simd2: center.simd2 - (size.simd2 / 2))
+        let origin = center - size / 2
         
         self.init(origin: origin, size: size)
     }
@@ -299,7 +263,7 @@ public extension CGRect {
     /// A point representing the rectangle's center.
     @inlinable var center: CGPoint {
         get { .init(x: midX, y: midY) }
-        set { origin.simd2 = newValue.simd2 - (size.simd2 / 2) }
+        set { origin = newValue - size / 2 }
     }
     
     @inlinable subscript(xBound: RectBoundary = .mid, yBound: RectBoundary = .mid) -> CGPoint {
@@ -321,7 +285,7 @@ public extension CGRect {
             return .init(x: x, y: y)
         }
         set {
-            origin.simd2 += newValue.simd2 - self[xBound, yBound].simd2
+            origin += newValue - self[xBound, yBound]
         }
     }
 }
@@ -332,14 +296,14 @@ public extension CGRect {
     
     /// The biggest square rectangle that `self` can contain.
     @inlinable var maxSquare: CGRect {
-        let maxEdge = max(self.width, self.height)
-        return CGRect(origin: .zero, size: .init(width: maxEdge, height: maxEdge))
+        let maxEdge = size.max
+        return CGRect(origin: .zero, size: .init(square: maxEdge))
     }
     
     /// The smallest square rectangle that can contain `self`.
     @inlinable var minSquare: CGRect {
-        let minEdge = min(self.width, self.height)
-        return CGRect(origin: .zero, size: .init(width: minEdge, height: minEdge))
+        let minEdge = size.min
+        return CGRect(origin: .zero, size: .init(square: minEdge))
     }
     
     /// The ratio of `self`.
@@ -499,47 +463,37 @@ public extension CGRect {
     
     /// Returns a copy of `self` translated by the given vector.
     @inlinable func translated(by vector: CGVector) -> CGRect {
-        .init(origin: .init(simd2: origin.simd2 + vector.simd2), size: size)
+        .init(origin: origin + vector, size: size)
     }
     
     /// Returns a copy of `self` translated by the given vector.
     @inlinable func translated(along vector: CGVector) -> CGRect {
-        .init(origin: .init(simd2: origin.simd2 + vector.simd2), size: size)
+        .init(origin: origin + vector, size: size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
     @inlinable func translated<I: BinaryInteger>(byTx tx: I, ty: I) -> CGRect {
-        .init(origin: .init(simd2: origin.simd2 + .init(tx.native, ty.native)), size: size)
+        .init(origin: origin + (tx.native, ty.native), size: size)
     }
     
     /// Returns a copy of `self` translated by `(tx,ty)`.
     @inlinable func translated<F: BinaryFloatingPoint>(byTx tx: F, ty: F) -> CGRect {
-        .init(origin: .init(simd2: origin.simd2 + .init(tx.native, ty.native)), size: size)
-    }
-    
-    /// Returns a copy of `self` translated by `(tx,ty)`.
-    @inlinable func translated(byTx tx: CGFloat.NativeType, ty: CGFloat.NativeType) -> CGRect {
-        .init(origin: .init(simd2: origin.simd2 + .init(tx, ty)), size: size)
+        .init(origin: origin + (tx.native, ty.native), size: size)
     }
 
     /// Translate `self` along the given vector.
     @inlinable mutating func translate(along vector: CGVector) {
-        origin.simd2 += vector.simd2
+        origin += vector
     }
 
     /// Translate `self` by `(tx,ty)`.
     @inlinable mutating func translate<I: BinaryInteger>(tx: I, ty: I) {
-        origin.simd2 += .init(tx.native, ty.native)
+        origin += (tx.native, ty.native)
     }
     
     /// Translate `self` by `(tx,ty)`.
     @inlinable mutating func translate<F: BinaryFloatingPoint>(tx: F, ty: F) {
-        origin.simd2 += .init(tx.native, ty.native)
-    }
-    
-    /// Translate `self` by `(tx,ty)`.
-    @inlinable mutating func translate(tx: CGFloat.NativeType, ty: CGFloat.NativeType) {
-        origin.simd2 += .init(tx, ty)
+        origin += (tx.native, ty.native)
     }
     
     /// Returns a copy of `self` rotated around the given point by the given angle.
@@ -578,29 +532,37 @@ public extension CGRect {
     @inlinable mutating func inset(_ edges: RectangleEdge, by amount: CGFloat) {
         guard !edges.isEmpty else { return }
         
+        var changes = SIMD4<Native>.zero
+        
         if edges.contains(.minXEdge) {
-            origin.x += amount
-            size.width -= amount
+            changes.x += amount
+            changes.z -= amount
         }
         if edges.contains(.maxXEdge) {
-            size.width -= amount
+            changes.z -= amount
         }
         if edges.contains(.minYEdge) {
-            origin.y += amount
-            size.height -= amount
+            changes.y += amount
+            changes.w -= amount
         }
         if edges.contains(.maxYEdge) {
-            size.height -= amount
+            changes.w -= amount
         }
+        
+        simd4 += changes
     }
     
     /// Insets `self` in the given edge directions by the given amount.
     /// - Parameter size: The inset amount.
-    @inlinable mutating func inset(by size: CGSize) {
-        guard size != .zero else { return }
+    @inlinable mutating func inset(by amount: CGSize) {
+        guard amount != .zero else { return }
         
-        self.origin.simd2 += size.simd2
-        self.size.simd2 -= size.simd2 * 2
+        var changes = SIMD4<Native>.zero
+        
+        changes.xy += amount.simd2
+        changes.zw -= amount.simd2 * 2
+        
+        simd4 += changes
     }
     
     /// Return a copy of `self` inset in the given edge directions by the given amount.
@@ -611,34 +573,35 @@ public extension CGRect {
     @inlinable func insetting(_ edges: RectangleEdge, by amount: CGFloat) -> CGRect {
         guard !edges.isEmpty else { return self }
         
-        var origin = self.origin
-        var size = self.size
+        var changes = SIMD4<Native>.zero
         
         if edges.contains(.minXEdge) {
-            origin.x += amount
-            size.width -= amount
+            changes.x += amount
+            changes.z -= amount
         }
         if edges.contains(.maxXEdge) {
-            size.width -= amount
+            changes.z -= amount
         }
         if edges.contains(.minYEdge) {
-            origin.y += amount
-            size.height -= amount
+            changes.y += amount
+            changes.w -= amount
         }
         if edges.contains(.maxYEdge) {
-            size.height -= amount
+            changes.w -= amount
         }
         
-        return .init(origin: origin, size: size)
+        return .init(simd4: simd4 + changes)
     }
     
-    @inlinable func insetting(by size: CGSize) -> CGRect {
-        guard size != .zero else { return self }
+    @inlinable func insetting(by amount: CGSize) -> CGRect {
+        guard amount != .zero else { return self }
         
-        return withMutable(self) {
-            $0.origin.simd2 += size.simd2
-            $0.size.simd2 -= size.simd2 * 2
-        }
+        var changes = SIMD4<Native>.zero
+        
+        changes.xy += amount.simd2
+        changes.zw -= amount.simd2 * 2
+        
+        return .init(simd4: simd4 + changes)
     }
 }
 
@@ -739,36 +702,6 @@ public extension CGRect {
 }
 
 public extension CGRect {
-    @available(*, deprecated, renamed: "transformingOrigin")
-    @inlinable func transformOrigin(_ transform: (CGPoint) throws -> CGPoint) rethrows -> CGRect {
-        with(origin: try transform(origin))
-    }
-    
-    @available(*, deprecated, renamed: "transformingX")
-    @inlinable func transformX(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
-        with(x: try transform(x))
-    }
-    
-    @available(*, deprecated, renamed: "transformingY")
-    @inlinable func transformY(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
-        with(y: try transform(y))
-    }
-    
-    @available(*, deprecated, renamed: "transformingSize")
-    @inlinable func transformSize(_ transform: (CGSize) throws -> CGSize) rethrows -> CGRect {
-        with(size: try transform(size))
-    }
-    
-    @available(*, deprecated, renamed: "transformingWidth")
-    @inlinable func transformWidth(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
-        with(width: try transform(width))
-    }
-    
-    @available(*, deprecated, renamed: "transformingHeight")
-    @inlinable func transformHeight(_ transform: (CGFloat) throws -> CGFloat) rethrows -> CGRect {
-        with(height: try transform(height))
-    }
-    
     @inlinable func transformingOrigin(_ transform: (CGPoint) throws -> CGPoint) rethrows -> CGRect {
         with(origin: try transform(origin))
     }

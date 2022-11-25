@@ -34,10 +34,10 @@ import SwizzleIMD
 import simd
 
 public extension CGSize {
-
+    
     /// The largest size that result from converting the source size values to integers.
     @inlinable var integral: Self { .init(simd2: simd2.rounded(.up)) }
-
+    
     /// `true` if `width` == `height`. `false` otherwise.
     @inlinable var isSquare: Bool { width == height }
     
@@ -46,16 +46,16 @@ public extension CGSize {
     
     /// The receiver's aspect ratio. Equals to `width / height`.
     @inlinable var aspectRatio: CGFloat {
-        if isZero { return 1 }
+        if isZero || isSquare { return 1 }
         else if height.isZero { return 0 }
         else { return abs(width) / abs(height) }
     }
     
     /// The minimum value of the size. Can be either the width or the height.
-    @inlinable var min: CGFloat { width < height ? width : height }
+    @inlinable var min: CGFloat { Swift.min(width, height) }
     
     /// The maximum value of the size. Can be either the width or the height.
-    @inlinable var max: CGFloat { width < height ? height : width }
+    @inlinable var max: CGFloat { Swift.max(width, height) }
     
     /// The largest square size the receiver can fit.
     @inlinable var minSize: CGSize { .init(square: min) }
@@ -236,161 +236,16 @@ public extension CGSize {
     }
 }
 
-public extension CGSize {
+extension CGSize: BiComponent {
     /// The receiver's SIMD representation.
-    @inlinable var simd2: SIMD2<CGFloat.NativeType> {
+    @inlinable public var simd2: SIMD2<Native> {
         get { .init(width.native, height.native) }
         set { (width, height) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// Inits a size from its SIMD representation.
-    @inlinable init(simd2: SIMD2<CGFloat.NativeType>) {
+    @inlinable public init(simd2: SIMD2<Native>) {
         self.init(width: simd2.x, height: simd2.y)
-    }
-}
-
-public extension CGSize {
-    
-    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * (lhs: CGSize, rhs: CGFloat.NativeType) -> CGSize {
-        .init(simd2: lhs.simd2 * rhs)
-    }
-    
-    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * <I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
-        .init(simd2: lhs.simd2 * rhs.native)
-    }
-    
-    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * <F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
-        .init(simd2: lhs.simd2 * rhs.native)
-    }
-    
-    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * (lhs: CGSize, rhs: (x: CGFloat.NativeType, y: CGFloat.NativeType)) -> CGSize {
-        .init(simd2: lhs.simd2 * .init(rhs.x, rhs.y))
-    }
-    
-    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * <I: BinaryInteger>(lhs: CGSize, rhs: (x: I, y: I)) -> CGSize {
-        .init(simd2: lhs.simd2 * .init(rhs.x.native, rhs.y.native))
-    }
-    
-    /// Multiplies `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * <F: BinaryFloatingPoint>(lhs: CGSize, rhs: (x: F, y: F)) -> CGSize {
-        .init(simd2: lhs.simd2 * .init(rhs.x.native, rhs.y.native))
-    }
-    
-    @inlinable static func * (lhs: CGSize, rhs: CGSize) -> CGSize {
-        .init(simd2: lhs.simd2 * rhs.simd2)
-    }
-    
-    /// Divides `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to devide components.
-    ///   - rhs: The value to devide.
-    @inlinable static func / (lhs: CGSize, rhs: CGFloat.NativeType) -> CGSize {
-        .init(simd2: lhs.simd2 / rhs)
-    }
-    
-    /// Divides `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to devide components.
-    ///   - rhs: The value to devide.
-    @inlinable static func / <I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
-        .init(simd2: lhs.simd2 / rhs.native)
-    }
-    
-    /// Divides `width` and `height` by the given value and returns the resulting `CGSize`.
-    /// - Parameters:
-    ///   - lhs: The point to devide components.
-    ///   - rhs: The value to devide.
-    @inlinable static func / <F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
-        .init(simd2: lhs.simd2 / rhs.native)
-    }
-    
-    @inlinable static func / (lhs: CGSize, rhs: CGSize) -> CGSize {
-        .init(simd2: lhs.simd2 / rhs.simd2)
-    }
-}
-
-public extension CGSize {
-    @inlinable static func + (lhs: CGSize, rhs: CGFloat.NativeType) -> CGSize {
-        .init(simd2: lhs.simd2 + rhs)
-    }
-    
-    @inlinable static func + <I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
-        .init(simd2: lhs.simd2 + rhs.native)
-    }
-    
-    @inlinable static func + <F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
-        .init(simd2: lhs.simd2 + rhs.native)
-    }
-    
-    @inlinable static func + (lhs: CGSize, rhs: (width: CGFloat.NativeType, height: CGFloat.NativeType)) -> CGSize {
-        .init(simd2: lhs.simd2 + .init(rhs.width, rhs.height))
-    }
-    
-    @inlinable static func + <I: BinaryInteger>(lhs: CGSize, rhs: (width: I, height: I)) -> CGSize {
-        .init(simd2: lhs.simd2 + .init(rhs.width.native, rhs.height.native))
-    }
-    
-    @inlinable static func + <F: BinaryFloatingPoint>(lhs: CGSize, rhs: (width: F, height: F)) -> CGSize {
-        .init(simd2: lhs.simd2 + .init(rhs.width.native, rhs.height.native))
-    }
-    
-    @inlinable static func - (lhs: CGSize, rhs: CGFloat.NativeType) -> CGSize {
-        .init(simd2: lhs.simd2 - rhs)
-    }
-    
-    @inlinable static func - <I: BinaryInteger>(lhs: CGSize, rhs: I) -> CGSize {
-        .init(simd2: lhs.simd2 - rhs.native)
-    }
-    
-    @inlinable static func - <F: BinaryFloatingPoint>(lhs: CGSize, rhs: F) -> CGSize {
-        .init(simd2: lhs.simd2 - rhs.native)
-    }
-    
-    @inlinable static func - (lhs: CGSize, rhs: (width: CGFloat.NativeType, height: CGFloat.NativeType)) -> CGSize {
-        .init(simd2: lhs.simd2 - .init(rhs.width, rhs.height))
-    }
-    
-    @inlinable static func - <I: BinaryInteger>(lhs: CGSize, rhs: (width: I, height: I)) -> CGSize {
-        .init(simd2: lhs.simd2 - .init(rhs.width.native, rhs.height.native))
-    }
-    
-    @inlinable static func - <F: BinaryFloatingPoint>(lhs: CGSize, rhs: (width: F, height: F)) -> CGSize {
-        .init(simd2: lhs.simd2 - .init(rhs.width.native, rhs.height.native))
-    }
-    
-    @inlinable static func + (lhs: CGSize, rhs: CGSize) -> CGSize {
-        .init(simd2: lhs.simd2 + rhs.simd2)
-    }
-
-    @inlinable static func - (lhs: CGSize, rhs: CGSize) -> CGSize {
-        .init(simd2: lhs.simd2 - rhs.simd2)
-    }
-    
-    @inlinable static prefix func - (rhs: CGSize) -> CGSize {
-        .init(simd2: -rhs.simd2)
     }
 }
 
@@ -519,12 +374,5 @@ public extension CGSize {
     
     @inlinable mutating func clamp(min: CGSize, max: CGSize) {
         self = clamped(min: min, max: max)
-    }
-}
-
-@available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
-public extension CGSize {
-    @inlinable static func * (lhs: Self, rhs: UnitPoint) -> Self {
-        .init(simd2: lhs.simd2 * rhs.simd2)
     }
 }

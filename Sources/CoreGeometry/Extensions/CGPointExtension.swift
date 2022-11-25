@@ -72,15 +72,15 @@ public extension CGPoint {
     }
 }
 
-public extension CGPoint {
+extension CGPoint: BiComponent {
     
     /// The receiver's SIMD representation.
-    @inlinable var simd2: SIMD2<CGFloat.NativeType> {
+    @inlinable public var simd2: SIMD2<Native> {
         get { .init(x.native, y.native) }
         set { (x, y) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
-    @inlinable init(simd2: SIMD2<CGFloat.NativeType>) {
+    @inlinable public init(simd2: SIMD2<Native>) {
         self.init(x: simd2.x, y: simd2.y)
     }
 }
@@ -93,49 +93,32 @@ public extension CGPoint {
     
     /// Returns a copy of `self` translated along the given vector.
     @inlinable func translated(along vector: CGVector) -> CGPoint {
-        .init(simd2: simd2 + vector.simd2)
+        self + vector
     }
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable func translated<I: BinaryInteger>(tx: I, ty: I) -> CGPoint {
-        .init(simd2: simd2 + .init(tx.native, ty.native))
+        self + (tx.native, ty.native)
     }
     
     /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable func translated<F: BinaryFloatingPoint>(tx: F, ty: F) -> CGPoint {
-        .init(simd2: simd2 + .init(tx.native, ty.native))
-    }
-    
-    /// Returns a copy of `self` translated by `tx` on the X-axis and by `ty` on the Y-axis.
-    @inlinable func translated(tx: CGFloat.NativeType, ty: CGFloat.NativeType) -> CGPoint {
-        .init(simd2: simd2 + .init(tx, ty))
-    }
-    
-    /// FIXME: deprecated.
-    /// Translates `self` along the given vector.
-    @available(*, deprecated, renamed: "translate(along:)")
-    @inlinable mutating func translate(by vector: CGVector) {
-        simd2 += vector.simd2
+        self + (tx.native, ty.native)
     }
     
     /// Translates `self` along the given vector.
     @inlinable mutating func translate(along vector: CGVector) {
-        simd2 += vector.simd2
+        self += vector
     }
     
     /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable mutating func translate<I: BinaryInteger>(tx: I, ty: I) {
-        simd2 += .init(tx.native, ty.native)
+        self += (tx.native, ty.native)
     }
     
     /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
     @inlinable mutating func translate<F: BinaryFloatingPoint>(tx: F, ty: F) {
-        simd2 += .init(tx.native, ty.native)
-    }
-    
-    /// Translates `self` by `tx` on the X-axis and by `ty` on the Y-axis.
-    @inlinable mutating func translate(tx: CGFloat.NativeType, ty: CGFloat.NativeType) {
-        simd2 += .init(tx, ty)
+        self += (tx.native, ty.native)
     }
     
     /// Returns a copy of `self` rotated around the given center by the given angle.
@@ -174,197 +157,11 @@ extension CGPoint {
 }
 
 public extension CGPoint {
-    
-    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * <I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint {
-        .init(simd2: lhs.simd2 * rhs.native)
-    }
-    
-    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable static func * <F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint {
-        .init(simd2: lhs.simd2 * rhs.native)
-    }
-    
-    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable
-    static func * (lhs: CGPoint, rhs: CGFloat.NativeType) -> CGPoint {
-        .init(simd2: lhs.simd2 * rhs)
-    }
-    
-    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable
-    static func * <I: BinaryInteger>(lhs: CGPoint, rhs: (x: I, y: I)) -> CGPoint {
-        .init(simd2: lhs.simd2 * .init(rhs.x.native, rhs.y.native))
-    }
-    
-    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable
-    static func * <F: BinaryFloatingPoint>(lhs: CGPoint, rhs: (x: F, y: F)) -> CGPoint {
-        .init(simd2: lhs.simd2 * .init(rhs.x.native, rhs.y.native))
-    }
-    
-    /// Multiplies `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to multiply components.
-    ///   - rhs: The value to multiply.
-    @inlinable
-    static func * (lhs: CGPoint, rhs: (x: CGFloat.NativeType, y: CGFloat.NativeType)) -> CGPoint {
-        .init(simd2: lhs.simd2 * .init(rhs.x, rhs.y))
-    }
-    
-    /// Multiplies a point's components by another one's and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: A point to multiply.
-    ///   - rhs: Another point the multiply.
-    @inlinable static func * (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        .init(simd2: lhs.simd2 * rhs.simd2)
-    }
-    
-    /// Divides `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to divide components.
-    ///   - rhs: The value to devide by.
-    @inlinable
-    static func / <I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint {
-        .init(simd2: lhs.simd2 / rhs.native)
-    }
-    
-    /// Divides `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to divide components.
-    ///   - rhs: The value to devide by.
-    @inlinable
-    static func / <F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint {
-        .init(simd2: lhs.simd2 / rhs.native)
-    }
-    
-    /// Divides `x` and `y` by the given value and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: The point to divide components.
-    ///   - rhs: The value to devide by.
-    @inlinable
-    static func / (lhs: CGPoint, rhs: CGFloat.NativeType) -> CGPoint {
-        .init(simd2: lhs.simd2 / rhs)
-    }
-    
-    /// Divides a point's components by another one's and returns the resulting `CGPoint`.
-    /// - Parameters:
-    ///   - lhs: A point to devide.
-    ///   - rhs: Another point the devide.
-    @inlinable
-    static func / (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        .init(simd2: lhs.simd2 / rhs.simd2)
-    }
-}
-
-extension CGPoint: AdditiveArithmetic {
-    
-    @inlinable public static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        .init(simd2: lhs.simd2 + rhs.simd2)
-    }
-    
-    /// Adds a value to a point's component.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to add.
-    /// - Returns: The resulting point.
-    @inlinable public static func + <I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint {
-        .init(simd2: lhs.simd2 + rhs.native)
-    }
-    
-    /// Adds a value to a point's component.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to add.
-    /// - Returns: The resulting point.
-    @inlinable public static func + <I: BinaryFloatingPoint>(lhs: CGPoint, rhs: I) -> CGPoint {
-        .init(simd2: lhs.simd2 + rhs.native)
-    }
-    
-    /// Adds a value to a point's component.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to add.
-    /// - Returns: The resulting point.
-    @inlinable public static func + <I: BinaryInteger>(lhs: CGPoint, rhs: (I, I)) -> CGPoint {
-        .init(simd2: lhs.simd2 + .init(rhs.0.native, rhs.1.native))
-    }
-    
-    /// Adds a value to a point's component.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to add.
-    /// - Returns: The resulting point.
-    @inlinable public static func + <I: BinaryFloatingPoint>(lhs: CGPoint, rhs: (I, I)) -> CGPoint {
-        .init(simd2: lhs.simd2 + .init(rhs.0.native, rhs.1.native))
-    }
-    
-    /// Adds a value to a point's component.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to add.
-    /// - Returns: The resulting point.
-    @inlinable public static func + (lhs: CGPoint, rhs: CGFloat.NativeType) -> CGPoint {
-        .init(simd2: lhs.simd2 + rhs.native)
-    }
-    
-    @inlinable public static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        .init(simd2: lhs.simd2 - rhs.simd2)
-    }
-    
-    /// Substracts a value from a point's components.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to substract.
-    /// - Returns: The resulting vector.
-    @inlinable public static func - <I: BinaryInteger>(lhs: CGPoint, rhs: I) -> CGPoint {
-        .init(simd2: lhs.simd2 - rhs.native)
-    }
-    
-    /// Substracts a value from a point's components.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to substract.
-    /// - Returns: The resulting vector.
-    @inlinable public static func - <F: BinaryFloatingPoint>(lhs: CGPoint, rhs: F) -> CGPoint {
-        .init(simd2: lhs.simd2 - rhs.native)
-    }
-    
-    /// Substracts a value from a point's components.
-    /// - Parameters:
-    ///   - lhs: A point.
-    ///   - rhs: The value to substract.
-    /// - Returns: The resulting vector.
-    @inlinable public static func - (lhs: CGPoint, rhs: CGFloat.NativeType) -> CGPoint {
-        .init(simd2: lhs.simd2 - rhs)
-    }
-    
-    @inlinable public static prefix func - (rhs: CGPoint) -> CGPoint {
-        .init(simd2: -rhs.simd2)
-    }
-}
-
-public extension CGPoint {
     @inlinable mutating func clamp(to rect: CGRect) {
         self = clamped(to: rect)
     }
     
     @inlinable func clamped(to rect: CGRect) -> CGPoint {
-        .init(simd2: self.simd2.clamped(lowerBound: rect.origin.simd2, upperBound: rect.origin.simd2 + rect.size.simd2))
+        .init(simd2: simd2.clamped(lowerBound: rect.origin.simd2, upperBound: rect.origin.simd2 + rect.size.simd2))
     }
 }
