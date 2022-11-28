@@ -32,16 +32,31 @@ public protocol BiComponent: AdditiveArithmetic {
 }
 
 public extension BiComponent {
+    @inlinable
     init(_ components: (CGFloat, CGFloat)) {
         self.init(simd2: .init(x: components.0.native, y: components.1.native))
     }
     
+    @inlinable
     init<F: BinaryFloatingPoint>(_ components: (F, F)) {
         self.init(simd2: .init(x: components.0.native, y: components.1.native))
     }
     
+    @inlinable
     init<I: BinaryInteger>(_ components: (I, I)) {
         self.init(simd2: .init(x: components.0.native, y: components.1.native))
+    }
+}
+
+public extension BiComponent {
+    @inlinable
+    func clamped<B1: BiComponent, B2: BiComponent>(lowerBound: B1, upperBound: B2) -> Self {
+        .init(simd2: simd2.clamped(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2))
+    }
+    
+    @inlinable
+    mutating func clamp<B1: BiComponent, B2: BiComponent>(lowerBound: B1, upperBound: B2) {
+        simd2.clamp(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2)
     }
 }
 

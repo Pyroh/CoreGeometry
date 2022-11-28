@@ -368,11 +368,13 @@ public extension CGSize {
         all(other.simd2 .<= simd2)
     }
     
+    @available(*, deprecated, renamed: "clamped(lowerBound:upperBound:)")
     @inlinable func clamped(min: CGSize, max: CGSize) -> CGSize {
         .init(simd2: simd.clamp(simd2, min: min.simd2, max: max.simd2))
     }
     
+    @available(*, deprecated, renamed: "clamp(lowerBound:upperBound:)")
     @inlinable mutating func clamp(min: CGSize, max: CGSize) {
-        self = clamped(min: min, max: max)
+        self = clamped(lowerBound: min, upperBound: max)
     }
 }
