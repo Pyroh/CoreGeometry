@@ -892,7 +892,27 @@ final class CoreGeometryTests: XCTestCase {
         let smax = CGSize(20, 20)
         let stest = CGSize(9, 30)
         
-        XCTAssert(stest.clamped(min: smin, max: smax) == .init(10, 20))
+        XCTAssert(stest.clamped(lowerBound: smin, upperBound: smax) == .init(10, 20))
+    }
+    
+    func testClamp() {
+        let vmin = CGVector(1, 1)
+        let vmax = CGVector(3, 3)
+        let smin = CGSize(1, 1)
+        let smax = CGSize(3, 3)
+        let pmin = CGPoint(1, 1)
+        let pmax = CGPoint(3, 3)
+        
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: vmin, upperBound: vmax) == CGVector(2, 2))
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: .zero, upperBound: vmax) == CGVector(2, 2))
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: -vmin, upperBound: .zero) == .zero)
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: smin, upperBound: smax) == CGVector(2, 2))
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: .zero, upperBound: smax) == CGVector(2, 2))
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: -smin, upperBound: .zero) == .zero)
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: pmin, upperBound: pmax) == CGVector(2, 2))
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: .zero, upperBound: pmax) == CGVector(2, 2))
+        XCTAssert(CGVector(2, 2).clamped(lowerBound: -pmin, upperBound: .zero) == .zero)
+        
     }
     
     func testEdgeInsets() {

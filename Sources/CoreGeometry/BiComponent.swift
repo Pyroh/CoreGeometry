@@ -55,7 +55,37 @@ public extension BiComponent {
     }
     
     @inlinable
+    func clamped<B: BiComponent>(lowerBound: Self, upperBound: B) -> Self {
+        .init(simd2: simd2.clamped(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2))
+    }
+    
+    @inlinable
+    func clamped<B: BiComponent>(lowerBound: B, upperBound: Self) -> Self {
+        .init(simd2: simd2.clamped(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2))
+    }
+    
+    @inlinable
+    func clamped(lowerBound: Self, upperBound: Self) -> Self {
+        .init(simd2: simd2.clamped(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2))
+    }
+    
+    @inlinable
     mutating func clamp<B1: BiComponent, B2: BiComponent>(lowerBound: B1, upperBound: B2) {
+        simd2.clamp(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2)
+    }
+    
+    @inlinable
+    mutating func clamp<B: BiComponent>(lowerBound: Self, upperBound: B) {
+        simd2.clamp(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2)
+    }
+    
+    @inlinable
+    mutating func clamp<B: BiComponent>(lowerBound: B, upperBound: Self) {
+        simd2.clamp(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2)
+    }
+    
+    @inlinable
+    mutating func clamp(lowerBound: Self, upperBound: Self) {
         simd2.clamp(lowerBound: lowerBound.simd2, upperBound: upperBound.simd2)
     }
 }
