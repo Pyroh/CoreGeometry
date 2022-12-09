@@ -940,6 +940,17 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(insets2.leading == 1)
         XCTAssert(insets2.bottom == 1)
         XCTAssert(insets2.trailing == 1)
+        
+        var insets3 = EdgeInsets(all: 0)
+        
+        insets3.simd4 = .init(1, 2, 3, 4)
+        XCTAssert(insets3 == .init(top: 1, leading: 2, bottom: 3, trailing: 4))
+        
+        insets3.vertical = .init(5, 6)
+        XCTAssert(insets3 == .init(top: 5, leading: 2, bottom: 6, trailing: 4))
+        
+        insets3.horizontal = .init(7, 8)
+        XCTAssert(insets3 == .init(top: 5, leading: 7, bottom: 6, trailing: 8))
     }
     
     func testDirectionalEdgeInsets() {

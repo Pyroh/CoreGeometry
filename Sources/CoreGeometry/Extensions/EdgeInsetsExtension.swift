@@ -34,19 +34,22 @@ public extension EdgeInsets {
     /// Horizontal edge insets SIMD representation.
     /// Orderd `leading, trailing`.
     @inlinable var horizontal: SIMD2<CGFloat.NativeType> {
-        .init(leading.native, trailing.native)
+        get { .init(leading.native, trailing.native) }
+        set { (leading, trailing) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// Vertical edge insets SIMD representation.
     /// Orderd `top, bottom`.
     @inlinable var vertical: SIMD2<CGFloat.NativeType> {
-        .init(top.native, bottom.native)
+        get { .init(top.native, bottom.native) }
+        set { (top, bottom) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// The receiver's SIMD representation.
     /// Ordered `top, leading, bottom, trailing`.
     @inlinable var simd4: SIMD4<CGFloat.NativeType> {
-        .init(top.native, leading.native, bottom.native, trailing.native)
+        get { .init(top.native, leading.native, bottom.native, trailing.native) }
+        set { (top, leading, bottom, trailing) = (newValue.x.cgFloat, newValue.y.cgFloat, newValue.z.cgFloat, newValue.w.cgFloat) }
     }
     
     @inlinable init(simd4: SIMD4<CGFloat.NativeType>) {
@@ -86,19 +89,22 @@ public extension NSDirectionalEdgeInsets {
     /// Horizontal edge insets SIMD representation.
     /// Orderd `leading, trailing`.
     @inlinable var horizontal: SIMD2<CGFloat.NativeType> {
-        .init(leading.native, trailing.native)
+        get { .init(leading.native, trailing.native) }
+        set { (leading, trailing) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// Vertical edge insets SIMD representation.
     /// Orderd `top, bottom`.
     @inlinable var vertical: SIMD2<CGFloat.NativeType> {
-        .init(top.native, bottom.native)
+        get { .init(top.native, bottom.native) }
+        set { (top, bottom) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// The receiver's SIMD representation.
     /// Ordered `top, leading, bottom, trailing`.
     @inlinable var simd4: SIMD4<CGFloat.NativeType> {
-        .init(top.native, leading.native, bottom.native, trailing.native)
+        get { .init(top.native, leading.native, bottom.native, trailing.native) }
+        set { (top, leading, bottom, trailing) = (newValue.x.cgFloat, newValue.y.cgFloat, newValue.z.cgFloat, newValue.w.cgFloat) }
     }
     
     @inlinable init(simd4: SIMD4<CGFloat.NativeType>) {
@@ -132,19 +138,22 @@ public extension NSEdgeInsets {
     /// Horizontal edge insets SIMD representation.
     /// Orderd `left, right`.
     @inlinable var horizontal: SIMD2<CGFloat.NativeType> {
-        .init(left.native, right.native)
+        get { .init(left.native, right.native) }
+        set { (left, right) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// Vertical edge insets SIMD representation.
     /// Orderd `top, bottom`.
     @inlinable var vertical: SIMD2<CGFloat.NativeType> {
-        .init(top.native, bottom.native)
+        get { .init(top.native, bottom.native) }
+        set { (top, bottom) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// The receiver's SIMD representation.
     /// Ordered `top, left, bottom, right`.
     @inlinable var simd4: SIMD4<CGFloat.NativeType> {
-        .init(top.native, left.native, bottom.native, right.native)
+        get { .init(top.native, left.native, bottom.native, right.native) }
+        set { (top, left, bottom, right) = (newValue.x.cgFloat, newValue.y.cgFloat, newValue.z.cgFloat, newValue.w.cgFloat) }
     }
     
     @inlinable init(simd4: SIMD4<CGFloat.NativeType>) {
@@ -179,19 +188,22 @@ public extension UIEdgeInsets {
     /// Horizontal edge insets SIMD representation.
     /// Orderd `left, right`.
     @inlinable var horizontal: SIMD2<CGFloat.NativeType> {
-        .init(left.native, right.native)
+        get { .init(left.native, right.native) }
+        set { (left, right) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// Vertical edge insets SIMD representation.
     /// Orderd `top, bottom`.
     @inlinable var vertical: SIMD2<CGFloat.NativeType> {
-        .init(top.native, bottom.native)
+        get { .init(top.native, bottom.native) }
+        set { (top, bottom) = (newValue.x.cgFloat, newValue.y.cgFloat) }
     }
     
     /// The receiver's SIMD representation.
     /// Ordered `top, left, bottom, right`.
     @inlinable var simd4: SIMD4<CGFloat.NativeType> {
-        .init(top.native, left.native, bottom.native, right.native)
+        get { .init(top.native, left.native, bottom.native, right.native) }
+        set { (top, left, bottom, right) = (newValue.x.cgFloat, newValue.y.cgFloat, newValue.z.cgFloat, newValue.w.cgFloat) }
     }
     
     @inlinable init(simd4: SIMD4<CGFloat.NativeType>) {
