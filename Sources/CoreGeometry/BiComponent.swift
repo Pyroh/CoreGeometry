@@ -26,9 +26,17 @@
 //  SOFTWARE.
 //
 
-public protocol BiComponent: AdditiveArithmetic {
+import simd
+
+public protocol BiComponent: AdditiveArithmetic, Equatable {
     var simd2: SIMD2<Native> { get set }
     init(simd2: SIMD2<Native>)
+}
+
+public extension BiComponent {
+    static func ==<B: BiComponent>(lhs: Self, rhs: B) -> Bool {
+        lhs.simd2 == rhs.simd2
+    }
 }
 
 public extension BiComponent {
@@ -329,5 +337,32 @@ public extension BiComponent {
     
     @inlinable static func /=<I: BinaryInteger>(lhs: inout Self, rhs: (I, I)) {
         lhs.simd2 = lhs.simd2 / .init(rhs.0.native, rhs.1.native)
+    }
+}
+
+public extension BiComponent {
+    @inlinable
+    func isApproximatelyEqual(to other: Self) -> Bool {
+        simd2.isApproximatelyEqual(to: other.simd2)
+    }
+    
+    @inlinable
+    func isApproximatelyEqual<B: BiComponent>(to other: B) -> Bool {
+        simd2.isApproximatelyEqual(to: other.simd2)
+    }
+}
+
+extension SIMD2 where Scalar == Native {
+    @usableFromInline
+    func isApproximatelyEqual(to other: Self) -> Bool {
+        let relativeTolerance = Self(repeating: Scalar.Magnitude.ulpOfOne.squareRoot())
+        let absoluteTolerance = relativeTolerance * Scalar.Magnitude.leastNormalMagnitude
+        
+        if self == other { return true }
+        let delta = abs(self - other)
+        let scale = simd.max(abs(self), abs(other))
+        let bound = simd.max(absoluteTolerance, scale * relativeTolerance)
+        
+        return delta.x.isFinite && delta.y.isFinite && all(delta .<= bound)
     }
 }

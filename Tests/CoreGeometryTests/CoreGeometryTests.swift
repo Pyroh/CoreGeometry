@@ -1041,6 +1041,19 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(insets2.right == 1)
     }
     #endif
+    
+    func testBiComponentEqualityAndApproximateEquality() {
+        let s1 = CGSize(375, 824.66666666666652)
+        let s2 = CGSize(375, 824.66666666666663)
+        let p = CGPoint(375, 824.66666666666663)
+        
+        XCTAssertFalse(s1 == s2)
+        XCTAssert(s1.isApproximatelyEqual(to: s2))
+        XCTAssertFalse(s1 == p)
+        XCTAssert(s1.isApproximatelyEqual(to: p))
+        XCTAssert(p == s2)
+        XCTAssert(p.isApproximatelyEqual(to: s2))
+    }
 }
 
 #endif
