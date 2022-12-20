@@ -40,6 +40,28 @@ public extension BiComponent {
 }
 
 public extension BiComponent {
+    @inlinable static func vertical(_ value: CGFloat) -> Self {
+        .init(simd2: .init(0, value.native))
+    }
+    @inlinable static func vertical<F: BinaryFloatingPoint>(_ value: F) -> Self {
+        .init(simd2: .init(0, value.native))
+    }
+    @inlinable static func vertical<I: BinaryInteger>(_ value: I) -> Self {
+        .init(simd2: .init(0, value.native))
+    }
+    
+    @inlinable static func horizontal(_ value: CGFloat) -> Self {
+        .init(simd2: .init(value.native, 0))
+    }
+    @inlinable static func horizontal<F: BinaryFloatingPoint>(_ value: F) -> Self {
+        .init(simd2: .init(value.native, 0))
+    }
+    @inlinable static func horizontal<I: BinaryInteger>(_ value: I) -> Self {
+        .init(simd2: .init(value.native, 0))
+    }
+}
+
+public extension BiComponent {
     @inlinable
     init(_ components: (CGFloat, CGFloat)) {
         self.init(simd2: .init(x: components.0.native, y: components.1.native))

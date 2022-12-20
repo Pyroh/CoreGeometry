@@ -1054,6 +1054,28 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(p == s2)
         XCTAssert(p.isApproximatelyEqual(to: s2))
     }
+    
+    func testBiComponentsCreation() {
+        let a: CGFloat = 42
+        let b: Float = 42
+        let c: Int8 = 42
+        
+        XCTAssert(CGSize.horizontal(a) == CGSize(42, 0))
+        XCTAssert(CGSize.horizontal(b) == CGSize(42, 0))
+        XCTAssert(CGSize.horizontal(c) == CGSize(42, 0))
+        
+        XCTAssert(CGPoint.vertical(a) == CGPoint(0, 42))
+        XCTAssert(CGPoint.vertical(b) == CGPoint(0, 42))
+        XCTAssert(CGPoint.vertical(c) == CGPoint(0, 42))
+        
+        XCTAssert(CGSize.horizontal(a) == CGVector.horizontal(a))
+        XCTAssert(CGSize.horizontal(b) == CGVector.horizontal(b))
+        XCTAssert(CGSize.horizontal(c) == CGVector.horizontal(c))
+        
+        XCTAssert(CGPoint.vertical(a) == CGVector.vertical(a))
+        XCTAssert(CGPoint.vertical(b) == CGVector.vertical(b))
+        XCTAssert(CGPoint.vertical(c) == CGVector.vertical(c))
+    }
 }
 
 #endif
