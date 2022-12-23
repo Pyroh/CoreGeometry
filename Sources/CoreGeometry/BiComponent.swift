@@ -63,6 +63,18 @@ public extension BiComponent {
 
 public extension BiComponent {
     @inlinable
+    mutating func round(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) {
+        simd2.round(rule)
+    }
+    
+    @inlinable
+    func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> Self {
+        .init(simd2: simd2.rounded(rule))
+    }
+}
+
+public extension BiComponent {
+    @inlinable
     init(_ components: (CGFloat, CGFloat)) {
         self.init(simd2: .init(x: components.0.native, y: components.1.native))
     }

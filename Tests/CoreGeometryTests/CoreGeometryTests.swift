@@ -32,6 +32,12 @@ import XCTest
 import SwiftUI
 @testable import CoreGeometry
 
+extension FloatingPointRoundingRule: CaseIterable {
+    public static var allCases: [FloatingPointRoundingRule] {
+        [.awayFromZero, .down, .toNearestOrAwayFromZero, .toNearestOrEven, .towardZero, .up]
+    }
+}
+
 final class CoreGeometryTests: XCTestCase {
     func testAngle() {
         XCTAssert(90° == 90.radian)
@@ -1075,6 +1081,45 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(CGPoint.vertical(a) == CGVector.vertical(a))
         XCTAssert(CGPoint.vertical(b) == CGVector.vertical(b))
         XCTAssert(CGPoint.vertical(c) == CGVector.vertical(c))
+    }
+    
+    func testBiComponentRound() {
+        let a = CGFloat.random(in: -10_000...10_000)
+        let b = CGFloat.random(in: -10_000...10_000)
+        
+        XCTAssert(CGSize(a, b).rounded() == CGSize(a.rounded(), b.rounded()))
+        XCTAssert(CGPoint(a, b).rounded() == CGPoint(a.rounded(), b.rounded()))
+        XCTAssert(CGVector(a, b).rounded() == CGVector(a.rounded(), b.rounded()))
+        
+        var s = CGSize(a, b)
+        var p = CGPoint(a, b)
+        var v = CGVector(a, b)
+        
+        s.round()
+        p.round()
+        v.round()
+        
+        XCTAssert(s == CGSize(a.rounded(), b.rounded()))
+        XCTAssert(p == CGPoint(a.rounded(), b.rounded()))
+        XCTAssert(v == CGVector(a.rounded(), b.rounded()))
+        
+        FloatingPointRoundingRule.allCases.forEach {
+            XCTAssert(CGSize(a, b).rounded($0) == CGSize(a.rounded($0), b.rounded($0)))
+            XCTAssert(CGPoint(a, b).rounded($0) == CGPoint(a.rounded($0), b.rounded($0)))
+            XCTAssert(CGVector(a, b).rounded($0) == CGVector(a.rounded($0), b.rounded($0)))
+            
+            var s = CGSize(a, b)
+            var p = CGPoint(a, b)
+            var v = CGVector(a, b)
+            
+            s.round($0)
+            p.round($0)
+            v.round($0)
+            
+            XCTAssert(s == CGSize(a.rounded($0), b.rounded($0)))
+            XCTAssert(p == CGPoint(a.rounded($0), b.rounded($0)))
+            XCTAssert(v == CGVector(a.rounded($0), b.rounded($0)))
+        }
     }
 }
 
