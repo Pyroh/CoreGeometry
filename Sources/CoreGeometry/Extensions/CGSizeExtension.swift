@@ -88,6 +88,17 @@ public extension CGSize {
 }
 
 public extension CGSize {
+    @inlinable static func square(_ amount: CGFloat) -> CGSize {
+        .init(square: amount)
+    }
+    
+    @inlinable static func square<I: BinaryInteger>(_ amount: I) -> CGSize {
+        .init(square: amount)
+    }
+    
+    @inlinable static func square<F: BinaryFloatingPoint>(_ amount: F) -> CGSize {
+        .init(square: amount)
+    }
     
     /// Inits a size of `(amount, amount)`.
     @inlinable init(square amount: CGFloat) {

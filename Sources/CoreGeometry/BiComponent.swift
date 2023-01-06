@@ -40,6 +40,10 @@ public extension BiComponent {
 }
 
 public extension BiComponent {
+    static var one: Self { .init(simd2: .one) }
+}
+
+public extension BiComponent {
     @inlinable static func vertical(_ value: CGFloat) -> Self {
         .init(simd2: .init(0, value.native))
     }

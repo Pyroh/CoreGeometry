@@ -788,6 +788,8 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(s4 == .init(aspectRatio: 4/3, maxEdge: 800))
         XCTAssert(s5 == .init(aspectRatio: 3/4, maxEdge: 800))
         XCTAssert(s6 == .init(aspectRatio: 1, maxEdge: 800))
+        
+        XCTAssert(CGSize.one == .square(1))
     }
     
     func testVectorAlgebra() {
