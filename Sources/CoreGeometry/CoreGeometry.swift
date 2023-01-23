@@ -109,7 +109,7 @@ public enum CoreGeometry {
     }
     
     @inlinable
-    static func setFlippedState(_ state: CoordinatesFlippedState) {
+    public static func setFlippedState(_ state: CoordinatesFlippedState) {
         flippedState = state
     }
     
