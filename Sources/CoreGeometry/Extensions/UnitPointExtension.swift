@@ -42,8 +42,8 @@ extension UnitPoint: BiComponent {
     }
     
     @usableFromInline func autoFlipped() -> Self {
-        guard layoutDirection() == .rightToLeft || !CoreGeometry.flippedVertically else { return self }
-        return flipped(x: layoutDirection() == .rightToLeft, y: !CoreGeometry.flippedVertically)
+        guard CoreGeometry.flippedHorizontally || !CoreGeometry.flippedVertically else { return self }
+        return flipped(x: CoreGeometry.flippedHorizontally, y: !CoreGeometry.flippedVertically)
     }
     
     @inlinable public init(simd2: SIMD2<Native>) {

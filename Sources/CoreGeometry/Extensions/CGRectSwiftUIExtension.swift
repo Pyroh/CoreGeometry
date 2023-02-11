@@ -28,43 +28,6 @@
 
 import SwiftUI
 
-#if os(macOS)
-import AppKit
-
-@available(OSX 10.15, *)
-@usableFromInline func layoutDirection() -> LayoutDirection {
-    if NSApp == nil { return .leftToRight }
-    switch NSApp.userInterfaceLayoutDirection {
-    case .leftToRight: return .leftToRight
-    case .rightToLeft: return .rightToLeft
-    @unknown default: fatalError()
-    }
-}
-
-#elseif os(watchOS)
-import WatchKit
-
-@available(watchOS 6.0, *)
-@usableFromInline func layoutDirection() -> LayoutDirection {
-    switch WKInterfaceDevice.current().layoutDirection {
-    case .leftToRight: return .leftToRight
-    case .rightToLeft: return .rightToLeft
-    @unknown default: return .leftToRight
-    }
-}
-#else
-import UIKit
-
-@available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-@usableFromInline func layoutDirection() -> LayoutDirection {
-    switch UIApplication.shared.userInterfaceLayoutDirection {
-    case .leftToRight: return .leftToRight
-    case .rightToLeft: return .rightToLeft
-    @unknown default: return .leftToRight
-    }
-}
-#endif
-
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 @usableFromInline func convert(_ alignment: Alignment) -> (x: AxisAlignment, y: AxisAlignment) {
     (convert(alignment.horizontal), convert(alignment.vertical))
@@ -78,8 +41,8 @@ import UIKit
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 @usableFromInline func convert(_ alignement: HorizontalAlignment) -> AxisAlignment {
     switch alignement {
-    case .leading: return layoutDirection() == .leftToRight ? .min : .max
-    case .trailing: return layoutDirection() == .leftToRight ? .max : .min
+    case .leading: return CoreGeometry.flippedHorizontally ? .max : .min
+    case .trailing: return CoreGeometry.flippedHorizontally ? .min : .max
     default: return .mid
     }
 }
@@ -87,10 +50,9 @@ import UIKit
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 @usableFromInline func convert(_ alignement: HorizontalAlignment) -> RectBoundary {
     switch alignement {
-    case .leading: return layoutDirection() == .leftToRight ? .min : .max
-    case .trailing: return layoutDirection() == .leftToRight ? .max : .min
-    default:
-        return .mid
+    case .leading: return CoreGeometry.flippedHorizontally ? .max : .min
+    case .trailing: return CoreGeometry.flippedHorizontally ? .min : .max
+    default: return .mid
     }
 }
 

@@ -48,8 +48,10 @@ postfix operator °
 #if !os(Linux)
 #if os(macOS)
 import Cocoa
-#else
+#elseif os(iOS)
 import UIKit
+#elseif os(watchOS)
+import WatchOS
 #endif
 
 public enum CoreGeometry {
@@ -73,6 +75,19 @@ public enum CoreGeometry {
                 return true
             case .notFlipped:
                 return false
+            }
+        }
+    }
+    
+    public enum CoordinateRTLState {
+        case leftToRight
+        case rightToLeft
+        
+        @usableFromInline
+        var rightToLeft: Bool {
+            switch self {
+            case .leftToRight: return false
+            case .rightToLeft: return true
             }
         }
     }
@@ -127,6 +142,43 @@ public enum CoreGeometry {
     @inlinable
     public static func setFlippedState(from view: NSView) {
         flippedState = view.isFlipped ? .flipped : .notFlipped
+    }
+    #endif
+    
+    @usableFromInline
+    static var rtlState: CoordinateRTLState = .leftToRight
+    
+    @usableFromInline
+    static var flippedHorizontally: Bool {
+        rtlState == .rightToLeft
+    }
+    
+    #if os(macOS)
+    @inlinable
+    public static func setLayoutDirection(from application: NSApplication) {
+        switch NSApp.userInterfaceLayoutDirection {
+        case .leftToRight: rtlState = .leftToRight
+        case .rightToLeft: rtlState = .rightToLeft
+        @unknown default: rtlState = .leftToRight
+        }
+    }
+    #elseif os(watchOS)
+    @inlinable
+    public static func setLayoutDirection(from interfaceDevice: WKInterfaceDevice) {
+        switch interfaceDevice.layoutDirection {
+        case .leftToRight: rtlState = .leftToRight
+        case .rightToLeft: rtlState = .rightToLeft
+        @unknown default: rtlState = .leftToRight
+        }
+    }
+    #elseif os(iOS)
+    @inlinable
+    public static func setLayoutDirection(from app: UIApplication) {
+        switch app.userInterfaceLayoutDirection {
+        case .leftToRight: rtlState = .leftToRight
+        case .rightToLeft: rtlState = .rightToLeft
+        @unknown default: rtlState = .leftToRight
+        }
     }
     #endif
 }
