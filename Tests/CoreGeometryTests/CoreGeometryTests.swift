@@ -276,8 +276,8 @@ final class CoreGeometryTests: XCTestCase {
         CoreGeometry.flippedState = .auto
     }
     
-    func testAnchorAlign() {
-        CoreGeometry.flippedState = .flipped
+    func testAnchorAlignFlippedY() {
+        CoreGeometry.setFlippedState(.flipped)
         
         let r1 = CGRect(center: .zero, size: .init(square: 4))
         let r2 = CGRect(center: .zero, size: .init(square: 2))
@@ -545,111 +545,200 @@ final class CoreGeometryTests: XCTestCase {
         r3.align(.bottomTrailing, to: r1, anchor: .bottomTrailing)
         XCTAssert(r3 == .init(+0, +0, 2, 2))
         
-        CoreGeometry.flippedState = .auto
+        CoreGeometry.resetFlippedState()
     }
     
     func testRectAnchor() {
-        let r1 = CGRect(20, 20)
+        let r1 = CGRect(2, 2)
         
-        let topLeading = CGPoint(0, 20)
-        let top = CGPoint(10, 20)
-        let topTrailing = CGPoint(20, 20)
-        let trailing = CGPoint(20, 10)
+        let topLeading = CGPoint(0, 2)
+        let top = CGPoint(1, 2)
+        let topTrailing = CGPoint(2, 2)
+        let leading = CGPoint(0, 1)
+        let center = CGPoint(1, 1)
+        let trailing = CGPoint(2, 1)
         let bottomLeading = CGPoint(0, 0)
-        let bottom = CGPoint(10, 0)
-        let bottomTrailing = CGPoint(20, 0)
-        let leading = CGPoint(0, 10)
-        let center = CGPoint(10, 10)
+        let bottom = CGPoint(1, 0)
+        let bottomTrailing = CGPoint(2, 0)
         
-        let topLeadingFlipped = CGPoint(0, 0)
-        let topFlipped = CGPoint(10, 0)
-        let topTrailingFlipped = CGPoint(20, 0)
-        let trailingFlipped = CGPoint(20, 10)
-        let bottomLeadingFlipped = CGPoint(0, 20)
-        let bottomFlipped = CGPoint(10, 20)
-        let bottomTrailingFlipped = CGPoint(20, 20)
-        let leadingFlipped = CGPoint(0, 10)
-        
-        func fTestNotFlipped() {
+        func fTest() {
             XCTAssert(r1[UnitPoint.topLeading] == topLeading)
             XCTAssert(r1[UnitPoint.top] == top)
             XCTAssert(r1[UnitPoint.topTrailing] == topTrailing)
+            XCTAssert(r1[UnitPoint.leading] == leading)
+            XCTAssert(r1[UnitPoint.center] == center)
             XCTAssert(r1[UnitPoint.trailing] == trailing)
             XCTAssert(r1[UnitPoint.bottomLeading] == bottomLeading)
             XCTAssert(r1[UnitPoint.bottom] == bottom)
             XCTAssert(r1[UnitPoint.bottomTrailing] == bottomTrailing)
-            XCTAssert(r1[UnitPoint.leading] == leading)
-            XCTAssert(r1[UnitPoint.center] == center)
+            
             XCTAssert(r1[Alignment.topLeading] == topLeading)
             XCTAssert(r1[Alignment.top] == top)
             XCTAssert(r1[Alignment.topTrailing] == topTrailing)
+            XCTAssert(r1[Alignment.leading] == leading)
+            XCTAssert(r1[Alignment.center] == center)
             XCTAssert(r1[Alignment.trailing] == trailing)
             XCTAssert(r1[Alignment.bottomLeading] == bottomLeading)
             XCTAssert(r1[Alignment.bottom] == bottom)
             XCTAssert(r1[Alignment.bottomTrailing] == bottomTrailing)
+            
+            var r2 = CGRect(2, 2)
+            
+            r2[UnitPoint.topLeading] = .zero
+            XCTAssert(r2[UnitPoint.topLeading]      == (0, 0))
+            XCTAssert(r2[UnitPoint.top]             == (1, 0))
+            XCTAssert(r2[UnitPoint.topTrailing]     == (2, 0))
+            XCTAssert(r2[UnitPoint.leading]         == (0, -1))
+            XCTAssert(r2[UnitPoint.center]          == (1, -1))
+            XCTAssert(r2[UnitPoint.trailing]        == (2, -1))
+            XCTAssert(r2[UnitPoint.bottomLeading]   == (0, -2))
+            XCTAssert(r2[UnitPoint.bottom]          == (1, -2))
+            XCTAssert(r2[UnitPoint.bottomTrailing]  == (2, -2))
+            
+            r2[UnitPoint.center] = .zero
+            XCTAssert(r2[UnitPoint.topLeading]      == (-1, 1))
+            XCTAssert(r2[UnitPoint.top]             == (0, 1))
+            XCTAssert(r2[UnitPoint.topTrailing]     == (1, 1))
+            XCTAssert(r2[UnitPoint.leading]         == (-1, 0))
+            XCTAssert(r2[UnitPoint.center]          == (0, 0))
+            XCTAssert(r2[UnitPoint.trailing]        == (1, 0))
+            XCTAssert(r2[UnitPoint.bottomLeading]   == (-1, -1))
+            XCTAssert(r2[UnitPoint.bottom]          == (0, -1))
+            XCTAssert(r2[UnitPoint.bottomTrailing]  == (1, -1))
+        }
+        
+        func fTestFlipX() {
+            XCTAssert(r1[UnitPoint.topLeading] == topTrailing)
+            XCTAssert(r1[UnitPoint.top] == top)
+            XCTAssert(r1[UnitPoint.topTrailing] == topLeading)
+            XCTAssert(r1[UnitPoint.leading] == trailing)
+            XCTAssert(r1[UnitPoint.center] == center)
+            XCTAssert(r1[UnitPoint.trailing] == leading)
+            XCTAssert(r1[UnitPoint.bottomLeading] == bottomTrailing)
+            XCTAssert(r1[UnitPoint.bottom] == bottom)
+            XCTAssert(r1[UnitPoint.bottomTrailing] == bottomLeading)
+            
+            XCTAssert(r1[Alignment.topLeading] == topTrailing)
+            XCTAssert(r1[Alignment.top] == top)
+            XCTAssert(r1[Alignment.topTrailing] == topLeading)
+            XCTAssert(r1[Alignment.leading] == trailing)
+            XCTAssert(r1[Alignment.center] == center)
+            XCTAssert(r1[Alignment.trailing] == leading)
+            XCTAssert(r1[Alignment.bottomLeading] == bottomTrailing)
+            XCTAssert(r1[Alignment.bottom] == bottom)
+            XCTAssert(r1[Alignment.bottomTrailing] == bottomLeading)
+            
+            var r2 = CGRect(2, 2)
+            
+            r2[UnitPoint.topLeading] = .zero
+            XCTAssert(r2[UnitPoint.topLeading]      == (0, 0))
+            XCTAssert(r2[UnitPoint.top]             == (-1, 0))
+            XCTAssert(r2[UnitPoint.topTrailing]     == (-2, 0))
+            XCTAssert(r2[UnitPoint.leading]         == (0, -1))
+            XCTAssert(r2[UnitPoint.center]          == (-1, -1))
+            XCTAssert(r2[UnitPoint.trailing]        == (-2, -1))
+            XCTAssert(r2[UnitPoint.bottomLeading]   == (0, -2))
+            XCTAssert(r2[UnitPoint.bottom]          == (-1, -2))
+            XCTAssert(r2[UnitPoint.bottomTrailing]  == (-2, -2))
+            
+            r2[UnitPoint.center] = .zero
+            XCTAssert(r2[UnitPoint.topLeading]      == (1, 1))
+            XCTAssert(r2[UnitPoint.top]             == (0, 1))
+            XCTAssert(r2[UnitPoint.topTrailing]     == (-1, 1))
+            XCTAssert(r2[UnitPoint.leading]         == (1, 0))
+            XCTAssert(r2[UnitPoint.center]          == (0, 0))
+            XCTAssert(r2[UnitPoint.trailing]        == (-1, 0))
+            XCTAssert(r2[UnitPoint.bottomLeading]   == (1, -1))
+            XCTAssert(r2[UnitPoint.bottom]          == (0, -1))
+            XCTAssert(r2[UnitPoint.bottomTrailing]  == (-1, -1))
+        }
+        
+        func fTestFlipY() {
+            XCTAssert(r1[UnitPoint.topLeading] == bottomLeading)
+            XCTAssert(r1[UnitPoint.top] == bottom)
+            XCTAssert(r1[UnitPoint.topTrailing] == bottomTrailing)
+            XCTAssert(r1[UnitPoint.leading] == leading)
+            XCTAssert(r1[UnitPoint.center] == center)
+            XCTAssert(r1[UnitPoint.trailing] == trailing)
+            XCTAssert(r1[UnitPoint.bottomLeading] == topLeading)
+            XCTAssert(r1[UnitPoint.bottom] == top)
+            XCTAssert(r1[UnitPoint.bottomTrailing] == topTrailing)
+            
+            XCTAssert(r1[Alignment.topLeading] == bottomLeading)
+            XCTAssert(r1[Alignment.top] == bottom)
+            XCTAssert(r1[Alignment.topTrailing] == bottomTrailing)
             XCTAssert(r1[Alignment.leading] == leading)
             XCTAssert(r1[Alignment.center] == center)
+            XCTAssert(r1[Alignment.trailing] == trailing)
+            XCTAssert(r1[Alignment.bottomLeading] == topLeading)
+            XCTAssert(r1[Alignment.bottom] == top)
+            XCTAssert(r1[Alignment.bottomTrailing] == topTrailing)
         }
         
-        func fTestFlipped() {
-            XCTAssert(r1[UnitPoint.topLeading] == topLeadingFlipped)
-            XCTAssert(r1[UnitPoint.top] == topFlipped)
-            XCTAssert(r1[UnitPoint.topTrailing] == topTrailingFlipped)
-            XCTAssert(r1[UnitPoint.trailing] == trailingFlipped)
-            XCTAssert(r1[UnitPoint.bottomLeading] == bottomLeadingFlipped)
-            XCTAssert(r1[UnitPoint.bottom] == bottomFlipped)
-            XCTAssert(r1[UnitPoint.bottomTrailing] == bottomTrailingFlipped)
-            XCTAssert(r1[UnitPoint.leading] == leadingFlipped)
+        func fTestFlipXY() {
+            XCTAssert(r1[UnitPoint.topLeading] == bottomTrailing)
+            XCTAssert(r1[UnitPoint.top] == bottom)
+            XCTAssert(r1[UnitPoint.topTrailing] == bottomLeading)
+            XCTAssert(r1[UnitPoint.leading] == trailing)
             XCTAssert(r1[UnitPoint.center] == center)
-            XCTAssert(r1[Alignment.topLeading] == topLeadingFlipped)
-            XCTAssert(r1[Alignment.top] == topFlipped)
-            XCTAssert(r1[Alignment.topTrailing] == topTrailingFlipped)
-            XCTAssert(r1[Alignment.trailing] == trailingFlipped)
-            XCTAssert(r1[Alignment.bottomLeading] == bottomLeadingFlipped)
-            XCTAssert(r1[Alignment.bottom] == bottomFlipped)
-            XCTAssert(r1[Alignment.bottomTrailing] == bottomTrailingFlipped)
-            XCTAssert(r1[Alignment.leading] == leadingFlipped)
+            XCTAssert(r1[UnitPoint.trailing] == leading)
+            XCTAssert(r1[UnitPoint.bottomLeading] == topTrailing)
+            XCTAssert(r1[UnitPoint.bottom] == top)
+            XCTAssert(r1[UnitPoint.bottomTrailing] == topLeading)
+            
+            XCTAssert(r1[Alignment.topLeading] == bottomTrailing)
+            XCTAssert(r1[Alignment.top] == bottom)
+            XCTAssert(r1[Alignment.topTrailing] == bottomLeading)
+            XCTAssert(r1[Alignment.leading] == trailing)
             XCTAssert(r1[Alignment.center] == center)
+            XCTAssert(r1[Alignment.trailing] == leading)
+            XCTAssert(r1[Alignment.bottomLeading] == topTrailing)
+            XCTAssert(r1[Alignment.bottom] == top)
+            XCTAssert(r1[Alignment.bottomTrailing] == topLeading)
+            
+            var r2 = CGRect(2, 2)
+            
+            r2[UnitPoint.topLeading] = .zero
+            XCTAssert(r2[UnitPoint.topLeading]      == (0, 0))
+            XCTAssert(r2[UnitPoint.top]             == (-1, 0))
+            XCTAssert(r2[UnitPoint.topTrailing]     == (-2, 0))
+            XCTAssert(r2[UnitPoint.leading]         == (0, 1))
+            XCTAssert(r2[UnitPoint.center]          == (-1, 1))
+            XCTAssert(r2[UnitPoint.trailing]        == (-2, 1))
+            XCTAssert(r2[UnitPoint.bottomLeading]   == (0, 2))
+            XCTAssert(r2[UnitPoint.bottom]          == (-1, 2))
+            XCTAssert(r2[UnitPoint.bottomTrailing]  == (-2, 2))
+            
+            r2[UnitPoint.center] = .zero
+            XCTAssert(r2[UnitPoint.topLeading]      == (1, -1))
+            XCTAssert(r2[UnitPoint.top]             == (0, -1))
+            XCTAssert(r2[UnitPoint.topTrailing]     == (-1, -1))
+            XCTAssert(r2[UnitPoint.leading]         == (1, 0))
+            XCTAssert(r2[UnitPoint.center]          == (0, 0))
+            XCTAssert(r2[UnitPoint.trailing]        == (-1, 0))
+            XCTAssert(r2[UnitPoint.bottomLeading]   == (1, 1))
+            XCTAssert(r2[UnitPoint.bottom]          == (0, 1))
+            XCTAssert(r2[UnitPoint.bottomTrailing]  == (-1, 1))
         }
         
-        CoreGeometry.resetFlippedState()
-        
-        #if os(macOS)
-        fTestNotFlipped()
-        CoreGeometry.setFlippedState(.flipped)
-        fTestFlipped()
         CoreGeometry.setFlippedState(.notFlipped)
-        fTestNotFlipped()
-        #else
-        fTestFlipped()
+        CoreGeometry.setLayoutDirection(rightToLeft: false)
+        fTest()
+        
         CoreGeometry.setFlippedState(.notFlipped)
-        fTestNotFlipped()
+        CoreGeometry.setLayoutDirection(rightToLeft: true)
+        fTestFlipX()
+        
         CoreGeometry.setFlippedState(.flipped)
-        fTestFlipped()
-        #endif
+        CoreGeometry.setLayoutDirection(rightToLeft: false)
+        fTestFlipY()
         
+        CoreGeometry.setFlippedState(.flipped)
+        CoreGeometry.setLayoutDirection(rightToLeft: true)
+        fTestFlipXY()
+        
+        CoreGeometry.setLayoutDirection(rightToLeft: false)
         CoreGeometry.resetFlippedState()
-        
-        var r2 = CGRect(20, 20)
-        
-        r2[UnitPoint.topLeading] = .zero
-        XCTAssert(r2[UnitPoint.topLeading] == .zero)
-        r2[UnitPoint.top] = .zero
-        XCTAssert(r2[UnitPoint.top] == .zero)
-        r2[UnitPoint.topTrailing] = .zero
-        XCTAssert(r2[UnitPoint.topTrailing] == .zero)
-        r2[UnitPoint.trailing] = .zero
-        XCTAssert(r2[UnitPoint.trailing] == .zero)
-        r2[UnitPoint.bottomLeading] = .zero
-        XCTAssert(r2[UnitPoint.bottomLeading] == .zero)
-        r2[UnitPoint.bottom] = .zero
-        XCTAssert(r2[UnitPoint.bottom] == .zero)
-        r2[UnitPoint.bottomTrailing] = .zero
-        XCTAssert(r2[UnitPoint.bottomTrailing] == .zero)
-        r2[UnitPoint.leading] = .zero
-        XCTAssert(r2[UnitPoint.leading] == .zero)
-        r2[UnitPoint.center] = .zero
-        XCTAssert(r2[UnitPoint.center] == .zero)
     }
     
     func testRectInsetExtension() {

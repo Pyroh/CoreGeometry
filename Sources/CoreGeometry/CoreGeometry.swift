@@ -146,38 +146,55 @@ public enum CoreGeometry {
     #endif
     
     @usableFromInline
-    static var rtlState: CoordinateRTLState = .leftToRight
+    static var flippedHorizontally: Bool = false
     
     @usableFromInline
-    static var flippedHorizontally: Bool {
-        rtlState == .rightToLeft
+    static var layoutDirectionStack: [Bool] = []
+    
+    @inlinable
+    public static func saveLayoutDirection() {
+        layoutDirectionStack.append(flippedHorizontally)
+    }
+    
+    @inlinable
+    public static func restoreLayoutDirection() {
+        guard !layoutDirectionStack.isEmpty else {
+            fatalError("Tried to perform an unbalanced call to \(#function). Don't try to perform unbalanced call to \(#function).")
+        }
+        
+        layoutDirectionStack.removeLast()
+    }
+    
+    @inlinable
+    public static func setLayoutDirection(rightToLeft flag: Bool) {
+        flippedHorizontally = flag
     }
     
     #if os(macOS)
     @inlinable
     public static func setLayoutDirection(from application: NSApplication) {
         switch NSApp.userInterfaceLayoutDirection {
-        case .leftToRight: rtlState = .leftToRight
-        case .rightToLeft: rtlState = .rightToLeft
-        @unknown default: rtlState = .leftToRight
+        case .leftToRight: flippedHorizontally = false
+        case .rightToLeft: flippedHorizontally = true
+        @unknown default: return
         }
     }
     #elseif os(watchOS)
     @inlinable
     public static func setLayoutDirection(from interfaceDevice: WKInterfaceDevice) {
         switch interfaceDevice.layoutDirection {
-        case .leftToRight: rtlState = .leftToRight
-        case .rightToLeft: rtlState = .rightToLeft
-        @unknown default: rtlState = .leftToRight
+        case .leftToRight: flippedHorizontally = false
+        case .rightToLeft: flippedHorizontally = true
+        @unknown default: return
         }
     }
     #elseif os(iOS)
     @inlinable
     public static func setLayoutDirection(from app: UIApplication) {
         switch app.userInterfaceLayoutDirection {
-        case .leftToRight: rtlState = .leftToRight
-        case .rightToLeft: rtlState = .rightToLeft
-        @unknown default: rtlState = .leftToRight
+        case .leftToRight: flippedHorizontally = false
+        case .rightToLeft: flippedHorizontally = true
+        @unknown default: return
         }
     }
     #endif

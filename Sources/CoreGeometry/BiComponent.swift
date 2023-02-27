@@ -28,19 +28,41 @@
 
 import simd
 
+extension SIMD2<Native> {
+    @usableFromInline init<I: BinaryInteger>(_ components: (I, I)) {
+        self.init(components.0.native, components.1.native)
+    }
+    
+    @usableFromInline init<F: BinaryFloatingPoint>(_ components: (F, F)) {
+        self.init(components.0.native, components.1.native)
+    }
+}
+
 public protocol BiComponent: AdditiveArithmetic, Equatable {
     var simd2: SIMD2<Native> { get set }
     init(simd2: SIMD2<Native>)
 }
 
 public extension BiComponent {
-    static func ==<B: BiComponent>(lhs: Self, rhs: B) -> Bool {
+    @inlinable static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.simd2 == rhs.simd2
+    }
+    
+    @inlinable static func ==<B: BiComponent>(lhs: Self, rhs: B) -> Bool {
+        lhs.simd2 == rhs.simd2
+    }
+    
+    @inlinable static func ==<I: BinaryInteger>(lhs: Self, rhs: (I, I)) -> Bool {
+        lhs.simd2 == .init(rhs)
+    }
+    
+    @inlinable static func ==<F: BinaryFloatingPoint>(lhs: Self, rhs: (F, F)) -> Bool {
+        lhs.simd2 == .init(rhs)
     }
 }
 
 public extension BiComponent {
-    static var one: Self { .init(simd2: .one) }
+    @inlinable static var one: Self { .init(simd2: .one) }
 }
 
 public extension BiComponent {
@@ -168,11 +190,11 @@ public extension BiComponent {
     }
     
     @inlinable static func +<F: BinaryFloatingPoint>(lhs: Self, rhs: (F, F)) -> Self {
-        .init(simd2: lhs.simd2 + .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 + .init(rhs))
     }
     
     @inlinable static func +<I: BinaryInteger>(lhs: Self, rhs: (I, I)) -> Self {
-        .init(simd2: lhs.simd2 + .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 + .init(rhs))
     }
     
     @inlinable static func +=(lhs: inout Self, rhs: SIMD2<Native>) {
@@ -196,11 +218,11 @@ public extension BiComponent {
     }
     
     @inlinable static func +=<F: BinaryFloatingPoint>(lhs: inout Self, rhs: (F, F)) {
-        lhs.simd2 = lhs.simd2 + .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 + .init(rhs)
     }
     
     @inlinable static func +=<I: BinaryInteger>(lhs: inout Self, rhs: (I, I)) {
-        lhs.simd2 = lhs.simd2 + .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 + .init(rhs)
     }
 }
 
@@ -226,11 +248,11 @@ public extension BiComponent {
     }
     
     @inlinable static func -<F: BinaryFloatingPoint>(lhs: Self, rhs: (F, F)) -> Self {
-        .init(simd2: lhs.simd2 - .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 - .init(rhs))
     }
     
     @inlinable static func -<I: BinaryInteger>(lhs: Self, rhs: (I, I)) -> Self {
-        .init(simd2: lhs.simd2 - .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 - .init(rhs))
     }
     
     @inlinable static func -=(lhs: inout Self, rhs: SIMD2<Native>) {
@@ -254,11 +276,11 @@ public extension BiComponent {
     }
     
     @inlinable static func -=<F: BinaryFloatingPoint>(lhs: inout Self, rhs: (F, F)) {
-        lhs.simd2 = lhs.simd2 - .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 - .init(rhs)
     }
     
     @inlinable static func -=<I: BinaryInteger>(lhs: inout Self, rhs: (I, I)) {
-        lhs.simd2 = lhs.simd2 - .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 - .init(rhs)
     }
 }
 
@@ -284,11 +306,11 @@ public extension BiComponent {
     }
     
     @inlinable static func *<F: BinaryFloatingPoint>(lhs: Self, rhs: (F, F)) -> Self {
-        .init(simd2: lhs.simd2 * .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 * .init(rhs))
     }
     
     @inlinable static func *<I: BinaryInteger>(lhs: Self, rhs: (I, I)) -> Self {
-        .init(simd2: lhs.simd2 * .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 * .init(rhs))
     }
     
     @inlinable static func *=(lhs: inout Self, rhs: SIMD2<Native>) {
@@ -312,11 +334,11 @@ public extension BiComponent {
     }
     
     @inlinable static func *=<F: BinaryFloatingPoint>(lhs: inout Self, rhs: (F, F)) {
-        lhs.simd2 = lhs.simd2 * .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 * .init(rhs)
     }
     
     @inlinable static func *=<I: BinaryInteger>(lhs: inout Self, rhs: (I, I)) {
-        lhs.simd2 = lhs.simd2 * .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 * .init(rhs)
     }
 }
 
@@ -342,11 +364,11 @@ public extension BiComponent {
     }
     
     @inlinable static func /<F: BinaryFloatingPoint>(lhs: Self, rhs: (F, F)) -> Self {
-        .init(simd2: lhs.simd2 / .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 / .init(rhs))
     }
     
     @inlinable static func /<I: BinaryInteger>(lhs: Self, rhs: (I, I)) -> Self {
-        .init(simd2: lhs.simd2 / .init(rhs.0.native, rhs.1.native))
+        .init(simd2: lhs.simd2 / .init(rhs))
     }
     
     @inlinable static func /=(lhs: inout Self, rhs: SIMD2<Native>) {
@@ -370,11 +392,11 @@ public extension BiComponent {
     }
     
     @inlinable static func /=<F: BinaryFloatingPoint>(lhs: inout Self, rhs: (F, F)) {
-        lhs.simd2 = lhs.simd2 / .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 / .init(rhs)
     }
     
     @inlinable static func /=<I: BinaryInteger>(lhs: inout Self, rhs: (I, I)) {
-        lhs.simd2 = lhs.simd2 / .init(rhs.0.native, rhs.1.native)
+        lhs.simd2 = lhs.simd2 / .init(rhs)
     }
 }
 

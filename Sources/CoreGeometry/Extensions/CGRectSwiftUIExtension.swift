@@ -92,7 +92,7 @@ extension CGRect {
 @available(OSX 10.15, iOS 13, watchOS 6.0, tvOS 13.0, *)
 public extension CGRect {
     @inlinable subscript(anchor: UnitPoint) -> CGPoint {
-        get { origin + size * anchor.autoFlipped() }
+        get { origin + size * anchor.auto() }
         set { origin += newValue - self[anchor] }
     }
     

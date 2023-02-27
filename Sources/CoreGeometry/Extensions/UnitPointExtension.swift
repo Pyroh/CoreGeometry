@@ -36,14 +36,13 @@ extension UnitPoint: BiComponent {
     
     @usableFromInline func flipped(x flagX: Bool, y flagY: Bool) -> Self {
         let x = flagX ? 1 - x : x
-        let y = flagY ? 1 - y : y
+        let y = flagY ? y : 1 - y
         
         return .init(x: x, y: y)
     }
     
-    @usableFromInline func autoFlipped() -> Self {
-        guard CoreGeometry.flippedHorizontally || !CoreGeometry.flippedVertically else { return self }
-        return flipped(x: CoreGeometry.flippedHorizontally, y: !CoreGeometry.flippedVertically)
+    @usableFromInline func auto() -> Self {
+        return flipped(x: CoreGeometry.flippedHorizontally, y: CoreGeometry.flippedVertically)
     }
     
     @inlinable public init(simd2: SIMD2<Native>) {
