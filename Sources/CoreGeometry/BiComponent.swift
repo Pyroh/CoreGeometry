@@ -62,7 +62,7 @@ public extension BiComponent {
 }
 
 public extension BiComponent {
-    @inlinable static var one: Self { .init(simd2: .one) }
+    @inlinable nonisolated static var one: Self { .init(simd2: .one) }
 }
 
 public extension BiComponent {

@@ -29,7 +29,7 @@
 
 import CoreGraphics
 
-public struct RectangleEdge: OptionSet {
+public struct RectangleEdge: OptionSet, Sendable {
     public let rawValue: Int
     
     @usableFromInline

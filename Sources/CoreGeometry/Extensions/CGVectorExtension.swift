@@ -54,6 +54,7 @@ public extension CGVector {
     }
 }
 
+extension CGVector: @retroactive AdditiveArithmetic {}
 extension CGVector: BiComponent {
     
     /// The receiver's SIMD representation.

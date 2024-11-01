@@ -28,6 +28,7 @@
 
 import SwiftUI
 
+extension UnitPoint: @retroactive AdditiveArithmetic {}
 extension UnitPoint: BiComponent {
     @inlinable public var simd2: SIMD2<Native> {
         get { .init(x.native, y.native) }
@@ -41,7 +42,7 @@ extension UnitPoint: BiComponent {
         return .init(x: x, y: y)
     }
     
-    @usableFromInline func auto() -> Self {
+    @MainActor @usableFromInline func auto() -> Self {
         return flipped(x: CoreGeometry.flippedHorizontally, y: CoreGeometry.flippedVertically)
     }
     

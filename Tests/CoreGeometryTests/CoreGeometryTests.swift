@@ -32,7 +32,7 @@ import XCTest
 import SwiftUI
 @testable import CoreGeometry
 
-extension FloatingPointRoundingRule: CaseIterable {
+extension FloatingPointRoundingRule: @retroactive CaseIterable {
     public static var allCases: [FloatingPointRoundingRule] {
         [.awayFromZero, .down, .toNearestOrAwayFromZero, .toNearestOrEven, .towardZero, .up]
     }
@@ -175,6 +175,7 @@ final class CoreGeometryTests: XCTestCase {
         XCTAssert(r4 == r3)
     }
     
+    @MainActor
     func testRectAlignExtension() {
         let r1 = CGRect(center: .zero, size: .init(square: 200))
         let r2 = CGRect(center: .zero, size: .init(square: 100))
@@ -276,6 +277,7 @@ final class CoreGeometryTests: XCTestCase {
         CoreGeometry.flippedState = .auto
     }
     
+    @MainActor
     func testAnchorAlignFlippedY() {
         CoreGeometry.setFlippedState(.flipped)
         
@@ -548,6 +550,7 @@ final class CoreGeometryTests: XCTestCase {
         CoreGeometry.resetFlippedState()
     }
     
+    @MainActor
     func testRectAnchor() {
         let r1 = CGRect(2, 2)
         
@@ -561,6 +564,7 @@ final class CoreGeometryTests: XCTestCase {
         let bottom = CGPoint(1, 0)
         let bottomTrailing = CGPoint(2, 0)
         
+        @MainActor
         func fTest() {
             XCTAssert(r1[UnitPoint.topLeading] == topLeading)
             XCTAssert(r1[UnitPoint.top] == top)
@@ -607,6 +611,7 @@ final class CoreGeometryTests: XCTestCase {
             XCTAssert(r2[UnitPoint.bottomTrailing]  == (1, -1))
         }
         
+        @MainActor
         func fTestFlipX() {
             XCTAssert(r1[UnitPoint.topLeading] == topTrailing)
             XCTAssert(r1[UnitPoint.top] == top)
@@ -653,6 +658,7 @@ final class CoreGeometryTests: XCTestCase {
             XCTAssert(r2[UnitPoint.bottomTrailing]  == (-1, -1))
         }
         
+        @MainActor
         func fTestFlipY() {
             XCTAssert(r1[UnitPoint.topLeading] == bottomLeading)
             XCTAssert(r1[UnitPoint.top] == bottom)
@@ -675,6 +681,7 @@ final class CoreGeometryTests: XCTestCase {
             XCTAssert(r1[Alignment.bottomTrailing] == topTrailing)
         }
         
+        @MainActor
         func fTestFlipXY() {
             XCTAssert(r1[UnitPoint.topLeading] == bottomTrailing)
             XCTAssert(r1[UnitPoint.top] == bottom)

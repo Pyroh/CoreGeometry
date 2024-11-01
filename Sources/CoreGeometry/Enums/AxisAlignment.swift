@@ -35,7 +35,7 @@ import Foundation
 /// - mid: Mid axis' value constraint.
 /// - max: Max axis' value constraint.
 /// - min: Min axis' value constraint.
-public enum AxisAlignment {
+public enum AxisAlignment: Sendable {
     case none
     case mid
     case max

@@ -247,6 +247,7 @@ public extension CGSize {
     }
 }
 
+extension CGSize: @retroactive AdditiveArithmetic {}
 extension CGSize: BiComponent {
     /// The receiver's SIMD representation.
     @inlinable public var simd2: SIMD2<Native> {
@@ -377,15 +378,5 @@ public extension CGSize {
     /// Returns `true` if the given size's elements are both lesser that or equel to the receiver's one, respectivelty. `false` otherwise.
     @inlinable func contains(_ other: CGSize) -> Bool {
         all(other.simd2 .<= simd2)
-    }
-    
-    @available(*, deprecated, renamed: "clamped(lowerBound:upperBound:)")
-    @inlinable func clamped(min: CGSize, max: CGSize) -> CGSize {
-        .init(simd2: simd.clamp(simd2, min: min.simd2, max: max.simd2))
-    }
-    
-    @available(*, deprecated, renamed: "clamp(lowerBound:upperBound:)")
-    @inlinable mutating func clamp(min: CGSize, max: CGSize) {
-        self = clamped(lowerBound: min, upperBound: max)
     }
 }

@@ -27,7 +27,7 @@
 //
 
 
-public enum RectBoundary {
+public enum RectBoundary: Sendable {
     case min
     case mid
     case max

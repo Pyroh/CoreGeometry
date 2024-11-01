@@ -29,6 +29,7 @@
 
 import CoreGraphics
 import simd
+import SwizzleIMD
 
 // MARK: Initializers
 public extension CGRect {

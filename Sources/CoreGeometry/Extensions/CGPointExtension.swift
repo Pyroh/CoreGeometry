@@ -72,6 +72,7 @@ public extension CGPoint {
     }
 }
 
+extension CGPoint: @retroactive AdditiveArithmetic {}
 extension CGPoint: BiComponent {
     
     /// The receiver's SIMD representation.

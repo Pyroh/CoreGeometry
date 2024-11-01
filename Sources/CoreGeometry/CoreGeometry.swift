@@ -54,15 +54,15 @@ import UIKit
 import WatchOS
 #endif
 
-public enum CoreGeometry {
-    public enum CoordinatesFlippedState {
+public enum CoreGeometry: Sendable {
+    public enum CoordinatesFlippedState: Sendable {
         /// Default for platform, independent on the context. Not flipped on macOS, flipped otherwise.
         case auto
         
         case flipped
         case notFlipped
         
-        @usableFromInline
+        @usableFromInline @MainActor
         var flipped: Bool {
             switch self {
             case .auto:
@@ -92,23 +92,23 @@ public enum CoreGeometry {
         }
     }
     
-    @usableFromInline
+    @usableFromInline @MainActor
     static var flippedState: CoordinatesFlippedState = .auto
     
-    @usableFromInline
+    @usableFromInline @MainActor
     static var flippedStateStack: [CoordinatesFlippedState] = []
     
-    @usableFromInline
+    @usableFromInline @MainActor
     static var flippedVertically: Bool {
         flippedState.flipped
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func saveFlippedState() {
         flippedStateStack.append(flippedState)
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func restoreFlippedState() {
         guard !flippedStateStack.isEmpty else {
             fatalError("Tried to perform an unbalanced call to \(#function). Don't try to perform unbalanced call to \(#function).")
@@ -117,46 +117,46 @@ public enum CoreGeometry {
         flippedState = flippedStateStack.removeLast()
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func resetFlippedState() {
         flippedState = .auto
         flippedStateStack = []
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func setFlippedState(_ state: CoordinatesFlippedState) {
         flippedState = state
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func setFlippedState(from layer: CALayer) {
         flippedState = layer.isGeometryFlipped ? .flipped : .notFlipped
     }
     
     #if os(macOS)
-    @inlinable
+    @inlinable @MainActor
     public static func setFlippedState(from context: NSGraphicsContext) {
         flippedState = context.isFlipped ? .flipped : .notFlipped
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func setFlippedState(from view: NSView) {
         flippedState = view.isFlipped ? .flipped : .notFlipped
     }
     #endif
     
-    @usableFromInline
+    @usableFromInline @MainActor
     static var flippedHorizontally: Bool = false
     
-    @usableFromInline
+    @usableFromInline @MainActor
     static var layoutDirectionStack: [Bool] = []
     
-    @inlinable
+    @inlinable @MainActor
     public static func saveLayoutDirection() {
         layoutDirectionStack.append(flippedHorizontally)
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func restoreLayoutDirection() {
         guard !layoutDirectionStack.isEmpty else {
             fatalError("Tried to perform an unbalanced call to \(#function). Don't try to perform unbalanced call to \(#function).")
@@ -165,13 +165,13 @@ public enum CoreGeometry {
         layoutDirectionStack.removeLast()
     }
     
-    @inlinable
+    @inlinable @MainActor
     public static func setLayoutDirection(rightToLeft flag: Bool) {
         flippedHorizontally = flag
     }
     
     #if os(macOS)
-    @inlinable
+    @inlinable @MainActor
     public static func setLayoutDirection(from application: NSApplication) {
         switch NSApp.userInterfaceLayoutDirection {
         case .leftToRight: flippedHorizontally = false
@@ -189,7 +189,7 @@ public enum CoreGeometry {
         }
     }
     #elseif os(iOS)
-    @inlinable
+    @MainActor @inlinable
     public static func setLayoutDirection(from app: UIApplication) {
         switch app.userInterfaceLayoutDirection {
         case .leftToRight: flippedHorizontally = false
